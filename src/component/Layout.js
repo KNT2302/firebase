@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import SignIn from '../feature/auth/SignIn'
-import Nav from './Nav'
+import Nav from './nav/Nav'
 
 const Layout = ({ children }) => {
   const isLogined = localStorage.getItem("isLogined")

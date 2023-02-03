@@ -20,7 +20,7 @@ const Button = ({ name, onClick, type }) => {
 
   }
   return (
-    <button disabled={isDisabled} style={{ fontSize: '1.6rem', padding: '.5em 1em', borderRadius: '3px', border: '1px solid black', background: `${isHover? "white":"black"}`, color: `${isHover? "black":"white"}`, cursor: "pointer" }} type={type} onClick={handleOnClick} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>{name}</button>
+    <button disabled={isDisabled} style={{ fontSize: '1em', borderRadius: '3px', border: 'none', background: `transparent`, color: `${isHover? "black":"gray"}`, cursor: "pointer", transition: '.15s' }} type={type} onClick={handleOnClick} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>{name}</button>
   )
 }
 

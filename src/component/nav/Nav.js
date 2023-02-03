@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { signOut } from "firebase/auth"
-import { auth } from '../firebaseConfig'
-import Button from './Button'
+import { auth } from '../../firebaseConfig'
+import Button from '../Button'
 import { Link } from 'react-router-dom'
+import BarLink from './BarLink'
 
 const Nav = () => {
 
@@ -21,16 +22,10 @@ const Nav = () => {
     <nav style={{ padding: '1rem 0' }}>
       <div style={{ display: 'flex', width: '100%', maxWidth: '1536px', margin: '0 auto', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <li>
-
-            <Link to="/todo">
-              Todo
-            </Link>
-
-          </li>
+         <BarLink />
         </div>
         <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>Tot</div>
-        <div>
+        <div style={{fontSize:'1.8rem'}}>
           <Button type="button" name="Sign out" onClick={handleSignOut} />
         </div>
       </div>
