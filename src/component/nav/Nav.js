@@ -8,8 +8,8 @@ import BarLink from './BarLink'
 const Nav = () => {
 
 
-  const handleSignOut = (e) => {
-    e.preventDefault()
+  const isLogined = localStorage.getItem("isLogined")
+  const handleSignOut = () => {
     signOut(auth).then(() => {
       localStorage.removeItem("isLogined")
       // Sign-out successful.
@@ -26,6 +26,7 @@ const Nav = () => {
         </div>
         <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>Tot</div>
         <div style={{fontSize:'1.8rem'}}>
+          
           <Button type="button" name="Sign out" onClick={handleSignOut} />
         </div>
       </div>

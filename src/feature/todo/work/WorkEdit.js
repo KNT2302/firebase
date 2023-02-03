@@ -10,7 +10,7 @@ const WorkEdit = ({ id, name, handleToggleState, stateDo, todoList, setTodoList 
   const workInputRef = useRef(null)
   const workRef = useRef(null)
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (workInputRef.current.value) {
       if (stateDo === stateDoObj.ADD) {
 
@@ -27,7 +27,7 @@ const WorkEdit = ({ id, name, handleToggleState, stateDo, todoList, setTodoList 
         setTodoList([...newTodoList])
       }
     }
-    handleUnmount()
+    await handleUnmount()
     handleToggleState()
     }
   
@@ -38,14 +38,17 @@ const WorkEdit = ({ id, name, handleToggleState, stateDo, todoList, setTodoList 
   }, [])
 
   const handleUnmount = () => {
-    workRef.current.style.opacity = "0"
-    setTimeout(()=>{},150)
+    return new Promise ((resolve)=>{
+      workRef.current.style.opacity = "0"
+      setTimeout(()=>{resolve("complete")},150)
+    })
+    
   }
 
   return (
     <div ref={workRef} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: "space-between", flexWrap:'wrap', opacity:'0',transition:'.15s' }}>
       <Input ref={workInputRef} type="text"/>
-      <div style={{ display: 'flex', gap: '2rem', fontSize:'1.8rem' }}>
+      <div style={{ display: 'flex', gap: '1em', fontSize:'1.8rem' }}>
         <Button name="Save" onClick={handleSave} />
         <Button name="Cancle" onClick={handleToggleState} />
       </div>

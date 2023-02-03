@@ -12,9 +12,9 @@ const Button = ({ name, onClick, type }) => {
     setIsHover(false)
   }
 
-  const handleOnClick = async () => {
+  const handleOnClick = async (e) => {
     setIsDisabled(true)
-    await onClick()
+    await onClick(e)
 
     setIsDisabled(false)
 
