@@ -63,7 +63,7 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
           setSrc(url)
 
         }
-      }, 1200)
+      }, 1000)
 
     }
 

@@ -13,7 +13,7 @@ const Photo = ({ path }) => {
 
   return (
 
-<div style={{ width: '100%', height: '250px' }}>
+<div style={{ width: '100%', height: '250px', fontSize:'2rem' }}>
       <Picture getSrc={getSrc} />
     </div>
 

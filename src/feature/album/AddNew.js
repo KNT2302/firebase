@@ -1,3 +1,4 @@
+import { resolveTo } from '@remix-run/router'
 import { ref, uploadString } from 'firebase/storage'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Button from '../../component/Button'
@@ -6,7 +7,7 @@ import Picture from '../../component/Picture'
 import Popup from '../../component/Popup'
 import { storage } from '../../firebaseConfig'
 
-const BoxAddNew = ({  bigScreen }) => {
+const BoxAddNew = ({ bigScreen }) => {
 
   const [selectedPic, setSelectedPic] = useState("")
 
@@ -14,17 +15,27 @@ const BoxAddNew = ({  bigScreen }) => {
     setSelectedPic(src)
   }
 
-  const postNewImage = async () => {
-    if (selectedPic) {
-      try {
+  const postNewImage = () => {
+    return new Promise((resolve, reject) => {
+      if (selectedPic) {
+        try {
+          setTimeout(async () => {
 
-        const imageRef = ref(storage, 'images/')
-        const uploaded = await uploadString(imageRef, selectedPic, "data_url")
+            // const imageRef = ref(storage, 'images/')
+            // const uploaded = await uploadString(imageRef, selectedPic, "data_url")
+
+            resolve("copmplete")
+
+          }, 2000)
+
+        }
+        catch (e) {
+          reject(e)
+          console.log(e)
+        }
       }
-      catch (e) {
-        console.log(e)
-      }
-    }
+    })
+
   }
   return (
     <div>
@@ -35,7 +46,9 @@ const BoxAddNew = ({  bigScreen }) => {
           <Picture handlePickFile={handlePickFile} isNeedChosen isAutoClick={bigScreen ? false : true} />
 
         </div>
-        {selectedPic && <Button type="submit" name="Add" onClick={postNewImage} />}
+        <div style={{ fontSize: '1.8rem'}}>
+          {selectedPic && <Button type="submit" name="Add" onClick={postNewImage} />}
+        </div>
       </form>
     </div>
   )
@@ -60,8 +73,8 @@ const AddNew = () => {
   const [screenSize, setScreenSize] = useState(getSizeScreen(window.innerWidth))
 
   useEffect(() => {
-    window.addEventListener("resize", (e) => {
-      setScreenSize(getSizeScreen(e.target.screen.width))
+    window.addEventListener("resize", () => {
+      setScreenSize(getSizeScreen(window.innerWidth))
     })
   }, [])
 
