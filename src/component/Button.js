@@ -1,4 +1,3 @@
-import { async } from '@firebase/util'
 import React, { useState } from 'react'
 
 const Button = ({ name, onClick, type }) => {
@@ -13,6 +12,7 @@ const Button = ({ name, onClick, type }) => {
   }
 
   const handleOnClick = async (e) => {
+    e.preventDefault()
     setIsDisabled(true)
     await onClick(e)
 
@@ -20,7 +20,7 @@ const Button = ({ name, onClick, type }) => {
 
   }
   return (
-    <button disabled={isDisabled} style={{ fontSize: '1em', borderRadius: '3px', border: 'none', background: `transparent`, color: `${isHover? "black":"gray"}`, cursor: "pointer", transition: '.15s' }} type={type} onClick={handleOnClick} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>{name}</button>
+    <button disabled={isDisabled} style={{ fontSize: '1em', borderRadius: '3px', border: 'none', background: `transparent`, color: `${isHover? "black":"gray"}`, cursor: "pointer", transition: '.15s' }} type={type} onClick={(e)=>handleOnClick(e)} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>{name}</button>
   )
 }
 

@@ -20,11 +20,10 @@ const Content = ({ children, handleTogglePopup }) => {
   }, [])
   return (
 
-    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '100%', maxWidth: '400px', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', padding: '20px', borderRadius: '3px', transition: '0.15s', border: '1px solid gray'}}>
+    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '100%', maxWidth: '400px', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white',borderRadius: '3px', transition: '0.15s'}}>
       {children}
-      <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: "translateY(calc(-100% - 10px))" }}>
+      <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: "translate(.5em,-100%)", padding:'.5em' }}>
         <Button type="button" name="X" onClick={handleClosePopup} />
-
       </div>
     </div>
   )

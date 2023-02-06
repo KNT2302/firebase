@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
-import Register from '../feature/auth/Register'
-import SignIn from '../feature/auth/SignIn'
+import React, { useState } from 'react'
+
 import { isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
 import { auth } from '../firebaseConfig';
-import Layout from '../component/Layout'
+
+import Page from '../component/Page'
 
 const Home = () => {
 
@@ -48,9 +47,9 @@ const Home = () => {
 
   return (
 
-    <Layout>
+    <Page>
       home
-    </Layout>
+    </Page>
   )
 }
 
