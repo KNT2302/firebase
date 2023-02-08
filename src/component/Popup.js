@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Button from './Button'
 
-const Content = ({ children, handleTogglePopup }) => {
+const Content = ({ handleTogglePopup, getChildren }) => {
   const [isFadedIn, setIsFadedIn] = useState(false)
 
   let timer = null
@@ -20,9 +20,9 @@ const Content = ({ children, handleTogglePopup }) => {
   }, [])
   return (
 
-    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '100%', maxWidth: '400px', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white',borderRadius: '3px', transition: '0.15s'}}>
-      {children}
-      <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: "translate(.5em,-100%)", padding:'.5em' }}>
+    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '100%', maxWidth: '400px', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', borderRadius: '3px', transition: '0.15s', backgroundColor:'lightpink', paddingBlock:'.5em' }}>
+      {getChildren(handleClosePopup)}
+      <div style={{ position: 'absolute', top: '0% ', right: '0%', padding: '.5em' }}>
         <Button type="button" name="X" onClick={handleClosePopup} />
       </div>
     </div>
@@ -30,7 +30,7 @@ const Content = ({ children, handleTogglePopup }) => {
 }
 
 
-const Popup = ({ children, name }) => {
+const Popup = ({ name, getChildren }) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const handleToggle = () => {
@@ -40,7 +40,11 @@ const Popup = ({ children, name }) => {
   return (
     <div>
       <Button type="button" onClick={handleToggle} name={name} />
-      {isOpen && <Content children={children} handleTogglePopup={handleToggle} />}
+      {isOpen &&
+
+        <Content getChildren={getChildren} handleTogglePopup={handleToggle} />
+
+      }
     </div>
   )
 }

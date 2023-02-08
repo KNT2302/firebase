@@ -7,6 +7,7 @@ import Loading from './Loading'
 
 const PicPicker = ({handleOnloadImage, isAutoClick}) => {
   const pickerImage = useRef(null)
+
   const handlePickFile=()=>{
     pickerImage.current.click()
   }
@@ -46,7 +47,6 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
 
   const [src, setSrc] = useState("")
 
-
   const picRef = useRef(null)
 
   const handleOnloadImage=(src)=>{
@@ -54,6 +54,15 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
     setSrc(src)
     handlePickFile(src)
   }
+
+  useEffect(()=>{
+
+    if(isNeedChosen){
+      if(isNeedChosen.haveDone){
+        setSrc("")
+      }
+    }
+  },[isNeedChosen])
 
   useEffect(() => {
     const updateSrc = () => {
@@ -66,6 +75,7 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
       }, 1000)
 
     }
+   
 
     updateSrc()
   }, [])
