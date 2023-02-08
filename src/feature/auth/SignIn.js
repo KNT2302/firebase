@@ -5,14 +5,15 @@ import Input from '../../component/Input'
 import Popup from '../../component/Popup'
 import actionCodeSettings from './setting'
 import { auth } from '../../firebaseConfig'
+import Container from '../../component/Container'
 
 const SignIn = () => {
 
+
   const email = useRef(null)
 
- 
-
   const getForm = (handleClosePopup) => {
+
 
     const handleSubmit = () => {
       return new Promise((resolve) => {
@@ -22,6 +23,7 @@ const SignIn = () => {
             // Save the email locally so you don't need to ask the user for it again
             // if they open the link on the same device.
             window.localStorage.setItem('emailForSignIn', email.current.value)
+            window.localStorage.setItem('isForSignIn', true)
             handleClosePopup()
             resolve("sent")
             // ...
@@ -38,7 +40,7 @@ const SignIn = () => {
       <>
         <form>
           <legend style={{ fontSize: '1.8rem' }}>Register</legend>
-          <Input ref={email} name="email" />
+          <Input type="text" ref={email} name="email" />
           <div style={{ marginTop: '10px' }}>
             <Button type="submit" name="Sign In" onClick={handleSubmit} />
           </div>
@@ -48,9 +50,12 @@ const SignIn = () => {
     )
   }
   return (
-    <Popup name="Sign In" getChildren={getForm}>
+    <Container>
+      <Popup name="Sign In" getChildren={getForm}>
 
-    </Popup>
+      </Popup>
+
+    </Container>
   )
 }
 

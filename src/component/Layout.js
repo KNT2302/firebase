@@ -6,9 +6,10 @@ import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/au
 
 const Layout = ({ children }) => {
   const [isLogined, setIsLogined] = useState(()=>localStorage.getItem("isLogined"))
+  const [isForSign, setIsForSign] = useState(()=>localStorage.getItem("isForSignIn"))
 
   useEffect(() => {
-    if (!isLogined) {
+    if (isForSign) {
       const auth = getAuth()
       if (isSignInWithEmailLink(auth, window.location.href)) {
         // Additional state parameters can also be passed via URL.
@@ -27,6 +28,7 @@ const Layout = ({ children }) => {
           .then((result) => {
             // Clear email from storage.
             window.localStorage.removeItem('emailForSignIn')
+            window.localStorage.removeItem('isForSignIn')
             console.log(result)
             window.localStorage.setItem("isLogined",true)
             setIsLogined(true)

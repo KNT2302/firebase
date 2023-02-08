@@ -7,13 +7,15 @@ import Picture from '../../component/Picture'
 import Popup from '../../component/Popup'
 import { db, storage } from '../../firebaseConfig'
 
-const BoxAddNew = ({ bigScreen, handleClosePopup }) => {
+const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
   const [selectedPic, setSelectedPic] = useState("")
+  const [nameFile, setNameFile] = useState("")
   const [isNeedChosen, setIsNeedChosen] = useState({ haveDone: false })
 
-  const handlePickFile = (src) => {
+  const handlePickFile = (src, nameFile) => {
     setSelectedPic(src)
+    setNameFile(nameFile)
   }
 
   const postNewImage = () => {
@@ -22,14 +24,14 @@ const BoxAddNew = ({ bigScreen, handleClosePopup }) => {
         try {
           setTimeout(async () => {
 
-            const imageRef = ref(storage, `images/2`)
+            const imageRef = ref(storage, `images/${nameFile}`)
             const uploaded = await uploadString(imageRef, selectedPic, "data_url")
-
-            console.log(uploaded)
 
             const docRef = await addDoc(collection(db, "photo"), {
               path: uploaded.ref._location.path_
             });
+
+            updateList(uploaded.ref._location.path_)
 
             if (bigScreen) {
 
@@ -55,7 +57,6 @@ const BoxAddNew = ({ bigScreen, handleClosePopup }) => {
   }
   return (
     <div>
-
       <form>
         <legend style={{ textAlign: 'center', height:'30px' }}>New picture</legend>
         <div style={{ width: '100%', height: '250px' }}>
@@ -70,7 +71,7 @@ const BoxAddNew = ({ bigScreen, handleClosePopup }) => {
   )
 }
 
-const AddNew = () => {
+const AddNew = ({updateList}) => {
 
   const sizeObj = useRef({
     BIG: 'big',
@@ -96,13 +97,12 @@ const AddNew = () => {
 
 
   const children = (handleClosePopup) => {
-    return <BoxAddNew handleClosePopup={handleClosePopup} />
+    return <BoxAddNew updateList={updateList} handleClosePopup={handleClosePopup} />
   }
 
   return (
     <div style={{ fontSize: '1.8rem' }}>
-      {screenSize === sizeObj.current.BIG ? <BoxAddNew bigScreen /> : <Popup getChildren={children} name="New">
-        <BoxAddNew />
+      {screenSize === sizeObj.current.BIG ? <BoxAddNew updateList={updateList} bigScreen /> : <Popup getChildren={children} name="New">
       </Popup>}
 
 

@@ -8,9 +8,14 @@ import Like from './Like'
 const Photo = ({ path }) => {
 
   const getSrc = async () => {
-    const downloadURL = await getDownloadURL(ref(storage, path))
+    try{
+      const downloadURL = await getDownloadURL(ref(storage, path))
+      return downloadURL
 
-    return downloadURL
+    }catch(e){
+      console.log(e)
+    }
+
   }
 
   return (

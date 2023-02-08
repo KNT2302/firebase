@@ -18,7 +18,7 @@ const PicPicker = ({handleOnloadImage, isAutoClick}) => {
       reader.readAsDataURL(e.target.files[0])
     }
     reader.onload = (readerEvent) => {
-      handleOnloadImage(readerEvent.target.result)
+      handleOnloadImage(readerEvent.target.result, pickerImage.current.files[0].name)
     }
     return
   }
@@ -49,10 +49,10 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
 
   const picRef = useRef(null)
 
-  const handleOnloadImage=(src)=>{
+  const handleOnloadImage=(src, nameFile)=>{
 
     setSrc(src)
-    handlePickFile(src)
+    handlePickFile(src,nameFile)
   }
 
   useEffect(()=>{
@@ -84,7 +84,7 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
     <>
       {src ? <div ref={picRef} style={{ width: '100%', height: '100%', backgroundImage: `url(${src})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
         {isNeedChosen && 
-         <div style={{fontSize:'1.8rem', padding:'.5em'}}>
+         <div style={{fontSize:'1.8rem', padding:'.5em', background:'rgba(0,0,0,.25)' ,display:'inline-block'}}>
          <Button type="button" name="X" onClick={()=>{
           setSrc("")
           handlePickFile("")

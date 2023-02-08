@@ -41,9 +41,7 @@ const Popup = ({ name, getChildren }) => {
     <div>
       <Button type="button" onClick={handleToggle} name={name} />
       {isOpen &&
-
         <Content getChildren={getChildren} handleTogglePopup={handleToggle} />
-
       }
     </div>
   )
