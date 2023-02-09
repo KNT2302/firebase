@@ -18,7 +18,7 @@ const Album = () => {
   const [tab,setTab] = useState("mine")
 
   const handleTab = (query) => {
-    console.log(query)
+    // console.log(query)
     // setTab(query)
   }
 

@@ -82,7 +82,7 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
 
   return (
     <>
-      {src ? <div ref={picRef} style={{ width: '100%', height: '100%', backgroundImage: `url(${src})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
+      {src ? <div ref={picRef} style={{ width: '100%', height: '100%',backgroundImage: `url(${src})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
         {isNeedChosen && 
          <div style={{fontSize:'1.8rem', padding:'.5em', background:'rgba(0,0,0,.25)' ,display:'inline-block'}}>
          <Button type="button" name="X" onClick={()=>{

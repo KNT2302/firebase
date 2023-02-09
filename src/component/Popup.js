@@ -20,7 +20,7 @@ const Content = ({ handleTogglePopup, getChildren }) => {
   }, [])
   return (
 
-    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '100%', maxWidth: '400px', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', borderRadius: '3px', transition: '0.15s', backgroundColor:'lightpink', paddingBlock:'.5em' }}>
+    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', paddingBlock: '.5em' }}>
       {getChildren(handleClosePopup)}
       <div style={{ position: 'absolute', top: '0% ', right: '0%', padding: '.5em' }}>
         <Button type="button" name="X" onClick={handleClosePopup} />
@@ -39,7 +39,10 @@ const Popup = ({ name, getChildren }) => {
 
   return (
     <div>
-      <Button type="button" onClick={handleToggle} name={name} />
+      <div style={{display:'flex', alignItems:"center", height:'100%'}}>
+
+        <Button type="button" onClick={handleToggle} name={name} />
+      </div>
       {isOpen &&
         <Content getChildren={getChildren} handleTogglePopup={handleToggle} />
       }

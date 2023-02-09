@@ -3,16 +3,17 @@ import React from 'react'
 import Button from '../../component/Button'
 import Picture from '../../component/Picture'
 import { storage } from '../../firebaseConfig'
+import Comment from './Comment'
 import Like from './Like'
 
 const Photo = ({ path }) => {
 
   const getSrc = async () => {
-    try{
+    try {
       const downloadURL = await getDownloadURL(ref(storage, path))
       return downloadURL
 
-    }catch(e){
+    } catch (e) {
       console.log(e)
     }
 
@@ -29,7 +30,7 @@ const Photo = ({ path }) => {
 
           <Like />
 
-          <Button type="button" name="Comment" />
+          <Comment />
 
           <Button type="button" name="Share" />
 

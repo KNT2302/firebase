@@ -38,7 +38,7 @@ const SignIn = () => {
     }
     return (
       <>
-        <form>
+        <form style={{maxWidth:'400px'}}>
           <legend style={{ fontSize: '1.8rem' }}>Register</legend>
           <Input type="text" ref={email} name="email" />
           <div style={{ marginTop: '10px' }}>
@@ -51,6 +51,7 @@ const SignIn = () => {
   }
   return (
     <Container>
+
       <Popup name="Sign In" getChildren={getForm}>
 
       </Popup>
