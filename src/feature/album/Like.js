@@ -11,12 +11,12 @@ const Like = () => {
 
   const likePhoto = async () => {
     try {
-      let docRef= null
-      if(!isLiked){
-       docRef = await setDoc(doc(db, "photo", "TPRaUU6jdgIIdCrESQIb", "like", "TPRaUU6jdgIIdCrESQIb"), {
+      let docRef = null
+      if (!isLiked) {
+        docRef = await setDoc(doc(db, "photo", "TPRaUU6jdgIIdCrESQIb", "like", "TPRaUU6jdgIIdCrESQIb"), {
           like: 1
         })
-      }else{
+      } else {
         docRef = await deleteDoc(doc(db, "photo", "TPRaUU6jdgIIdCrESQIb", "like", "TPRaUU6jdgIIdCrESQIb"))
       }
       console.log("Document written with ID: ", docRef)
@@ -44,9 +44,9 @@ const Like = () => {
     })
   }
   return (
-    <>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <Button name={!isLiked ? <AiOutlineHeart /> : <BsFillHeartFill style={{ color: 'red' }} />} onClick={handleOnClick} />
-    </>
+    </div>
   )
 }
 

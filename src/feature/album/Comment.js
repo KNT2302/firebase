@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Popup from '../../component/Popup'
 import { VscComment } from "react-icons/vsc"
 import Input from '../../component/Input'
 import Button from '../../component/Button'
+import { async } from '@firebase/util'
 
 const data = [
   {
@@ -13,16 +14,16 @@ const data = [
         id: 'rty',
         text: 'cv bhn',
         reply: [{
-          id: 'rty',
+          id: 'vdf',
           text: 'gh nhm',
           reply: []
         }]
       },
       {
-        id: 'rty',
+        id: 'svb',
         text: 'cv bhn',
         reply: [{
-          id: 'rty',
+          id: 'njy',
           text: 'gh nhm',
           reply: []
         }]
@@ -30,11 +31,11 @@ const data = [
     ]
   },
   {
-    id: 'rty',
+    id: 'jkn',
     text: 'vf bgt',
     reply: [
       {
-        id: 'rty',
+        id: 'dfb',
         text: 'cd vbn',
         reply: [{
           id: 'rty',
@@ -49,10 +50,10 @@ const data = [
     text: 'nb nbv',
     reply: [
       {
-        id: 'rty',
+        id: 'gfn',
         text: 'qw vfd',
         reply: [{
-          id: 'rty',
+          id: 'efg',
           text: 'cd zsd',
           reply: []
         }]
@@ -64,69 +65,120 @@ const data = [
     text: 'bn hyu',
     reply: [
       {
-        id: 'rty',
+        id: 'ujm',
         text: 'po lkm',
+        reply: []
+      }
+    ]
+  },
+  {
+    id: 'fdb',
+    text: 'hn qef',
+    reply: [
+      {
+        id: 'mjk',
+        text: 'lk tmj',
         reply: []
       }
     ]
   },
 ]
 
-const AddComment = () => {
+const AddComment = ({ addComment }) => {
+
+  const textRef = useRef(null)
+  const doAdd = async () => {
+    const data = {
+      id: "rov",
+      text: textRef.current.value,
+      reply: []
+    }
+    await addComment(data)
+
+    textRef.current.value = ""
+  }
   return (
-    <div style={{ position: 'absolute', top: '100%', left: '0%', width: '100%', background: 'lightpink' }}>
-      <Input type="text" name="comment" />
-      <Button type="button" name="Add" />
+    <div style={{ width: '100%', background: 'lightpink', padding: '0 1em' }}>
+      <Input ref={textRef} type="text" name="comment" />
+      <Button type="button" name="Add" onClick={doAdd} />
     </div>
   )
 }
-const ItemComment = ({ comment, handleReply }) => {
+
+const ReplyComment = ({idComment}) => {
+  const replyRef = useRef(null)
+  const getChildren = (handleClosePopup) => {
+
+    const sendReply = () => {
+      console.log('sent message to ',idComment)
+      handleClosePopup()
+    }
+    return (
+      <div style={{ background: 'lightgreen' }}>
+
+        <Input ref={replyRef} type="text" name="Reply" />
+        <Button type='button' name="Send" onClick={sendReply} />
+      </div>
+    )
+  }
+  return (
+      <Popup name="Reply" getChildren={getChildren} />
+  )
+}
+const ItemComment = ({ comment }) => {
+  const [readMore, setReadMore] = useState(false)
+
   return (
     <div style={{ position: 'relative' }}>
-      <div style={{ display: 'flex' }}>
-        <p>{comment.text}</p>
-        <Button type="button" name="reply" onClick={handleReply} />
-      </div>
-      {
-        comment.reply.length > 0 &&
-        <div style={{ padding: '.25em', position: 'absolute', borderLeft: '1px solid gray', borderBottom: '1px solid gray' }}>
+
+      <p>{comment.text}</p>
+      <ReplyComment idComment={comment.id}/>
+
+      {comment.reply.length > 0 && !readMore && <Button type="button" name="Read more" onClick={() => { setReadMore(true) }} />}
+      {readMore && <>
+        <div style={{ marginLeft: "1em", borderLeft: '1px solid gray', paddingLeft: '.5em' }}>
+          {comment.reply.length > 0 &&
+            comment.reply.map((reply) => {
+              return (
+                <ItemComment key={reply.id} comment={reply} />
+              )
+            })
+          }
 
         </div>
-      }
-      <div style={{ transform: 'translateX(calc(0% + 1em))' }}>
-        {comment.reply.length > 0 &&
-          comment.reply.map((reply) => {
-            return (
-              <ItemComment key={reply.id} comment={reply} />
-            )
-          })
-        }
+      </>}
 
-      </div>
     </div>
   )
 }
 
 const Comment = () => {
+  const [list, setList] = useState(() => data)
 
-  const [reply, setReply] = useState(false)
-  const handleReply = () => {
-    setReply(true)
+  const addComment = (comment) => {
+    return new Promise(async (resolve) => {
+      setTimeout(() => {
+        setList([...list, comment])
+        resolve("added")
+      }, 1000)
+
+
+    })
   }
-
   const getChildren = (handleClosePopup) => {
     return (
-      <div style={{ width: '400px', maxHeight: '500px', position: 'relative' }}>
-        {data.map((comment) => {
-          return (
-            <ItemComment key={comment.id} comment={comment} handleReply={handleReply} />
-          )
-        })}
-        {
-          reply && <AddComment />
-        }
+      <div>
+        <div style={{ width: '400px', maxHeight: '500px', position: 'relative', padding: '0 1em', overflowY: 'auto' }}>
+          {list.map((comment) => {
+            return (
+              <ItemComment key={comment.id} comment={comment} />
+            )
+          })}
 
+        </div>
+        <AddComment addComment={addComment} />
       </div>
+
     )
 
   }

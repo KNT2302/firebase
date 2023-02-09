@@ -5,6 +5,7 @@ import Picture from '../../component/Picture'
 import { storage } from '../../firebaseConfig'
 import Comment from './Comment'
 import Like from './Like'
+import Share from './Share'
 
 const Photo = ({ path }) => {
 
@@ -20,7 +21,7 @@ const Photo = ({ path }) => {
   }
 
   return (
-    <figure style={{ width: '100%' }}>
+    <figure style={{ width: '100%', position: 'relative' }}>
       <div style={{ width: '100%', height: '250px', fontSize: '3rem' }}>
         <Picture getSrc={getSrc} />
 
@@ -32,7 +33,7 @@ const Photo = ({ path }) => {
 
           <Comment />
 
-          <Button type="button" name="Share" />
+          <Share />
 
         </div>
       </footer>

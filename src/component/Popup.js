@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Button from './Button'
 
-const Content = ({ handleTogglePopup, getChildren }) => {
+const Content = ({ handleTogglePopup, getChildren, resetState }) => {
   const [isFadedIn, setIsFadedIn] = useState(false)
 
   let timer = null
@@ -10,7 +10,12 @@ const Content = ({ handleTogglePopup, getChildren }) => {
 
   const handleClosePopup = () => {
     handleToggleFadedIn()
-    timer = setTimeout(() => { handleTogglePopup() }, 150)
+    timer = setTimeout(() => {
+      handleTogglePopup()
+      if (resetState) {
+        resetState()
+      }
+    }, 150)
   }
   useEffect(() => {
     setIsFadedIn(!isFadedIn)
@@ -20,7 +25,7 @@ const Content = ({ handleTogglePopup, getChildren }) => {
   }, [])
   return (
 
-    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', paddingBlock: '.5em' }}>
+    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink',zIndex:'1' }}>
       {getChildren(handleClosePopup)}
       <div style={{ position: 'absolute', top: '0% ', right: '0%', padding: '.5em' }}>
         <Button type="button" name="X" onClick={handleClosePopup} />
@@ -30,7 +35,7 @@ const Content = ({ handleTogglePopup, getChildren }) => {
 }
 
 
-const Popup = ({ name, getChildren }) => {
+const Popup = ({ name, getChildren, resetState }) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const handleToggle = () => {
@@ -39,12 +44,12 @@ const Popup = ({ name, getChildren }) => {
 
   return (
     <div>
-      <div style={{display:'flex', alignItems:"center", height:'100%'}}>
+      <div style={{ display: 'flex', alignItems: "center", height: '100%'}}>
 
         <Button type="button" onClick={handleToggle} name={name} />
       </div>
       {isOpen &&
-        <Content getChildren={getChildren} handleTogglePopup={handleToggle} />
+        <Content getChildren={getChildren} handleTogglePopup={handleToggle} resetState={resetState} />
       }
     </div>
   )

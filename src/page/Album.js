@@ -15,7 +15,7 @@ const Album = () => {
   }
 
   const [list, setList] = useState([])
-  const [tab,setTab] = useState("mine")
+  const [tab, setTab] = useState("mine")
 
   const handleTab = (query) => {
     // console.log(query)
@@ -64,7 +64,7 @@ const Album = () => {
           <AddNew updateList={updateList} />
         </div>
         <div style={{ width: "100%", maxWidth: '375px' }}>
-          <TabPhoto listTab={[{name:'Mine', query:'mine'}, {name:'Publish', query:'publish'}]} setTab={handleTab}/>
+          <TabPhoto listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab} />
           <div style={{ height: '30px' }}>
             <h1>{nameTab[tab]}</h1>
           </div>
