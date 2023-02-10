@@ -1,6 +1,5 @@
 import { getDownloadURL, ref } from 'firebase/storage'
 import React from 'react'
-import Button from '../../component/Button'
 import Picture from '../../component/Picture'
 import { storage } from '../../firebaseConfig'
 import Comment from './Comment'

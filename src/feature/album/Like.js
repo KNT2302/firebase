@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { collection, addDoc, deleteDoc, doc, setDoc } from "firebase/firestore"
+import { deleteDoc, doc, setDoc } from "firebase/firestore"
 import Button from '../../component/Button'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { BsFillHeartFill } from 'react-icons/bs'
 import { db } from '../../firebaseConfig'
-import { async } from '@firebase/util'
 
 const Like = () => {
   const [isLiked, setIsLiked] = useState(false)

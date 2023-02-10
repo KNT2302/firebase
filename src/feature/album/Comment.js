@@ -3,7 +3,6 @@ import Popup from '../../component/Popup'
 import { VscComment } from "react-icons/vsc"
 import Input from '../../component/Input'
 import Button from '../../component/Button'
-import { async } from '@firebase/util'
 
 const data = [
   {
@@ -105,12 +104,18 @@ const AddComment = ({ addComment }) => {
   )
 }
 
-const ReplyComment = ({idComment}) => {
+const ReplyComment = ({ updateComment, idComment }) => {
   const replyRef = useRef(null)
   const getChildren = (handleClosePopup) => {
 
     const sendReply = () => {
-      console.log('sent message to ',idComment)
+      console.log('sent message to ', idComment, replyRef.current.value)
+      const reply = {
+        id: 'vmn',
+        text: replyRef.current.value,
+        reply: []
+      }
+      updateComment(reply)
       handleClosePopup()
     }
     return (
@@ -122,23 +127,33 @@ const ReplyComment = ({idComment}) => {
     )
   }
   return (
+    <div>
       <Popup name="Reply" getChildren={getChildren} />
+
+    </div>
   )
 }
 const ItemComment = ({ comment }) => {
+  const [data, setData] = useState(() => comment)
   const [readMore, setReadMore] = useState(false)
+
+  const updateComment = (reply) => {
+    const newComment = comment
+    newComment.reply.push(reply)
+    setData(newComment)
+  }
 
   return (
     <div style={{ position: 'relative' }}>
 
-      <p>{comment.text}</p>
-      <ReplyComment idComment={comment.id}/>
+      <p>{data.text}</p>
+      <ReplyComment updateComment={updateComment} idComment={data.id} />
 
-      {comment.reply.length > 0 && !readMore && <Button type="button" name="Read more" onClick={() => { setReadMore(true) }} />}
+      {data.reply.length > 0 && !readMore && <Button type="button" name="Read more" onClick={() => { setReadMore(true) }} />}
       {readMore && <>
         <div style={{ marginLeft: "1em", borderLeft: '1px solid gray', paddingLeft: '.5em' }}>
-          {comment.reply.length > 0 &&
-            comment.reply.map((reply) => {
+          {data.reply.length > 0 &&
+            data.reply.map((reply) => {
               return (
                 <ItemComment key={reply.id} comment={reply} />
               )
