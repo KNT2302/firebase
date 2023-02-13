@@ -1,5 +1,6 @@
 import React from 'react'
-import Button from '../../component/Button'
+import Button from './Button'
+
 
 
 const ItemTab = ({ name, setTab, query }) => {
@@ -10,7 +11,7 @@ const ItemTab = ({ name, setTab, query }) => {
     </div>
   )
 }
-const TabPhoto = ({ listTab, setTab }) => {
+const Tab = ({ listTab, setTab, children }) => {
   return (
     <div style={{ display: 'flex', fontSize: '1.8rem' }}>
       {listTab.map((tab, index) => {
@@ -18,8 +19,12 @@ const TabPhoto = ({ listTab, setTab }) => {
           <ItemTab key={index} name={tab.name} setTab={setTab} query={tab.query} />
         )
       })}
+      <div style={{ width: '100%' }}>
+        {children}
+      </div>
     </div>
   )
 }
 
-export default TabPhoto
+export default Tab
+

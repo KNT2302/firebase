@@ -109,7 +109,6 @@ const ReplyComment = ({ updateComment, idComment }) => {
   const getChildren = (handleClosePopup) => {
 
     const sendReply = () => {
-      console.log('sent message to ', idComment, replyRef.current.value)
       const reply = {
         id: 'vmn',
         text: replyRef.current.value,
@@ -138,14 +137,13 @@ const ItemComment = ({ comment }) => {
   const [readMore, setReadMore] = useState(false)
 
   const updateComment = (reply) => {
-    const newComment = comment
-    newComment.reply.push(reply)
-    setData(newComment)
+    data.reply.push(reply)
+    setData({ ...data })
+    setReadMore(true)
   }
 
   return (
     <div style={{ position: 'relative' }}>
-
       <p>{data.text}</p>
       <ReplyComment updateComment={updateComment} idComment={data.id} />
 

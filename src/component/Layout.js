@@ -3,10 +3,13 @@ import { Outlet } from 'react-router-dom'
 import SignIn from '../feature/auth/SignIn'
 import Nav from './nav/Nav'
 import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth"
+import { message } from '../firebaseConfig'
+import { getToken, onMessage } from 'firebase/messaging'
+import { onBackgroundMessage } from 'firebase/messaging/sw'
 
 const Layout = ({ children }) => {
-  const [isLogined, setIsLogined] = useState(()=>localStorage.getItem("isLogined"))
-  const [isForSign, setIsForSign] = useState(()=>localStorage.getItem("isForSignIn"))
+  const [isLogined, setIsLogined] = useState(() => localStorage.getItem("isLogined"))
+  const [isForSign, setIsForSign] = useState(() => localStorage.getItem("isForSignIn"))
 
   useEffect(() => {
     if (isForSign) {
@@ -30,7 +33,7 @@ const Layout = ({ children }) => {
             window.localStorage.removeItem('emailForSignIn')
             window.localStorage.removeItem('isForSignIn')
             console.log(result)
-            window.localStorage.setItem("isLogined",true)
+            window.localStorage.setItem("isLogined", true)
             setIsLogined(true)
             // You can access the new user via result.user
             // Additional user info profile not available via:
@@ -49,11 +52,37 @@ const Layout = ({ children }) => {
 
   }, [])
 
+  useEffect(() => {
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        console.log("Notification permission granted.")
 
+
+        getToken(message, {
+          vapidKey:
+            "BCrLmZCKr730uizu0keRxgSVCPQyXr0qlhVZZ5r5qPLUGrgJb9qP9NdHulaRETzABlS0JZi0OARryYR4BRZ8oGI",
+        }).then((currentToken) => {
+          if (currentToken) {
+            console.log("currentToken: ", currentToken)
+          } else {
+            console.log("Can not get token")
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      } else {
+        console.log("Do not have permission!")
+      }
+    })
+
+    onMessage(message,(message)=>{
+      console.log(message)
+    })
+  }, [])
 
   return (
     <div style={{ width: '100%', padding: '0 20px' }}>
-      <Nav handleSignOut={()=>{setIsLogined(false)}} isLogined={isLogined} />
+      <Nav handleSignOut={() => { setIsLogined(false) }} isLogined={isLogined} />
       {isLogined ?
         <div style={{ maxWidth: '1563px', margin: '0 auto' }}>
           {children}

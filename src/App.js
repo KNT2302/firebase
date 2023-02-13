@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from './component/Layout'
 import Album from './page/Album'
@@ -5,6 +6,8 @@ import Home from './page/Home'
 import Todo from './page/Todo'
 
 function App() {
+
+  
 
   return (
     <Layout>

@@ -26,7 +26,7 @@ const Photo = ({ path }) => {
 
       </div>
       <footer style={{ fontSize: '2rem' }}>
-        <div style={{ height: '2em', display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ height: '2em', display: 'flex', gap: '.5em' }}>
 
           <Like />
 

@@ -5,7 +5,7 @@ import Container from '../component/Container'
 import AddNew from '../feature/album/AddNew'
 import { collection, getDocs } from "firebase/firestore"
 import Loading from '../component/Loading'
-import TabPhoto from '../feature/album/TabPhoto'
+import Tab from '../component/Tab'
 
 const Album = () => {
 
@@ -64,7 +64,7 @@ const Album = () => {
           <AddNew updateList={updateList} />
         </div>
         <div style={{ width: "100%", maxWidth: '375px' }}>
-          <TabPhoto listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab} />
+          <Tab listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab} />
           <div style={{ height: '30px' }}>
             <h1>{nameTab[tab]}</h1>
           </div>
