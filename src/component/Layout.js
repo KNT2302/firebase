@@ -52,34 +52,6 @@ const Layout = ({ children }) => {
 
   }, [])
 
-  useEffect(() => {
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Notification permission granted.")
-
-
-        getToken(message, {
-          vapidKey:
-            "BCrLmZCKr730uizu0keRxgSVCPQyXr0qlhVZZ5r5qPLUGrgJb9qP9NdHulaRETzABlS0JZi0OARryYR4BRZ8oGI",
-        }).then((currentToken) => {
-          if (currentToken) {
-            console.log("currentToken: ", currentToken)
-          } else {
-            console.log("Can not get token")
-          }
-        }).catch((err) => {
-          console.log(err)
-        })
-      } else {
-        console.log("Do not have permission!")
-      }
-    })
-
-    onMessage(message,(message)=>{
-      console.log(message)
-    })
-  }, [])
-
   return (
     <div style={{ width: '100%', padding: '0 20px' }}>
       <Nav handleSignOut={() => { setIsLogined(false) }} isLogined={isLogined} />
