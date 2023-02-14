@@ -19,6 +19,7 @@ const BarLink = () => {
       <ListLink name="Home" to='/' />
       <ListLink name="Todo" to='/todo' />
       <ListLink name="Album" to='/album' />
+      <ListLink name="Profile" to='/profile' />
     </ul>
   )
 }

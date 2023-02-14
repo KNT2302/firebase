@@ -6,12 +6,10 @@ import { Link } from 'react-router-dom'
 import BarLink from './BarLink'
 import SignOut from '../../feature/auth/SignOut'
 import Notify from '../../feature/notify/Notify'
+import Profile from '../../feature/profile/Profile'
+
 
 const Nav = ({ handleSignOut, isLogined }) => {
-
-
-
-
 
   return (
     <nav style={{ padding: '1rem 0' }}>
@@ -25,17 +23,9 @@ const Nav = ({ handleSignOut, isLogined }) => {
           {isLogined &&
             <>
               <SignOut handleSignOut={handleSignOut} />
-
               <Notify />
             </>
-
           }
-
-
-
-
-
-
         </div>
       </div>
     </nav>
@@ -43,3 +33,5 @@ const Nav = ({ handleSignOut, isLogined }) => {
 }
 
 export default Nav
+
+
