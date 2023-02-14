@@ -5,7 +5,6 @@ const Message = ({ message, isLast, isNew, handleClick }) => {
   
   const handleOnClick = isNew? () => {
     handleClick(message)
-    console.log("d")
   }: ()=>{}
   return (
     <div style={{ display: 'flex', gap: '.5em', borderBottom: `${isLast ? 'none' : '1px solid gray'}`, padding: '.5em', background:`${isNew?"lightgreen":"transparent"}`, width:'250px', cursor:"pointer" }} onClick={handleOnClick}>

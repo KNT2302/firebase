@@ -29,7 +29,7 @@ const Content = ({ handleTogglePopup, getChildren, resetState, position }) => {
   }
   return (
 
-    <div style={{ position: 'absolute', top: 'calc(0% + 1em)', ...positionStyle, opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', zIndex: '1' }}>
+    <div style={{ position: 'absolute', top: 'calc(0% + 1em)', ...positionStyle, opacity: `${isFadedIn ? "1" : '.5'}`, background: 'white', borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', zIndex: '1'}}>
       {getChildren(handleClosePopup)}
       <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: 'translateY(-100%)', background: 'lightpink', borderRadius: ".1em" }}>
         <Button type="button" name="X" onClick={handleClosePopup} />

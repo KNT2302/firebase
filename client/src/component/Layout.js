@@ -11,6 +11,9 @@ const Layout = ({ children }) => {
   const [isLogined, setIsLogined] = useState(() => localStorage.getItem("isLogined"))
   const [isForSign, setIsForSign] = useState(() => localStorage.getItem("isForSignIn"))
 
+  const handleSignIned = () => {
+    setIsLogined(true)
+  }
   useEffect(() => {
     if (isForSign) {
       const auth = getAuth()
@@ -59,7 +62,7 @@ const Layout = ({ children }) => {
         <div style={{ maxWidth: '1563px', margin: '0 auto' }}>
           {children}
         </div>
-        : <SignIn />}<Outlet /></div>
+        : <SignIn setSignined={handleSignIned} />}<Outlet /></div>
   )
 }
 

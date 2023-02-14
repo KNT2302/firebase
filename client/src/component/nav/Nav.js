@@ -21,12 +21,18 @@ const Nav = ({ handleSignOut, isLogined }) => {
         </div>
         <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>Tot</div>
 
-        <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems:'center' }}>
-          {isLogined && <SignOut handleSignOut={handleSignOut} />}
-         
+        <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems: 'center' }}>
+          {isLogined &&
+            <>
+              <SignOut handleSignOut={handleSignOut} />
+
+              <Notify />
+            </>
+
+          }
 
 
-            <Notify />
+
 
 
 
