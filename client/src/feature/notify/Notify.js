@@ -25,14 +25,7 @@ const Notify = () => {
     }
   ])
 
-  const [newData, setNewData] = useState([
-    {
-      id: '2',
-      title: 'Service System',
-      content: "Updated photo",
-      image: 'url(1)'
-    }
-  ])
+  const [newData, setNewData] = useState([])
 
   useEffect(() => {
     Notification.requestPermission().then((permission) => {
@@ -57,21 +50,21 @@ const Notify = () => {
       }
     })
 
-    
+
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     onMessage(message, (message) => {
       console.log(message)
-      const { notification } = message
+      const { notification, messageId } = message
       setNewData([...newData, {
-        id: '1',
+        id: messageId,
         title: notification.title,
         content: notification.body,
         image: 'url(1)'
       }])
     })
-  },[newData])
+  }, [newData])
 
   const setHaveRead = (message) => {
     const haveNotRead = newData
