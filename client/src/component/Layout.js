@@ -11,6 +11,16 @@ const Layout = ({ children }) => {
   const [isLogined, setIsLogined] = useState(() => localStorage.getItem("isLogined"))
   const [isForSign, setIsForSign] = useState(() => localStorage.getItem("isForSignIn"))
 
+  const setUser = (user) => {
+    const {accessToken,displayName,photoURL} = user
+
+    console.log(accessToken, displayName,photoURL)
+    localStorage.setItem('user', JSON.stringify({
+      accessToken,
+      displayName,
+      photoURL
+    }))
+  }
   const handleSignIned = () => {
     setIsLogined(true)
   }
@@ -62,7 +72,7 @@ const Layout = ({ children }) => {
         <div style={{ maxWidth: '1563px', margin: '0 auto' }}>
           {children}
         </div>
-        : <SignIn setSignined={handleSignIned} />}<Outlet /></div>
+        : <SignIn setSignined={handleSignIned} setUser={setUser} />}<Outlet /></div>
   )
 }
 

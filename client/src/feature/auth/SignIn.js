@@ -8,7 +8,7 @@ import { auth } from '../../firebaseConfig'
 import Container from '../../component/Container'
 import { async } from '@firebase/util'
 
-const SignIn = ({setSignined}) => {
+const SignIn = ({setSignined,setUser}) => {
 
 
 
@@ -20,7 +20,7 @@ const SignIn = ({setSignined}) => {
       <div style={{ padding: '.5em' }}>
         <SignByEmail handleClosePopup={handleClosePopup} />
         <div style={{ textAlign: 'center', fontSize: '1.6rem', marginTop: '10px' }}>Or</div>
-        <SignByGoogle setSignined={setSignined} />
+        <SignByGoogle setSignined={setSignined} setUser={setUser} />
       </div>
     )
   }
@@ -76,7 +76,7 @@ const SignByEmail = ({ handleClosePopup }) => {
   )
 }
 
-const SignByGoogle = ({setSignined}) => {
+const SignByGoogle = ({setSignined, setUser}) => {
 
   const onClick = async () => {
     return new Promise((resolve)=>{
@@ -94,6 +94,8 @@ const SignByGoogle = ({setSignined}) => {
           // ...
           window.localStorage.setItem("isLogined", true)
           setSignined()
+          setUser(result.user)
+          console.log(result)
           resolve("authed")
         }).catch((error) => {
           // Handle Errors here.
