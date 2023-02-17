@@ -1,14 +1,14 @@
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "../app.js"
 
-export const getAllDevice = async (res) => {
+export const getAllUsers = async (res) => {
 
   const devices=[]
   try{
-    const querySnapshot = await getDocs(collection(db, "devices"))
+    const querySnapshot = await getDocs(collection(db, "users"))
     
     querySnapshot.forEach((doc) => {
-      devices.push(doc.data().currentToken)
+      devices.push(doc.data())
     })
 
     return devices

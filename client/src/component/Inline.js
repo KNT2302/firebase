@@ -8,19 +8,21 @@ import Loading from './Loading'
 
 
 
-const InlineEdit = ({ keyName = "Display name", value = "My name" }) => {
+const Inline = ({ keyName = "Display name", value = "My name", canEdit }) => {
 
   return (
     <div style={{ fontSize: '1em', width: '100%', display: 'flex', gap: '.5em' }}>
       <div style={{ color: 'gray', lineHeight: '1em' }}>
         {keyName}
       </div>
-      <EditField value={value} />
+      <div style={{ fontSize: '2rem' }}>
+        {canEdit ? <EditField value={value} /> : <div style={{lineHeight: '1em'}}>{value}</div>}
+      </div>
 
     </div>
   )
 }
-export default InlineEdit
+export default Inline
 
 const EditField = ({ value }) => {
 
@@ -48,9 +50,9 @@ const EditField = ({ value }) => {
 
 
   return (
-    <div style={{ fontSize: '2rem' }}>
+    <div >
 
-      <div style={{ wordBreak: 'break-all', lineHeight: '1em', height: `${isExpand ? isUpdating?"calc(100% - 1em)":'100%' : '1em'}`, overflow: 'hidden', transition: '.3s' }} ref={refEdit} onFocus={expandField} onBlur={upDateField} contentEditable={!isUpdating} suppressContentEditableWarning={true}>
+      <div style={{ wordBreak: 'break-all', lineHeight: '1em', height: `${isExpand ? isUpdating ? "calc(100% - 1em)" : '100%' : '1em'}`, overflow: 'hidden', transition: '.3s' }} ref={refEdit} onFocus={expandField} onBlur={upDateField} contentEditable={!isUpdating} suppressContentEditableWarning={true}>
         {value}
       </div>
       <div style={{ fontSize: '1em', width: '1em' }}>

@@ -7,7 +7,7 @@ import actionCodeSettings from './setting'
 import { auth } from '../../firebaseConfig'
 import Container from '../../component/Container'
 
-const SignIn = ({setSignined,setUser}) => {
+const SignIn = ({setSignined,getUserInfo }) => {
 
 
 
@@ -19,7 +19,7 @@ const SignIn = ({setSignined,setUser}) => {
       <div style={{ padding: '.5em' }}>
         <SignByEmail handleClosePopup={handleClosePopup} />
         <div style={{ textAlign: 'center', fontSize: '1.6rem', marginTop: '10px' }}>Or</div>
-        <SignByGoogle setSignined={setSignined} setUser={setUser} />
+        <SignByGoogle setSignined={setSignined} getUserInfo={getUserInfo}/>
       </div>
     )
   }
@@ -75,7 +75,7 @@ const SignByEmail = ({ handleClosePopup }) => {
   )
 }
 
-const SignByGoogle = ({setSignined, setUser}) => {
+const SignByGoogle = ({setSignined, getUserInfo}) => {
 
   const onClick = async () => {
     return new Promise((resolve)=>{
@@ -93,7 +93,7 @@ const SignByGoogle = ({setSignined, setUser}) => {
           // ...
           window.localStorage.setItem("isLogined", true)
           setSignined()
-          setUser(result.user)
+          getUserInfo.current = result.user
           console.log(result)
           resolve("authed")
         }).catch((error) => {

@@ -3,6 +3,8 @@ import Input from './Input'
 import Loading from './Loading'
 import { FiUser } from "react-icons/fi"
 import Button from './Button'
+import axiosProvider from '../ulti/axios'
+import { async } from '@firebase/util'
 
 const friends = [
   {
@@ -17,7 +19,7 @@ const friends = [
   },
 ]
 
-const User = ({ friend, isPick }) => {
+const User = ({ user, isPick }) => {
 
   const pickFriendRef = useRef(null)
 
@@ -32,11 +34,11 @@ const User = ({ friend, isPick }) => {
     <div>
 
       {isPick ? <div style={{ display: 'flex', fontSize: '1.8rem' }}>
-        <Input ref={pickFriendRef} type='checkbox' name={friend.name} />
+        <Input ref={pickFriendRef} type='checkbox' name={user.displayName} />
         <Button name={
           <>
             <FiUser />
-            <span style={{ paddingLeft: '.25em' }}>{friend.name}</span>
+            <span style={{ paddingLeft: '.25em' }}>{user.displayName}</span>
           </>
         } onClick={() => { pickFriendRef.current.checked = !pickFriendRef.current.checked }} />
 
@@ -44,35 +46,24 @@ const User = ({ friend, isPick }) => {
         <div>
 
           <FiUser />
-          <h3>{friend.name}</h3>
-          <MakeFriend name={friend.name} />
+          <h3>{user.displayName}</h3>
+          <MakeFriend currentToken={user.currentToken} />
         </div>}
     </div>
   )
 }
 const UserList = ({ list, isPick }) => {
 
-  const [data, setData] = useState([])
 
-  useEffect(() => {
-
-    setTimeout(() => {
-      if (list) {
-        setData(list)
-      } else {
-        setData(friends)
-
-      }
-    }, 1000)
-  }, [])
+ 
   return (
     <div>
-      {data.length <= 0 ? <div style={{ fontSize: '2rem' }}>
+      {list.length <= 0 ? <div style={{ fontSize: '2rem' }}>
         <Loading />
       </div> : <>
-        {data.map(friend => {
+        {list.map(user => {
           return (
-            <User key={friend.id} friend={friend} isPick={isPick} />
+            <User key={user.userId} user={user} isPick={isPick} />
           )
         })}
       </>}
@@ -81,8 +72,20 @@ const UserList = ({ list, isPick }) => {
 }
 
 const MakeFriend = ({ currentToken }) => {
-  const makeFriend = () => {
-    console.log("made")
+
+  const makeFriend =  () => {
+    return new Promise( async (resolve)=>{
+      const notificationContent={
+        title:"title",
+        body:"body"
+      }
+      const response = await axiosProvider.post("api/pushNotification",{},{
+        ...notificationContent,
+        currentToken
+      })
+      resolve("done")
+    })
+   
   }
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '.5em' }}>

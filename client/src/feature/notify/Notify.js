@@ -8,7 +8,7 @@ import NumberNew from './NumberNew'
 import Button from '../../component/Button'
 import { List } from './List'
 
-const Notify = () => {
+const Notify = ({ promiseGetToken }) => {
 
   const [data, setData] = useState([
     {
@@ -28,28 +28,36 @@ const Notify = () => {
   const [newData, setNewData] = useState([])
 
   useEffect(() => {
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Notification permission granted.")
+    
+    promiseGetToken.current = () => {
+      return new Promise((resolve, reject) => {
 
-
-        getToken(message, {
-          vapidKey:
-            "BCrLmZCKr730uizu0keRxgSVCPQyXr0qlhVZZ5r5qPLUGrgJb9qP9NdHulaRETzABlS0JZi0OARryYR4BRZ8oGI",
-        }).then((currentToken) => {
-          if (currentToken) {
-            console.log("currentToken: ", currentToken)
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted.")
+            
+            getToken(message, {
+              vapidKey:
+                "BCrLmZCKr730uizu0keRxgSVCPQyXr0qlhVZZ5r5qPLUGrgJb9qP9NdHulaRETzABlS0JZi0OARryYR4BRZ8oGI",
+            }).then((currentToken) => {
+              if (currentToken) {
+                resolve(currentToken)
+                console.log("currentToken: ", currentToken)
+              } else {
+                console.log("Can not get token")
+                resolve("Error internal")
+              }
+            }).catch((err) => {
+              console.log(err)
+              resolve("Error internal")
+            })
           } else {
-            console.log("Can not get token")
+            console.log("Do not have permission!")
+            resolve("do not have permission")
           }
-        }).catch((err) => {
-          console.log(err)
         })
-      } else {
-        console.log("Do not have permission!")
-      }
-    })
-
+      })
+    }
 
   }, [])
 

@@ -9,7 +9,7 @@ import Notify from '../../feature/notify/Notify'
 import Profile from '../../feature/profile/Profile'
 
 
-const Nav = ({ handleSignOut, isLogined }) => {
+const Nav = ({ handleSignOut, isLogined, promiseGetToken }) => {
 
   return (
     <nav style={{ padding: '1rem 0' }}>
@@ -23,7 +23,7 @@ const Nav = ({ handleSignOut, isLogined }) => {
           {isLogined &&
             <>
               <SignOut handleSignOut={handleSignOut} />
-              <Notify />
+              <Notify promiseGetToken={promiseGetToken} />
             </>
           }
         </div>
