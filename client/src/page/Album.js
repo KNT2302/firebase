@@ -6,6 +6,8 @@ import AddNew from '../feature/album/AddNew'
 import { collection, getDocs } from "firebase/firestore"
 import Loading from '../component/Loading'
 import Tab from '../component/Tab'
+import UserList from '../component/UserList'
+import User from '../feature/album/User'
 
 const Album = () => {
 
@@ -80,6 +82,7 @@ const Album = () => {
           </div>
         </div>
 
+       <User />
       </div>
 
     </Container>

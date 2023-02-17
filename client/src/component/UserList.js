@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Input from '../../component/Input'
-import Loading from '../../component/Loading'
+import Input from './Input'
+import Loading from './Loading'
 import { FiUser } from "react-icons/fi"
-import Button from '../../component/Button'
+import Button from './Button'
 
 const friends = [
   {
@@ -17,7 +17,7 @@ const friends = [
   },
 ]
 
-const Friend = ({ friend, isPick }) => {
+const User = ({ friend, isPick }) => {
 
   const pickFriendRef = useRef(null)
 
@@ -38,19 +38,31 @@ const Friend = ({ friend, isPick }) => {
             <FiUser />
             <span style={{ paddingLeft: '.25em' }}>{friend.name}</span>
           </>
-        } onClick={() => { pickFriendRef.current.checked=!pickFriendRef.current.checked}} />
+        } onClick={() => { pickFriendRef.current.checked = !pickFriendRef.current.checked }} />
 
-      </div> : <span>{friend.name}</span>}
+      </div> :
+        <div>
+
+          <FiUser />
+          <h3>{friend.name}</h3>
+          <MakeFriend name={friend.name} />
+        </div>}
     </div>
   )
 }
-const FriendList = ({ isPick }) => {
+const UserList = ({ list, isPick }) => {
 
   const [data, setData] = useState([])
 
   useEffect(() => {
+
     setTimeout(() => {
-      setData(friends)
+      if (list) {
+        setData(list)
+      } else {
+        setData(friends)
+
+      }
     }, 1000)
   }, [])
   return (
@@ -60,7 +72,7 @@ const FriendList = ({ isPick }) => {
       </div> : <>
         {data.map(friend => {
           return (
-            <Friend key={friend.id} friend={friend} isPick={isPick} />
+            <User key={friend.id} friend={friend} isPick={isPick} />
           )
         })}
       </>}
@@ -68,4 +80,16 @@ const FriendList = ({ isPick }) => {
   )
 }
 
-export default FriendList
+const MakeFriend = ({ currentToken }) => {
+  const makeFriend = () => {
+    console.log("made")
+  }
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '.5em' }}>
+
+      <Button name="friend" onClick={makeFriend} />
+    </div>
+  )
+}
+
+export default UserList

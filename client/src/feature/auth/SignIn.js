@@ -6,7 +6,6 @@ import Popup from '../../component/Popup'
 import actionCodeSettings from './setting'
 import { auth } from '../../firebaseConfig'
 import Container from '../../component/Container'
-import { async } from '@firebase/util'
 
 const SignIn = ({setSignined,setUser}) => {
 

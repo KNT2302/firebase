@@ -2,7 +2,7 @@ import React from 'react'
 import { RiShareForwardLine } from "react-icons/ri"
 import Button from '../../component/Button'
 import Popup from '../../component/Popup'
-import FriendList from './FriendList'
+import UserList from '../../component/UserList'
 
 const Share = () => {
 
@@ -18,7 +18,7 @@ const Share = () => {
         <span>Or</span>
         <div>
           <h2>Friends</h2>
-          <FriendList isPick />
+          <UserList isPick />
         </div>
       </div>
     )
