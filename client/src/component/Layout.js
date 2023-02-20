@@ -15,13 +15,14 @@ const Layout = ({ children }) => {
   const getUserInfo = useRef(null)
 
   const setUser = (user) => {
-    const { displayName, photoURL, userId, currentToken, lastSignIn } = user
+    const { displayName, photoURL, userId, currentToken, lastSignIn, createdAt } = user
     localStorage.setItem('user', JSON.stringify({
       displayName,
       photoURL,
       userId,
       currentToken,
-      lastSignIn
+      lastSignIn,
+      createdAt
     }))
   }
   const handleSignIned = () => {
@@ -38,13 +39,14 @@ const Layout = ({ children }) => {
       const tokenNofity = promiseGetToken.current
       const currentToken = await tokenNofity()
       console.log(currentToken)
-      const { photoURL, displayName, uid } = getUserInfo.current
+      const { photoURL, displayName, uid , metadata:{createdAt}} = getUserInfo.current
       const user = {
         userId: uid,
         currentToken: currentToken,
         photoURL: photoURL,
         displayName: displayName,
         lastSignIn: new Date(),
+        createdAt: createdAt
       }
       const res = await axiosProvider.post("/api/user", {}, user)
       setUser(user)

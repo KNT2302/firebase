@@ -1,10 +1,10 @@
 import express from 'express'
-import { create, get } from '../controller/user.js'
+import { login, get } from '../controller/user.js'
 
 
 const router = express.Router()
 
-router.post("/", create)
+router.post("/", login)
 router.get("/", get)
 
 

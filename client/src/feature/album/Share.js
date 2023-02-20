@@ -4,6 +4,19 @@ import Button from '../../component/Button'
 import Popup from '../../component/Popup'
 import UserList from '../../component/UserList'
 
+const friends = [
+  {
+    userId: '2',
+    avatar: "",
+    displayName: "Martinez"
+  },
+  {
+    userId: '1',
+    avatar: "",
+    displayName: "Terami"
+  },
+]
+
 const Share = () => {
 
   const getChildren = (handleClosePopup) => {
@@ -18,7 +31,7 @@ const Share = () => {
         <span>Or</span>
         <div>
           <h2>Friends</h2>
-          <UserList isPick />
+          <UserList list={friends} isPick />
         </div>
       </div>
     )

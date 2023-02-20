@@ -6,7 +6,7 @@ import Comment from './Comment'
 import Like from './Like'
 import Share from './Share'
 
-const Photo = ({ path }) => {
+const Post = ({ path }) => {
 
   const getSrc = async () => {
     try {
@@ -42,4 +42,4 @@ const Photo = ({ path }) => {
   )
 }
 
-export default Photo
+export default Post

@@ -6,18 +6,7 @@ import Button from './Button'
 import axiosProvider from '../ulti/axios'
 import { async } from '@firebase/util'
 
-const friends = [
-  {
-    id: '2',
-    avatar: "",
-    name: "Martinez"
-  },
-  {
-    id: '1',
-    avatar: "",
-    name: "Terami"
-  },
-]
+
 
 const User = ({ user, isPick }) => {
 

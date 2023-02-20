@@ -27,11 +27,14 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
             const imageRef = ref(storage, `images/${nameFile}`)
             const uploaded = await uploadString(imageRef, selectedPic, "data_url")
 
-            const docRef = await addDoc(collection(db, "photo"), {
-              path: uploaded.ref._location.path_
-            });
+            const docRef = await addDoc(collection(db, "posts"), {
+              urlPhoto: uploaded.ref._location.path_
+            })
 
-            updateList(uploaded.ref._location.path_)
+            updateList({
+              caption: "",
+              urlPhoto: uploaded.ref._location.path_
+            })
 
             if (bigScreen) {
 
@@ -57,8 +60,8 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
   }
   return (
     <div>
-      <form style={{width:'375px'}}>
-        <legend style={{ textAlign: 'center', height:'30px' }}>New picture</legend>
+      <form style={{ width: '375px' }}>
+        <legend style={{ textAlign: 'center', height: '30px' }}>New picture</legend>
         <div style={{ width: '100%', height: '250px' }}>
           <Picture handlePickFile={handlePickFile} isNeedChosen={isNeedChosen} isAutoClick={bigScreen ? false : true} />
 
@@ -71,7 +74,7 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
   )
 }
 
-const AddNew = ({updateList}) => {
+const AddNew = ({ updateList }) => {
 
   const sizeObj = useRef({
     BIG: 'big',

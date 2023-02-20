@@ -7,7 +7,7 @@ const SERVER_KEY = "AAAAUhHgYXE:APA91bE7LWKLslUIL_PfMyFeZWnko8cIF03U_7WF5A-SbsXY
 export const pushCommon = async (req, res, next) => {
   const devices = await getAllUsers(res)
 
-  console.log(devices)
+
 
   let fcm = new FCM(SERVER_KEY)
 
@@ -35,7 +35,7 @@ export const pushCommon = async (req, res, next) => {
 export const pushSpecific = async (req, res, next) => {
   const devices = await getAllUsers(res)
 
-  console.log(devices)
+
 
   let fcm = new FCM(SERVER_KEY)
 

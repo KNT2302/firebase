@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../firebaseConfig'
-import Photo from '../feature/album/Photo'
 import Container from '../component/Container'
 import AddNew from '../feature/album/AddNew'
 import { collection, getDocs } from "firebase/firestore"
@@ -8,6 +7,7 @@ import Loading from '../component/Loading'
 import Tab from '../component/Tab'
 import UserList from '../component/UserList'
 import User from '../feature/album/User'
+import Post from '../feature/album/Post'
 
 const Album = () => {
 
@@ -26,9 +26,9 @@ const Album = () => {
 
   const getList = async () => {
     const list = []
-    const querySnapshot = await getDocs(collection(db, "photo"))
+    const querySnapshot = await getDocs(collection(db, "posts"))
     querySnapshot.forEach((doc) => {
-      list.push(doc.data().path)
+      list.push(doc.data())
     })
     setList(list)
   }
@@ -72,9 +72,9 @@ const Album = () => {
           </div>
           {list.length === 0 && <div style={{ fontSize: '1.8rem' }}>Getting photo list <span style={{ display: 'inline-block' }}><Loading /></span></div>}
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {list.reverse().map((path) => {
+            {list.reverse().map((post) => {
               return (
-                <Photo key={path} path={path} />
+                <Post key={post.urlPhoto} path={post.urlPhoto} />
               )
 
             })}
