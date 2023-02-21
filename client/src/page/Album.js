@@ -5,7 +5,6 @@ import AddNew from '../feature/album/AddNew'
 import { collection, getDocs } from "firebase/firestore"
 import Loading from '../component/Loading'
 import Tab from '../component/Tab'
-import UserList from '../component/UserList'
 import User from '../feature/album/User'
 import Post from '../feature/album/Post'
 
@@ -59,6 +58,8 @@ const Album = () => {
     getList()
   }, [])
 
+
+
   return (
     <Container>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "1rem" }}>
@@ -74,7 +75,7 @@ const Album = () => {
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {list.reverse().map((post) => {
               return (
-                <Post key={post.urlPhoto} path={post.urlPhoto} />
+                <Post key={post.urlPhoto} path={post.urlPhoto} comment={post.comment} postId={post.postId}/>
               )
 
             })}

@@ -9,6 +9,8 @@ import { getFirestore, getDocs, collection } from "firebase/firestore"
 import tokenDeviceRoute from "./route/tokenDevice.js"
 import pushNotificationRoute from "./route/pushNotification.js"
 import userRoute from "./route/user.js"
+import postRoute from "./route/post.js"
+import commentRoute from "./route/comment.js"
 import { ApolloServer } from "apollo-server-express"
 import { getMessaging } from "firebase/messaging"
 import { typeDefs } from "./graphql/schema.js"
@@ -71,6 +73,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use("/api/deviceToken", tokenDeviceRoute)
 app.use("/api/pushNotification", pushNotificationRoute)
 app.use("/api/user", userRoute)
+app.use("/api/post", postRoute)
+app.use("/api/comment", commentRoute)
+
 
 
 

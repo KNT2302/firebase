@@ -6,7 +6,8 @@ import Comment from './Comment'
 import Like from './Like'
 import Share from './Share'
 
-const Post = ({ path }) => {
+const Post = ({ path, comment, postId }) => {
+
 
   const getSrc = async () => {
     try {
@@ -30,7 +31,7 @@ const Post = ({ path }) => {
 
           <Like />
 
-          <Comment />
+          <Comment comment={comment} postId={postId}/>
 
           <Share />
 

@@ -1,8 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Popup from '../../component/Popup'
 import { VscComment } from "react-icons/vsc"
 import Input from '../../component/Input'
 import Button from '../../component/Button'
+import axiosProvider from '../../ulti/axios'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { db } from '../../firebaseConfig'
 
 const data = [
   {
@@ -83,15 +86,20 @@ const data = [
   },
 ]
 
-const AddComment = ({ addComment }) => {
+const AddComment = ({ addComment, comment, postId }) => {
 
   const textRef = useRef(null)
   const doAdd = async () => {
+    
+
+    const response = await axiosProvider.post("/api/comment", {}, { ...data, postId, comment: comment ? comment : [] })
+
     const data = {
-      id: "rov",
       text: textRef.current.value,
-      reply: []
+      reply: [],
+      commentId: response.data.commentId
     }
+
     await addComment(data)
 
     textRef.current.value = ""
@@ -104,17 +112,22 @@ const AddComment = ({ addComment }) => {
   )
 }
 
-const ReplyComment = ({ updateComment, idComment }) => {
+const ReplyComment = ({ updateComment, commentId, reply }) => {
   const replyRef = useRef(null)
   const getChildren = (handleClosePopup) => {
 
-    const sendReply = () => {
-      const reply = {
-        id: 'vmn',
+    const sendReply = async () => {
+      
+
+      const replies = reply.map((item)=> item.commentId)
+      console.log(reply)
+      const response = await axiosProvider.post("/api/comment", {}, { commentId, reply: replies, text: replyRef.current.value })
+      const newReply = {
         text: replyRef.current.value,
-        reply: []
+        reply: [],
+        commentId: response.data.commentId
       }
-      updateComment(reply)
+      updateComment(newReply)
       handleClosePopup()
     }
     return (
@@ -145,7 +158,7 @@ const ItemComment = ({ comment }) => {
   return (
     <div style={{ position: 'relative' }}>
       <p>{data.text}</p>
-      <ReplyComment updateComment={updateComment} idComment={data.id} />
+      <ReplyComment updateComment={updateComment} reply={data.reply} commentId={data.commentId} />
 
       {data.reply.length > 0 && !readMore && <Button type="button" name="Read more" onClick={() => { setReadMore(true) }} />}
       {readMore && <>
@@ -165,38 +178,57 @@ const ItemComment = ({ comment }) => {
   )
 }
 
-const Comment = () => {
-  const [list, setList] = useState(() => data)
+const Comment = ({ comment, postId }) => {
+  const [list, setList] = useState([])
 
-  const addComment = (comment) => {
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const response = await axiosProvider.get(`/api/comment?reply=${comment ? JSON.stringify(comment) : JSON.stringify([])}`, {})
+
+      if (response.success) {
+        setList([...list, ...response.data])
+      } else {
+        setList([])
+      }
+    }
+    fetchData()
+
+  }, [])
+
+  const addComment = (newComment) => {
     return new Promise(async (resolve) => {
       setTimeout(() => {
-        setList([...list, comment])
+        setList([...list, newComment])
         resolve("added")
       }, 1000)
 
 
     })
   }
-  const getChildren = (handleClosePopup) => {
+
+
+  const GetChildren = (handleClosePopup) => {
+
+
     return (
       <div>
         <div style={{ width: '400px', maxHeight: '500px', position: 'relative', padding: '0 1em', overflowY: 'auto' }}>
-          {list.map((comment) => {
+          {list.map((comment, index) => {
             return (
-              <ItemComment key={comment.id} comment={comment} />
+              <ItemComment key={index} comment={comment} />
             )
           })}
 
         </div>
-        <AddComment addComment={addComment} />
+        <AddComment addComment={addComment} comment={comment} postId={postId} />
       </div>
 
     )
 
   }
   return (
-    <Popup name={<VscComment />} getChildren={getChildren} />
+    <Popup name={<VscComment />} getChildren={GetChildren} />
   )
 }
 

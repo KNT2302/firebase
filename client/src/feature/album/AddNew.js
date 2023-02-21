@@ -6,6 +6,7 @@ import Button from '../../component/Button'
 import Picture from '../../component/Picture'
 import Popup from '../../component/Popup'
 import { db, storage } from '../../firebaseConfig'
+import axiosProvider from '../../ulti/axios'
 
 const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
@@ -28,7 +29,12 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
             const uploaded = await uploadString(imageRef, selectedPic, "data_url")
 
             const docRef = await addDoc(collection(db, "posts"), {
-              urlPhoto: uploaded.ref._location.path_
+              urlPhoto: uploaded.ref._location.path_,
+            })
+
+            const addPostToUser = await axiosProvider.post("/api/post",{},{
+              userId: JSON.parse(localStorage.getItem('user')).userId,
+              postId: docRef._key.path.segments[1]
             })
 
             updateList({
