@@ -39,7 +39,7 @@ const Layout = ({ children }) => {
       const tokenNofity = promiseGetToken.current
       const currentToken = await tokenNofity()
       console.log(currentToken)
-      const { photoURL, displayName, uid , metadata:{createdAt}} = getUserInfo.current
+      const { photoURL, displayName, uid, metadata: { createdAt } } = getUserInfo.current
       const user = {
         userId: uid,
         currentToken: currentToken,
@@ -65,13 +65,16 @@ const Layout = ({ children }) => {
 
   return (
     <div style={{ width: '100%', padding: '0 20px' }}>
-      <Nav handleSignOut={() => { setIsLogined(false) }} isLogined={isLogined} promiseGetToken={promiseGetToken} />
-      {isLogined ?
-        <div style={{ maxWidth: '1563px', margin: '0 auto' }}>
-          {children}
-        </div>
-        : <SignIn setSignined={handleSignIned} getUserInfo={getUserInfo} />}
-      <Outlet />
+      <div style={{ height: '90vh', position:'relative' }}>
+        <Nav handleSignOut={() => { setIsLogined(false) }} isLogined={isLogined} promiseGetToken={promiseGetToken} />
+        {isLogined ?
+          <div style={{ maxWidth: '1563px', margin: '0 auto' }}>
+            {children}
+          </div>
+          : <SignIn setSignined={handleSignIned} getUserInfo={getUserInfo} />}
+        <Outlet />
+      </div>
+
     </div>
   )
 }

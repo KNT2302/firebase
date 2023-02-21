@@ -71,7 +71,7 @@ export const get = async (req, res, next) => {
   }
   try {
 
-    console.log(JSON.parse(req.query.reply))
+
     const response = await getComment(JSON.parse(req.query.reply))
 
 

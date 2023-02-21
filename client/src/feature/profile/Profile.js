@@ -11,7 +11,7 @@ const Profile = () => {
     const result = JSON.parse(localStorage.getItem("user"))
     return result
   }
-  console.log(Object.keys(obJectProfile()))
+
   return (
     <Container>
       <div style={{ fontSize: '1.8rem', margin: '0 auto' }}>

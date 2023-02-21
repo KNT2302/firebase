@@ -28,14 +28,14 @@ const Notify = ({ promiseGetToken }) => {
   const [newData, setNewData] = useState([])
 
   useEffect(() => {
-    
+
     promiseGetToken.current = () => {
       return new Promise((resolve, reject) => {
 
         Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
             console.log("Notification permission granted.")
-            
+
             getToken(message, {
               vapidKey:
                 "BCrLmZCKr730uizu0keRxgSVCPQyXr0qlhVZZ5r5qPLUGrgJb9qP9NdHulaRETzABlS0JZi0OARryYR4BRZ8oGI",
@@ -89,9 +89,11 @@ const Notify = ({ promiseGetToken }) => {
     )
   }
   return (
-    <div style={{ position: 'relative' }}>
-      <Popup name={<MdOutlineNotificationsNone />} getChildren={getChildren} position={{ right: '0' }} />
-      {newData.length > 0 && <NumberNew numberNew={newData.length} />}
+    <div style={{ display: 'flex', width:'2em' }}>
+      <Popup name={<MdOutlineNotificationsNone />} getChildren={getChildren} />
+      {newData.length > 0 && <div style={{ position: 'relative', top: '0', right: '1em', width: '1em', height: '1em', zIndex:"-1" }}>
+        <NumberNew numberNew={newData.length} />
+      </div>}
 
     </div>
   )

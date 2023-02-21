@@ -7,6 +7,7 @@ import Loading from '../component/Loading'
 import Tab from '../component/Tab'
 import User from '../feature/album/User'
 import Post from '../feature/album/Post'
+import Message from '../feature/album/Message'
 
 const Album = () => {
 
@@ -63,11 +64,13 @@ const Album = () => {
   return (
     <Container>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "1rem" }}>
-        <div style={{ width: '100%', maxWidth: '375px' }}>
+        <div style={{ width: '100%', display:'flex', fontSize:'1.8rem'}}>
           <AddNew updateList={updateList} />
+          <Message />
+
         </div>
         <div style={{ width: "100%", maxWidth: '375px' }}>
-          <Tab listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab} />
+          <Tab listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab}>
           <div style={{ height: '30px' }}>
             <h1>{nameTab[tab]}</h1>
           </div>
@@ -81,6 +84,9 @@ const Album = () => {
             })}
 
           </div>
+
+          </Tab>
+          
         </div>
 
        <User />

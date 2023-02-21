@@ -25,7 +25,7 @@ const SignIn = ({setSignined,getUserInfo }) => {
   }
   return (
     <Container>
-      <div style={{ fontSize: '1.8rem' }}>
+      <div style={{ fontSize: '1.8rem', width:'100%'}}>
         <Popup name="Sign In" getChildren={getForm}>
 
         </Popup>

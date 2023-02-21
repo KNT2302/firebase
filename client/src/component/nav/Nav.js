@@ -19,7 +19,7 @@ const Nav = ({ handleSignOut, isLogined, promiseGetToken }) => {
         </div>
         <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>Tot</div>
 
-        <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems: 'center' }}>
+        <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems: 'center'}}>
           {isLogined &&
             <>
               <SignOut handleSignOut={handleSignOut} />

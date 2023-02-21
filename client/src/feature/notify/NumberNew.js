@@ -42,7 +42,7 @@ const NumberNew = ({ numberNew }) => {
       transform:'translate(50%,-50%)',
       zIndex:"-1",
       opacity:`${doAnimate? "1":'0.5'}`,
-      transition:'.3s'
+      transition:'.3s',
     }}><span>{numberNew}</span></div>
   )
 }

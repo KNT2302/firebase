@@ -21,7 +21,7 @@ const WorkEdit = ({ id, name, handleToggleState, stateDo, todoList, setTodoList 
         setTodoList([newTodo, ...todoList])
       } else {
         const indexTodo = todoList.findIndex((todo) => todo.id === id)
-        console.log(indexTodo)
+
         const newTodoList = todoList
         newTodoList[indexTodo].name = workInputRef.current.value
         setTodoList([...newTodoList])

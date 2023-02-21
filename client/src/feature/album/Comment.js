@@ -7,92 +7,13 @@ import axiosProvider from '../../ulti/axios'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 
-const data = [
-  {
-    id: 'qwe',
-    text: 'sd sdv',
-    reply: [
-      {
-        id: 'rty',
-        text: 'cv bhn',
-        reply: [{
-          id: 'vdf',
-          text: 'gh nhm',
-          reply: []
-        }]
-      },
-      {
-        id: 'svb',
-        text: 'cv bhn',
-        reply: [{
-          id: 'njy',
-          text: 'gh nhm',
-          reply: []
-        }]
-      }
-    ]
-  },
-  {
-    id: 'jkn',
-    text: 'vf bgt',
-    reply: [
-      {
-        id: 'dfb',
-        text: 'cd vbn',
-        reply: [{
-          id: 'rty',
-          text: 'ty uik',
-          reply: []
-        }]
-      }
-    ]
-  },
-  {
-    id: 'xcz',
-    text: 'nb nbv',
-    reply: [
-      {
-        id: 'gfn',
-        text: 'qw vfd',
-        reply: [{
-          id: 'efg',
-          text: 'cd zsd',
-          reply: []
-        }]
-      }
-    ]
-  },
-  {
-    id: 'cvf',
-    text: 'bn hyu',
-    reply: [
-      {
-        id: 'ujm',
-        text: 'po lkm',
-        reply: []
-      }
-    ]
-  },
-  {
-    id: 'fdb',
-    text: 'hn qef',
-    reply: [
-      {
-        id: 'mjk',
-        text: 'lk tmj',
-        reply: []
-      }
-    ]
-  },
-]
-
 const AddComment = ({ addComment, comment, postId }) => {
 
   const textRef = useRef(null)
   const doAdd = async () => {
     
 
-    const response = await axiosProvider.post("/api/comment", {}, { ...data, postId, comment: comment ? comment : [] })
+    const response = await axiosProvider.post("/api/comment", {}, { text: textRef.current.value, postId, comment: comment ? comment : [] })
 
     const data = {
       text: textRef.current.value,
@@ -120,7 +41,7 @@ const ReplyComment = ({ updateComment, commentId, reply }) => {
       
 
       const replies = reply.map((item)=> item.commentId)
-      console.log(reply)
+
       const response = await axiosProvider.post("/api/comment", {}, { commentId, reply: replies, text: replyRef.current.value })
       const newReply = {
         text: replyRef.current.value,
@@ -166,7 +87,7 @@ const ItemComment = ({ comment }) => {
           {data.reply.length > 0 &&
             data.reply.map((reply) => {
               return (
-                <ItemComment key={reply.id} comment={reply} />
+                <ItemComment key={reply.commentId} comment={reply} />
               )
             })
           }
@@ -212,11 +133,11 @@ const Comment = ({ comment, postId }) => {
 
 
     return (
-      <div>
-        <div style={{ width: '400px', maxHeight: '500px', position: 'relative', padding: '0 1em', overflowY: 'auto' }}>
-          {list.map((comment, index) => {
+      <div style={{height:'100%'}}>
+        <div style={{ width: '400px', height: '100%', position: 'relative', padding: '0 1em', overflowY: 'auto'}}>
+          {list.map((comment) => {
             return (
-              <ItemComment key={index} comment={comment} />
+              <ItemComment key={comment.commentId} comment={comment} />
             )
           })}
 

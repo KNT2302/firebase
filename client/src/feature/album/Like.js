@@ -43,7 +43,7 @@ const Like = () => {
     })
   }
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
       <Button name={!isLiked ? <AiOutlineHeart /> : <BsFillHeartFill style={{ color: 'red' }} />} onClick={handleOnClick} />
     </div>
   )
