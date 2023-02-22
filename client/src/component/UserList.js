@@ -32,11 +32,16 @@ const User = ({ user, isPick }) => {
         } onClick={() => { pickFriendRef.current.checked = !pickFriendRef.current.checked }} />
 
       </div> :
-        <div>
+        <div style={{ display: 'flex', gap:'.5em' }}>
+          <div>
 
-          <FiUser />
-          <h3>{user.displayName}</h3>
-          <MakeFriend currentToken={user.currentToken} />
+            <FiUser />
+          </div>
+          <div>
+
+            <h3>{user.displayName}</h3>
+            <MakeFriend currentToken={user.currentToken} />
+          </div>
         </div>}
     </div>
   )
@@ -44,9 +49,9 @@ const User = ({ user, isPick }) => {
 const UserList = ({ list, isPick }) => {
 
 
- 
+
   return (
-    <div>
+    <div style={{width:'375px'}}>
       {list.length <= 0 ? <div style={{ fontSize: '2rem' }}>
         <Loading />
       </div> : <>
@@ -62,19 +67,19 @@ const UserList = ({ list, isPick }) => {
 
 const MakeFriend = ({ currentToken }) => {
 
-  const makeFriend =  () => {
-    return new Promise( async (resolve)=>{
-      const notificationContent={
-        title:"title",
-        body:"body"
+  const makeFriend = () => {
+    return new Promise(async (resolve) => {
+      const notificationContent = {
+        title: "title",
+        body: "body"
       }
-      const response = await axiosProvider.post("api/pushNotification",{},{
+      const response = await axiosProvider.post("api/pushNotification", {}, {
         ...notificationContent,
         currentToken
       })
       resolve("done")
     })
-   
+
   }
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '.5em' }}>

@@ -61,13 +61,21 @@ const Sender = () => {
 
 const Chat = ({ query }) => {
   return (
-    <div style={{display:'flex', flexDirection:'column', height:"100%"}}>
+    <div style={{display:'flex', flexDirection:'column', height:'100%', minHeight:'50vh'}}>
       <h1>{query}</h1>
       <div style={{ display: "flex", flexDirection: 'column', justifyContent: 'flex-end', padding: '.5em', flex:'1'}}>
 
-        <BoxChat />
+        {query?
+        <>
+         <BoxChat />
         <BoxChat sent />
         <Sender />
+        
+        </>:
+        <>Chat</>
+        }
+
+       
 
       </div>
 
@@ -98,7 +106,7 @@ const Message = () => {
 
   const getChildren = () => {
     return (
-      <div style={{ width: '100%', height: '100%' }}>
+      <div style={{ width: '100%'}}>
         <Tab listTab={tabMesList} row setTab={handleUser} itemTab={itemTab}>
           <Chat query={query} />
         </Tab>
@@ -107,9 +115,9 @@ const Message = () => {
 
   }
   return (
-    <div>
-      <Popup name="Message" getChildren={getChildren} />
-    </div>
+    <>
+      <Popup name="Message" getChildren={getChildren} position={{bottom:'0%',left:'0'}}/>
+    </>
   )
 }
 

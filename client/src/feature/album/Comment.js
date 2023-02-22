@@ -149,7 +149,7 @@ const Comment = ({ comment, postId }) => {
 
   }
   return (
-    <Popup name={<VscComment />} getChildren={GetChildren} />
+    <Popup name={<VscComment />} getChildren={GetChildren} position={{top:'0'}} />
   )
 }
 

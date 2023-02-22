@@ -21,7 +21,7 @@ const Post = ({ path, comment, postId }) => {
   }
 
   return (
-    <figure style={{ width: '100%', position: 'relative' }}>
+    <figure style={{ width: '100%' }}>
       <div style={{ width: '100%', height: '250px', fontSize: '3rem' }}>
         <Picture getSrc={getSrc} />
 

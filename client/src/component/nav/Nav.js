@@ -13,17 +13,24 @@ const Nav = ({ handleSignOut, isLogined, promiseGetToken }) => {
 
   return (
     <nav style={{ padding: '1rem 0' }}>
-      <div style={{ display: 'flex', width: '100%', maxWidth: '1536px', margin: '0 auto', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div>
+      <div style={{ display: 'flex', width: '100%', maxWidth: '1536px', margin: '0 auto', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
+        <div style={{zIndex:'1'}}>
           <BarLink />
         </div>
         <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>Tot</div>
 
-        <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems: 'center'}}>
+        <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems: 'center' }}>
           {isLogined &&
             <>
+            <div style={{zIndex:'1'}}>
+
               <SignOut handleSignOut={handleSignOut} />
-              <Notify promiseGetToken={promiseGetToken} />
+            </div>
+
+
+              <div style={{ width: "2em" }}>
+                <Notify promiseGetToken={promiseGetToken} />
+              </div>
             </>
           }
         </div>

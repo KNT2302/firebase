@@ -4,6 +4,7 @@ import SignIn from '../feature/auth/SignIn'
 import Nav from './nav/Nav'
 import { getAuth, isSignInWithEmailLink, signInWithEmailLink, } from "firebase/auth"
 import axiosProvider from '../ulti/axios'
+import SecondNav from './nav/SecondNav'
 
 const Layout = ({ children }) => {
   const [isLogined, setIsLogined] = useState(() => localStorage.getItem("isLogined"))
@@ -65,13 +66,14 @@ const Layout = ({ children }) => {
 
   return (
     <div style={{ width: '100%', padding: '0 20px' }}>
-      <div style={{ height: '90vh', position:'relative' }}>
+      <div style={{ height: '90vh' }}>
         <Nav handleSignOut={() => { setIsLogined(false) }} isLogined={isLogined} promiseGetToken={promiseGetToken} />
         {isLogined ?
           <div style={{ maxWidth: '1563px', margin: '0 auto' }}>
             {children}
           </div>
           : <SignIn setSignined={handleSignIned} getUserInfo={getUserInfo} />}
+        <SecondNav />
         <Outlet />
       </div>
 

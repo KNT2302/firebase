@@ -7,6 +7,7 @@ import Picture from '../../component/Picture'
 import Popup from '../../component/Popup'
 import { db, storage } from '../../firebaseConfig'
 import axiosProvider from '../../ulti/axios'
+import useResponsive from '../../ulti/hooks/reponsive'
 
 const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
@@ -39,7 +40,8 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
             updateList({
               caption: "",
-              urlPhoto: uploaded.ref._location.path_
+              urlPhoto: uploaded.ref._location.path_,
+              postId: docRef._key.path.segments[1]
             })
 
             if (bigScreen) {
@@ -53,7 +55,7 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
             }
             resolve("copmplete")
-          }, 2000)
+          }, 0)
 
         }
         catch (e) {
@@ -66,7 +68,7 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
   }
   return (
     <div>
-      <form style={{ width: '375px' }}>
+      <form style={{ width: '100%' }}>
         <legend style={{ textAlign: 'center', height: '30px' }}>New picture</legend>
         <div style={{ width: '100%', height: '250px' }}>
           <Picture handlePickFile={handlePickFile} isNeedChosen={isNeedChosen} isAutoClick={bigScreen ? false : true} />
@@ -82,27 +84,21 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
 const AddNew = ({ updateList }) => {
 
-  const sizeObj = useRef({
+  const sizeObj = {
     BIG: 'big',
     SMALL: 'small'
-  })
+  }
 
-  const getSizeScreen = useCallback((size) => {
+  const getSizeScreen = (size) => {
     if (size >= 800) {
-      return sizeObj.current.BIG
+      return sizeObj.BIG
     }
-    return sizeObj.current.SMALL
-  }, [])
+    return sizeObj.SMALL
+  }
 
+  
 
-
-  const [screenSize, setScreenSize] = useState(getSizeScreen(window.innerWidth))
-
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setScreenSize(getSizeScreen(window.innerWidth))
-    })
-  }, [])
+  const screenSize = useResponsive(getSizeScreen)
 
 
   const children = (handleClosePopup) => {
@@ -111,8 +107,13 @@ const AddNew = ({ updateList }) => {
 
   return (
     <div style={{ fontSize: '1.8rem' }}>
-      {screenSize === sizeObj.current.BIG ? <BoxAddNew updateList={updateList} bigScreen /> : <Popup getChildren={children} name="New">
-      </Popup>}
+      {screenSize === sizeObj.BIG ? <BoxAddNew updateList={updateList} bigScreen /> : 
+
+      <Popup getChildren={children} name="New">
+      </Popup>
+
+    }
+      
 
 
     </div>
