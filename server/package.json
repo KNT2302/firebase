@@ -19,6 +19,7 @@
     "fcm-node": "^1.6.1",
     "firebase": "^9.17.1",
     "graphql": "^16.6.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "socket.io": "^4.6.1"
   }
 }

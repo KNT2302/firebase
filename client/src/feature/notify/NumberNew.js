@@ -39,7 +39,6 @@ const NumberNew = ({ numberNew }) => {
       right: '0%',
       width:'100%',
       height:'100%',
-      transform:'translate(50%,-50%)',
       zIndex:"-1",
       opacity:`${doAnimate? "1":'0.5'}`,
       transition:'.3s',

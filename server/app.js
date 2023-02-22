@@ -1,7 +1,8 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
-
+import { Server } from "socket.io"
+import http from "http"
 import FCM from "fcm-node"
 
 import { initializeApp } from "firebase/app"
@@ -18,6 +19,8 @@ import { resolvers } from "./graphql/resolvers.js"
 import { async } from "@firebase/util"
 
 var app = express()
+
+const httpInstance = http.Server(app)
 
 dotenv.config()
 
@@ -40,11 +43,22 @@ const startServer = async () => {
       resolvers
     })
 
+    const io = new Server(httpInstance,{
+      cors: {
+        origin: "*"
+      }
+    });
+
     await server.start()
 
     server.applyMiddleware({ app })
 
-    app.listen({ port }, () => {
+    io.on("connection", (socket) => {
+      console.log(socket)
+      // ...
+    });
+
+    httpInstance.listen({ port }, () => {
       console.log('Listening on port', server.graphqlPath)
     })
 

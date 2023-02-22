@@ -9,7 +9,7 @@ const User = () => {
 
   const BigSize = {
     BIG: 'big',
-    FROM: 1200
+    FROM: 800
   }
 
   const userPanRef = useRef(null)

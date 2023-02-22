@@ -79,7 +79,7 @@ const Album = () => {
   return (
     <Container>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "1rem" }}>
-        <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px' }}>
+        <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display:`${screenSize===sizeObj.BIG?'block':'flex'}`, gap:'.5em' }}>
           <AddNew updateList={updateList} />
           <User />
         </div>

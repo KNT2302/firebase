@@ -5,11 +5,11 @@ import Profile from './feature/profile/Profile'
 import Album from './page/Album'
 import Home from './page/Home'
 import Todo from './page/Todo'
+import {io} from "socket.io-client"
+import environment from './ulti/environment/env'
 
 function App() {
-
-  
-
+  const socket = io(environment);
   return (
     <Layout>
 
