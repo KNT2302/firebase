@@ -25,28 +25,28 @@ export const login = async (req, res, next) => {
   }
 
 
-  const updateCurrentToken = async (res, req) => {
+  const updateCurrentToken = async (res, req, user) => {
 
-    const users = await getAllUsers(res)
+   
 
-    const userNeedUpdate = users.filter((user) => user.userId === req.body.userId)
 
-    const userRef = doc(db, "users", userNeedUpdate[0].docId)
 
-    // Set the "capital" field of the city 'DC'
+    const userRef = doc(db, "users", user.docId)
+
     await updateDoc(userRef, {
       currentToken: req.body.currentToken
     })
 
   }
   try {
+    const users = await getAllUsers(res)
+    const user = users.filter((user) => user.userId === req.body.userId)
 
-    const dateToday = new Date().getTime()
-    if (dateToday === req.body.createdAt) {
+    if (!user.length) {
       await createNewUser()
     }
 
-    await updateCurrentToken(res, req)
+    await updateCurrentToken(res, req, user[0])
     res.status(200).json({ success: true, data: "dvd" })
   } catch (error) {
     res.status(200).json({ success: false, error })
@@ -57,7 +57,7 @@ export const get = async (req, res, next) => {
   try {
     const users = await getAllUsers(res)
 
-  
+
 
     res.status(200).json({ success: true, data: users })
   } catch (error) {

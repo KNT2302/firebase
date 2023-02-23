@@ -82,6 +82,7 @@ const Album = () => {
         <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display:`${screenSize===sizeObj.BIG?'block':'flex'}`, gap:'.5em' }}>
           <AddNew updateList={updateList} />
           <User />
+          <Message />
         </div>
         <div style={{ width: "100%", maxWidth: '375px' }}>
           <Tab listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab}>
