@@ -17,6 +17,7 @@ import { getMessaging } from "firebase/messaging"
 import { typeDefs } from "./graphql/schema.js"
 import { resolvers } from "./graphql/resolvers.js"
 import { async } from "@firebase/util"
+import { connection } from "./socketIO.js"
 
 var app = express()
 
@@ -54,8 +55,24 @@ const startServer = async () => {
     server.applyMiddleware({ app })
 
     io.on("connection", (socket) => {
-      console.log(socket)
+      connection(socket)
       // ...
+      socket.on("disconnect",()=>{
+        console.log(socket.id, "disconnected")
+      })
+
+      socket.on('send_message',(data)=>{
+        socket.to(data.room).emit("receive_message",data)
+      })
+      
+      socket.on("join_room",(room)=>{
+        socket.join(room)
+        console.log("joined ",room)
+      })
+      socket.on("leave_room",(room)=>{
+        socket.leave(room)
+        console.log("leave ",room)
+      })
     });
 
     httpInstance.listen({ port }, () => {

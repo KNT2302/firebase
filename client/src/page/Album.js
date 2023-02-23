@@ -7,7 +7,7 @@ import Loading from '../component/Loading'
 import Tab from '../component/Tab'
 import User from '../feature/album/User'
 import Post from '../feature/album/Post'
-import Message from '../feature/album/Message'
+import Message from '../feature/album/message/Message'
 import useResponsive from '../ulti/hooks/reponsive'
 
 const Album = () => {

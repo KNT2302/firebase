@@ -28,4 +28,9 @@ messaging.onBackgroundMessage(function(payload) {
 
   self.registration.showNotification(notificationTitle,
     notificationOptions);
+  
+    self.registration.onClick = () => {
+      window.open("http://localhost:5000/")
+    }
+
 });

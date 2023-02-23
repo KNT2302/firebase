@@ -90,7 +90,7 @@ const Notify = ({ promiseGetToken }) => {
   }
   return (
     <div style={{display:'flex'}}>
-      <Popup name={<MdOutlineNotificationsNone />} getChildren={getChildren} position={{ top: '1em' }} />
+      <Popup name={<MdOutlineNotificationsNone />} getChildren={getChildren} />
       {newData.length > 0 &&
         <div style={{ width: '1em', height: '1em', position: 'relative' }}>
           <NumberNew numberNew={newData.length} />

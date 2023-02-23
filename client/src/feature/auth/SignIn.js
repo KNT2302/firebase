@@ -65,7 +65,7 @@ const SignByEmail = ({ handleClosePopup }) => {
   }
 
   return (
-    <form style={{ width: '375px' }}>
+    <form style={{ width: '100%' }}>
       <legend style={{ fontSize: '1.8rem' }}>Sign in</legend>
       <Input type="text" ref={email} name="email" />
       <div style={{ marginTop: '10px', fontSize: '1em' }}>

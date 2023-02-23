@@ -12,11 +12,14 @@ import Profile from '../../feature/profile/Profile'
 const Nav = ({ handleSignOut, isLogined, promiseGetToken }) => {
 
   return (
-    <nav style={{ padding: '1rem 20px', position: 'fixed', width: '100%', top: '0', left: "0", background: 'linear-gradient(to bottom,white 50% , rgba(225,225,225,0.5))' }}>
-      <div style={{ display: 'flex', width: '100%', maxWidth: '1536px', margin: '0 auto', justifyContent: 'space-between', alignItems: 'center', position: 'relative' }}>
-        <div style={{ zIndex: '1' }}>
+    <nav style={{ padding: '1rem 20px', position: 'fixed', width: '100%', top: '0', left: "0", background: 'linear-gradient(to bottom,white 50% , rgba(225,225,225,0.5))', zIndex:'1' }}>
+      <div style={{ display: 'flex', width: '100%', maxWidth: '1536px', margin: '0 auto', justifyContent: 'space-between', alignItems: 'center', }}>
+        {isLogined &&
+
           <BarLink />
-        </div>
+
+        }
+
         <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>Tot</div>
 
         <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems: 'center' }}>
