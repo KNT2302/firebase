@@ -6,7 +6,8 @@ import { getAuth, isSignInWithEmailLink, signInWithEmailLink, } from "firebase/a
 import axiosProvider from '../ulti/axios'
 
 const Layout = ({ children }) => {
-  const [isLogined, setIsLogined] = useState(() => localStorage.getItem("user"))
+  const [isLogined, setIsLogined] = useState(() => JSON.parse(localStorage.getItem("user")))
+
 
   const user = localStorage.getItem("user")
 
@@ -17,16 +18,19 @@ const Layout = ({ children }) => {
   const setUser = (user) => {
     const { displayName, photoURL, userId, currentToken, lastSignIn, createdAt } = user
     localStorage.setItem('user', JSON.stringify({
-      displayName,
-      photoURL,
-      userId,
-      currentToken,
-      lastSignIn,
-      createdAt
+      isLogined: true,
+      data: {
+        displayName,
+        photoURL,
+        userId,
+        currentToken,
+        lastSignIn,
+        createdAt
+      }
     }))
   }
   const handleSignIned = () => {
-    setIsLogined(true)
+    setIsLogined({ isLogined: true })
   }
 
 
@@ -55,7 +59,9 @@ const Layout = ({ children }) => {
     }
 
     if (isLogined) {
-      postDevice()
+      if (!isLogined.data) {
+        postDevice()
+      }
     }
 
 

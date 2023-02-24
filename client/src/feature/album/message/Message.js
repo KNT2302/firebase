@@ -5,6 +5,7 @@ import Tab from '../../../component/Tab'
 import { socket } from '../../../ulti/socketIO'
 import ChatSession from './ChatSession'
 import axiosProvider from '../../../ulti/axios'
+import useGetUserId from '../../../ulti/hooks/getUserId'
 
 
 
@@ -14,28 +15,22 @@ import axiosProvider from '../../../ulti/axios'
 
 const Message = () => {
 
-  const [getUserId, setGetUserId] = useState(0)
 
   const [query, setQuery] = useState("")
 
   const [roomData, setRoomData] = useState([])
 
+  const userId = useGetUserId()
+
   useEffect(() => {
     const getRoomList = async () => {
-      const userId = JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).userId : ""
       if (userId) {
         const res = await axiosProvider.get(`/api/chat/room?userId=${userId}`, {})
-
-
         setRoomData(res.data)
-      } else {
-        setGetUserId(getUserId + 1)
       }
-
     }
-
     getRoomList()
-  }, [getUserId])
+  }, [userId])
 
 
   const handleUser = (query) => {

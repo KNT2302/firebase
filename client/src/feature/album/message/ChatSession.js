@@ -6,7 +6,7 @@ import Sender from "./Sender"
 
 const ChatSession = ({ query }) => {
 
-  const {userId} = JSON.parse(localStorage.getItem('user'))
+  const {userId} = JSON.parse(localStorage.getItem('user')).data
 
 
   const [data, setData] = useState([])
