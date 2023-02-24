@@ -91,7 +91,6 @@ const SignByGoogle = ({setSignined, getUserInfo}) => {
           const user = result.user
           // IdP data available using getAdditionalUserInfo(result)
           // ...
-          window.localStorage.setItem("isLogined", true)
           setSignined()
           getUserInfo.current = result.user
           console.log(result)

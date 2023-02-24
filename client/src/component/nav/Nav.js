@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { signOut } from "firebase/auth"
-import { auth } from '../../firebaseConfig'
-import Button from '../Button'
-import { Link } from 'react-router-dom'
+import React from 'react'
 import BarLink from './BarLink'
 import SignOut from '../../feature/auth/SignOut'
 import Notify from '../../feature/notify/Notify'
-import Profile from '../../feature/profile/Profile'
 
 
 const Nav = ({ handleSignOut, isLogined, promiseGetToken }) => {
 
   return (
-    <nav style={{ padding: '1rem 20px', position: 'fixed', width: '100%', top: '0', left: "0", background: 'linear-gradient(to bottom,white 50% , rgba(225,225,225,0.5))'}}>
+    <nav style={{ padding: '1rem 20px', width: '100%'}}>
       <div style={{ display: 'flex', width: '100%', maxWidth: '1536px', margin: '0 auto', justifyContent: 'space-between', alignItems: 'center', }}>
         {isLogined &&
 
@@ -20,12 +15,12 @@ const Nav = ({ handleSignOut, isLogined, promiseGetToken }) => {
 
         }
 
-        <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>Tot</div>
+        <div style={{ fontSize: '2rem', fontWeight: 'bold', flex:'1', textAlign:'center' }}>Tot</div>
 
         <div style={{ fontSize: '1.8rem', display: 'flex', gap: '1em', alignItems: 'center' }}>
           {isLogined &&
             <>
-              <div style={{  }}>
+              <div style={{ }}>
 
                 <SignOut handleSignOut={handleSignOut} />
               </div>

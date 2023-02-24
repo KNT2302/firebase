@@ -70,14 +70,8 @@ export const get = async (req, res, next) => {
     }))
   }
   try {
-
-
     const response = await getComment(JSON.parse(req.query.reply))
-
-
-
     res.status(200).json({ success: true, data: response })
-
   } catch (err) {
     res.status(200).json({ success: false, err })
   }

@@ -26,7 +26,7 @@ const AddComment = ({ addComment, comment, postId }) => {
     textRef.current.value = ""
   }
   return (
-    <div style={{ width: '100%', background: 'lightpink', padding: '0 1em' }}>
+    <div style={{ width: '100%', background: 'lightpink', padding: '0 1em'}}>
       <Input ref={textRef} type="text" name="comment" />
       <Button type="button" name="Add" onClick={doAdd} />
     </div>
@@ -52,7 +52,7 @@ const ReplyComment = ({ updateComment, commentId, reply }) => {
       handleClosePopup()
     }
     return (
-      <div style={{ background: 'lightgreen' }}>
+      <div style={{ background: 'lightgreen'}}>
 
         <Input ref={replyRef} type="text" name="Reply" />
         <Button type='button' name="Send" onClick={sendReply} />
@@ -77,13 +77,13 @@ const ItemComment = ({ comment }) => {
   }
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div>
       <p>{data.text}</p>
       <ReplyComment updateComment={updateComment} reply={data.reply} commentId={data.commentId} />
 
       {data.reply.length > 0 && !readMore && <Button type="button" name="Read more" onClick={() => { setReadMore(true) }} />}
       {readMore && <>
-        <div style={{ marginLeft: "1em", borderLeft: '1px solid gray', paddingLeft: '.5em' }}>
+        <div style={{ marginLeft: "1em", borderLeft: '1px solid gray', paddingLeft: '.5em',}}>
           {data.reply.length > 0 &&
             data.reply.map((reply) => {
               return (
@@ -131,10 +131,9 @@ const Comment = ({ comment, postId }) => {
 
   const GetChildren = (handleClosePopup) => {
 
-
     return (
       <div style={{height:'100%'}}>
-        <div style={{ width: '400px', height: '100%', position: 'relative', padding: '0 1em', overflowY: 'auto'}}>
+        <div style={{ width: '100%', height: '50vh', padding: '0 1em', overflowY: 'auto'}}>
           {list.map((comment) => {
             return (
               <ItemComment key={comment.commentId} comment={comment} />

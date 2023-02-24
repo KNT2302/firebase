@@ -12,7 +12,7 @@ const ItemTab = ({ name, setTab, query, isSelect }) => {
   )
 }
 const Tab = ({ listTab, setTab, row, itemTab, children }) => {
-  const [tabValue, setTabValue] = useState(()=>listTab[0].query)
+  const [tabValue, setTabValue] = useState(()=> listTab.length ? listTab[0].query: 0)
 
   const handleSetTab = (tabName) => {
     setTab(tabName)

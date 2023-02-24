@@ -1,33 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Popup from '../../../component/Popup'
 import Tab from '../../../component/Tab'
-import Input from '../../../component/Input'
-import Button from '../../../component/Button'
+
 import { socket } from '../../../ulti/socketIO'
 import ChatSession from './ChatSession'
+import axiosProvider from '../../../ulti/axios'
 
-const tabMesList = [
-  {
-    name: 'Terami',
-    query: "123"
-  },
-  {
-    name: 'Ronaldo',
-    query: "124"
-  },
-  {
-    name: 'Messi',
-    query: "125"
-  },
-  {
-    name: 'Neymar',
-    query: "126"
-  },
-  {
-    name: 'Son',
-    query: "127"
-  }
-]
 
 
 
@@ -36,7 +14,29 @@ const tabMesList = [
 
 const Message = () => {
 
+  const [getUserId, setGetUserId] = useState(0)
+
   const [query, setQuery] = useState("")
+
+  const [roomData, setRoomData] = useState([])
+
+  useEffect(() => {
+    const getRoomList = async () => {
+      const userId = JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).userId : ""
+      if (userId) {
+        const res = await axiosProvider.get(`/api/chat/room?userId=${userId}`, {})
+
+
+        setRoomData(res.data)
+      } else {
+        setGetUserId(getUserId + 1)
+      }
+
+    }
+
+    getRoomList()
+  }, [getUserId])
+
 
   const handleUser = (query) => {
 
@@ -45,10 +45,10 @@ const Message = () => {
 
   }
 
-  const itemTab = (query, setTab, key) => {
+  const ItemTab = (query, setTab, key) => {
     return (
-      <div key={key} style={{ display: 'flex', alignItems: 'flex-start', padding: '.5em', gap: '.5em' }} onClick={() => { setTab(query) }}>
-        <div style={{ width: '2em', height: '2em', background: 'white', borderRadius: '50%' }}></div>
+      <div key={key} style={{ display: 'flex', alignItems: 'flex-start', padding: '.5em', gap: '.5em', width: '100px', overflow: 'hidden' }} onClick={() => { setTab(query) }}>
+        <div style={{ width: '2em', height: '2em', background: 'white', borderRadius: '50%', flexShrink: '0' }}></div>
         <div>
           <h1 style={{ fontSize: '1.2em' }}>{query}</h1>
           <p>message</p>
@@ -61,7 +61,7 @@ const Message = () => {
 
     return (
       <div style={{ width: '100%' }}>
-        <Tab listTab={tabMesList} row setTab={handleUser} itemTab={itemTab}>
+        <Tab listTab={roomData} row setTab={handleUser} itemTab={ItemTab}>
           <ChatSession query={query} />
         </Tab>
       </div>

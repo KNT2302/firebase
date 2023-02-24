@@ -6,7 +6,7 @@ import { getAuth, isSignInWithEmailLink, signInWithEmailLink, } from "firebase/a
 import axiosProvider from '../ulti/axios'
 
 const Layout = ({ children }) => {
-  const [isLogined, setIsLogined] = useState(() => localStorage.getItem("isLogined"))
+  const [isLogined, setIsLogined] = useState(() => localStorage.getItem("user"))
 
   const user = localStorage.getItem("user")
 
@@ -55,11 +55,9 @@ const Layout = ({ children }) => {
     }
 
     if (isLogined) {
-      if (!user) {
-
-        postDevice()
-      }
+      postDevice()
     }
+
 
   }, [isLogined])
 

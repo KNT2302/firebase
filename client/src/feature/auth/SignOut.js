@@ -7,7 +7,7 @@ const SignOut = ({handleSignOut}) => {
 
   const doSignOut = () => {
     signOut(auth).then(() => {
-      localStorage.removeItem("isLogined")
+      localStorage.removeItem("user")
       // Sign-out successful.
       handleSignOut()
     }).catch((error) => {

@@ -15,7 +15,7 @@ const ListLink = ({ name, to }) => {
 
 const BarLink = () => {
   return (
-    <ul style={{ listStyle: 'none', display: 'flex', gap: '1em', flexWrap:'wrap' }}>
+    <ul style={{ listStyle: 'none', display: 'flex', gap: '1em', flexWrap:'wrap',flex:'1' }}>
       <ListLink name="Home" to='/' />
       <ListLink name="Todo" to='/todo' />
       <ListLink name="Album" to='/album' />

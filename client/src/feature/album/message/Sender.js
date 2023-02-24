@@ -1,24 +1,31 @@
 import { useRef } from "react"
 import Button from "../../../component/Button"
 import Input from "../../../component/Input"
+import axiosProvider from "../../../ulti/axios"
 import { socket } from "../../../ulti/socketIO"
 
 const Sender = ({ updateChat, room }) => {
   const inputRef = useRef(null)
+  const { userId } = JSON.parse(localStorage.getItem('user'))
 
   const sendMessage = () => {
     return new Promise((resolve) => {
-      setTimeout(() => {
-        updateChat({
-          message: inputRef.current.innerHTML,
-          type: 'sent'
-        })
-        socket.emit('send_message', {
+      setTimeout(async () => {
+        await socket.emit('send_message', {
           room,
           message: inputRef.current.innerHTML,
-          type: 'receive'
+          userId
+        })
+        await axiosProvider.post("/api/chat", {}, {
+          message: inputRef.current.innerHTML,
+          userId,
+          chatId: room
         })
         console.log('sent to ', room)
+        updateChat({
+          message: inputRef.current.innerHTML,
+          userId
+        })
         resolve("dv")
       }, 1000)
     })
