@@ -79,14 +79,21 @@ const Album = () => {
   return (
     <Container>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "1rem" }}>
-        <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display:`${screenSize===sizeObj.BIG?'block':'flex'}`, gap:'.5em' }}>
-          <AddNew updateList={updateList} />
-          <User />
-          <Message />
-        </div>
+
+
+        <Tab>
+          <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display: `${screenSize === sizeObj.BIG ? 'block' : 'flex'}`, gap: '.5em' }}>
+
+            <AddNew updateList={updateList} />
+            <User />
+            <Message />
+          </div>
+        </Tab>
+
+
         <div style={{ width: "100%", maxWidth: '375px' }}>
           <Tab listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab}>
-            <div style={{ height: '30px' }}>
+            <div style={{ fontSize: '1.5rem' }}>
               <h1>{nameTab[tab]}</h1>
             </div>
             {list.length === 0 && <div style={{ fontSize: '1.8rem' }}>Getting photo list <span style={{ display: 'inline-block' }}><Loading /></span></div>}
@@ -101,9 +108,9 @@ const Album = () => {
 
           </Tab>
         </div>
-     
 
-      
+
+
 
 
       </div>

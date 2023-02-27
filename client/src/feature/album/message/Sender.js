@@ -2,11 +2,12 @@ import { useRef } from "react"
 import Button from "../../../component/Button"
 import Input from "../../../component/Input"
 import axiosProvider from "../../../ulti/axios"
+import useGetUserId from "../../../ulti/hooks/getUserId"
 import { socket } from "../../../ulti/socketIO"
 
 const Sender = ({ updateChat, room }) => {
   const inputRef = useRef(null)
-  const { userId } = JSON.parse(localStorage.getItem('user'))
+  const userId = useGetUserId()
 
   const sendMessage = () => {
     return new Promise((resolve) => {

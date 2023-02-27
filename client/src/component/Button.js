@@ -22,9 +22,9 @@ const Button = ({ name, onClick, type }) => {
 
   }
   return (
-    <div style={{margin:'-.25em -.5em'}}>
+    <div style={{ margin: '-.25em -.5em' }}>
 
-      <button disabled={isDisabled} style={{ fontSize: '1em', borderRadius: '3px', border: 'none', background: `transparent`, color: `${isHover ? "black" : "gray"}`, cursor: "pointer", transition: '.15s', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '.25em .5em' }} type={type} onClick={(e) => handleOnClick(e)} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
+      <button disabled={isDisabled} style={{ fontSize: '1em', borderRadius: '3px', border: 'none', background: `transparent`, color: `${isHover ? "black" : "rgba(0,0,0,.7)"}`, cursor: "pointer", transition: '.15s', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '.25em .5em' }} type={type} onClick={(e) => handleOnClick(e)} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
         {!isDisabled ? name : <Loading />}
       </button>
     </div>

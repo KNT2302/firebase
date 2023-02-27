@@ -7,14 +7,15 @@ const EditField = ["displayName", "photoURL"]
 
 const Profile = () => {
 
+
   const obJectProfile = () => {
-    const result = JSON.parse(localStorage.getItem("user"))
+    const result = JSON.parse(localStorage.getItem("user")).data
     return result
   }
 
   return (
     <Container>
-      <div style={{ fontSize: '1.8rem', margin: '0 auto' }}>
+      <div style={{ fontSize: '1.8rem', margin: '0 auto', overflow:'hidden' }}>
         <h1>Profile</h1>
         <div style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center', gap: '1em', paddingBlock: '.5em', flexWrap: 'wrap' }}>
           <div style={{ width: '5em', height: '5em', background: 'gray', borderRadius: '50%', overflow: 'hidden' }}>

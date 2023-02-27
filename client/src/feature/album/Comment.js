@@ -11,7 +11,7 @@ const AddComment = ({ addComment, comment, postId }) => {
 
   const textRef = useRef(null)
   const doAdd = async () => {
-    
+
 
     const response = await axiosProvider.post("/api/comment", {}, { text: textRef.current.value, postId, comment: comment ? comment : [] })
 
@@ -26,7 +26,7 @@ const AddComment = ({ addComment, comment, postId }) => {
     textRef.current.value = ""
   }
   return (
-    <div style={{ width: '100%', background: 'lightpink', padding: '0 1em'}}>
+    <div style={{ width: '100%', background: 'lightpink', padding: '0 1em' }}>
       <Input ref={textRef} type="text" name="comment" />
       <Button type="button" name="Add" onClick={doAdd} />
     </div>
@@ -35,12 +35,13 @@ const AddComment = ({ addComment, comment, postId }) => {
 
 const ReplyComment = ({ updateComment, commentId, reply }) => {
   const replyRef = useRef(null)
-  const getChildren = (handleClosePopup) => {
+  const [isOpenRep, setIsOpenRep] = useState(false)
+  const getChildren = () => {
 
     const sendReply = async () => {
-      
 
-      const replies = reply.map((item)=> item.commentId)
+
+      const replies = reply.map((item) => item.commentId)
 
       const response = await axiosProvider.post("/api/comment", {}, { commentId, reply: replies, text: replyRef.current.value })
       const newReply = {
@@ -49,20 +50,24 @@ const ReplyComment = ({ updateComment, commentId, reply }) => {
         commentId: response.data.commentId
       }
       updateComment(newReply)
-      handleClosePopup()
+      setIsOpenRep(!isOpenRep)
+
     }
     return (
-      <div style={{ background: 'lightgreen'}}>
+      <div>
+        <Button name="Reply" onClick={()=>{setIsOpenRep(!isOpenRep)}} />
+        {isOpenRep && <>
 
-        <Input ref={replyRef} type="text" name="Reply" />
-        <Button type='button' name="Send" onClick={sendReply} />
+          <Input ref={replyRef} type="text" />
+          <Button type='button' name="Send" onClick={sendReply} />
+        </>}
       </div>
     )
   }
   return (
     <div>
-      <Popup name="Reply" getChildren={getChildren} />
-
+      {/* <Popup name="Reply" getChildren={getChildren} /> */}
+      {getChildren()}
     </div>
   )
 }
@@ -77,13 +82,13 @@ const ItemComment = ({ comment }) => {
   }
 
   return (
-    <div>
+    <div style={{paddingBottom:'.5em'}}>
       <p>{data.text}</p>
       <ReplyComment updateComment={updateComment} reply={data.reply} commentId={data.commentId} />
 
       {data.reply.length > 0 && !readMore && <Button type="button" name="Read more" onClick={() => { setReadMore(true) }} />}
       {readMore && <>
-        <div style={{ marginLeft: "1em", borderLeft: '1px solid gray', paddingLeft: '.5em',}}>
+        <div style={{ marginLeft: "1em", borderLeft: '1px solid gray', paddingLeft: '.5em', }}>
           {data.reply.length > 0 &&
             data.reply.map((reply) => {
               return (
@@ -132,8 +137,8 @@ const Comment = ({ comment, postId }) => {
   const GetChildren = (handleClosePopup) => {
 
     return (
-      <div style={{height:'100%'}}>
-        <div style={{ width: '100%', height: '50vh', padding: '0 1em', overflowY: 'auto'}}>
+      <div style={{ height: '100%'}}>
+        <div style={{ width: '100%', height: '50vh', padding: '0 1em', overflowY: 'auto' }}>
           {list.map((comment) => {
             return (
               <ItemComment key={comment.commentId} comment={comment} />
@@ -148,7 +153,7 @@ const Comment = ({ comment, postId }) => {
 
   }
   return (
-    <Popup name={<VscComment />} getChildren={GetChildren} position={{top:'0'}} />
+    <Popup name={<VscComment />} getChildren={GetChildren} position={{ top: '0' }} />
   )
 }
 
