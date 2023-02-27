@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Button from './Button'
 
-const Content = ({ handleTogglePopup, getChildren, resetState, position }) => {
+const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth }) => {
   const [isFadedIn, setIsFadedIn] = useState(false)
 
   let timer = null
@@ -24,14 +24,12 @@ const Content = ({ handleTogglePopup, getChildren, resetState, position }) => {
     }
   }, [])
 
-  const positionStyle = position ? position : {
-    left: '50%', transform: 'translate(-50%, 0%)'
-  }
+  const maxWidthProp = maxWidth ? maxWidth : "375px"
   return (
 
 
-    <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.5)'}}>
-      <div style={{ opacity: `${isFadedIn ? "1" : '.5'}`, borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', width: '100%', maxWidth: '375px', position: 'relative' }}>
+    <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.5)', padding:'0 20px' }}>
+      <div style={{ opacity: `${isFadedIn ? "1" : '.5'}`, borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', width: '100%', maxWidth: maxWidthProp, position: 'relative' }}>
         {getChildren(handleClosePopup)}
         <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: 'translateY(-100%)', background: 'lightpink', borderRadius: ".1em" }}>
           <Button type="button" name="X" onClick={handleClosePopup} />
@@ -44,7 +42,7 @@ const Content = ({ handleTogglePopup, getChildren, resetState, position }) => {
 }
 
 
-const Popup = ({ name, getChildren, resetState, position }) => {
+const Popup = ({ name, getChildren, resetState, maxWidth }) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const handleToggle = () => {
@@ -58,7 +56,7 @@ const Popup = ({ name, getChildren, resetState, position }) => {
         <Button type="button" onClick={handleToggle} name={name} />
       </div>
       {isOpen &&
-        <Content getChildren={getChildren} handleTogglePopup={handleToggle} resetState={resetState} position={position} />
+        <Content getChildren={getChildren} handleTogglePopup={handleToggle} resetState={resetState} maxWidth={maxWidth} />
       }
     </>
   )

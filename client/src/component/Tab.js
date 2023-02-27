@@ -40,7 +40,7 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children }) => {
 
         {listTab ? listTab.map((tab, index) => {
           return (
-            itemTab ? itemTab(tab.query, setTab, index) :
+            itemTab ? itemTab(tab, setTab, index) :
               <ItemTab key={index} name={tab.name} setTab={handleSetTab} query={tab.query} isSelect={tabValue === tab.query} />
           )
         }) :

@@ -30,7 +30,7 @@ const Work = ({ id, name, edit, handleSave, todoList, setTodoList }) => {
   }
 
   const handleToggleComplete = () => {
-    console.log(state)
+  
     if (state === stateValue.current.COMPLETE) {
       setState(stateValue.current.READ)
     } else {

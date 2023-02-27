@@ -8,17 +8,19 @@ const ChatSession = ({ query, messengeData, updateChat }) => {
 
   const { userId } = JSON.parse(localStorage.getItem('user')).data
 
-
-
-
-
   const chatRef = useRef()
 
+  useEffect(() => {
+    socket.on('receive_message', (data) => {
 
-  socket.on('receive_message', (data) => {
-    console.log(data)
-    updateChat(data)
-  })
+      console.log(data)
+      updateChat({ message: data.message, userId: data.userId })
+    })
+    return () => {
+      socket.off("receive_message")
+    }
+  },[updateChat])
+
 
   useEffect(() => {
     return () => {
@@ -42,7 +44,7 @@ const ChatSession = ({ query, messengeData, updateChat }) => {
 
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '50vh', paddingBottom: '.5em' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '50vh', paddingBottom: '3em' }}>
       {/* <h1>{query}</h1> */}
       {query ?
         <>
