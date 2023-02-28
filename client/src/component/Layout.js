@@ -5,9 +5,9 @@ import Nav from './nav/Nav'
 import { getAuth, isSignInWithEmailLink, signInWithEmailLink, } from "firebase/auth"
 import axiosProvider from '../ulti/axios'
 
+
 const Layout = ({ children }) => {
   const [isLogined, setIsLogined] = useState(() => JSON.parse(localStorage.getItem("user")))
-
 
   const user = localStorage.getItem("user")
 

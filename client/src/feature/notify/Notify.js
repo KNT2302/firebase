@@ -7,23 +7,14 @@ import Message from './Message'
 import NumberNew from './NumberNew'
 import Button from '../../component/Button'
 import { List } from './List'
+import { onMessageConsolve } from '../../ulti/onMessageConsolve'
+import messageStore from "../../store/message"
 
 const Notify = ({ promiseGetToken }) => {
 
-  const [data, setData] = useState([
-    {
-      id: '1',
-      title: 'Service System',
-      content: "Updated avatar",
-      image: 'url(1)'
-    },
-    {
-      id: '2',
-      title: 'Service System',
-      content: "Updated photo",
-      image: 'url(1)'
-    }
-  ])
+  const [data, setData] = useState([])
+
+  const notifyStore = messageStore(state=>state)
 
   const [newData, setNewData] = useState([])
 
@@ -64,15 +55,17 @@ const Notify = ({ promiseGetToken }) => {
   useEffect(() => {
     onMessage(message, (message) => {
       console.log(message)
-      const { notification, messageId } = message
+      const data = onMessageConsolve(message, notifyStore)
+      console.log(data)
       setNewData([...newData, {
-        id: messageId,
-        title: notification.title,
-        content: notification.body,
+        id: data.messageId,
+        title: data.notification.title,
+        content: data.notification.body,
         image: 'url(1)'
       }])
+     
     })
-  }, [newData])
+  }, [newData, notifyStore])
 
   const setHaveRead = (message) => {
     const haveNotRead = newData

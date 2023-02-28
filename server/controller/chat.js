@@ -69,12 +69,19 @@ export const getRoom = async (req, res, next) => {
 
       const friend = await getUser(res, friendId[0])
 
-      const messenge = await getDoc(doc(db, 'messenger', chat.data().messenger[chat.data().messenger.length - 1]))
+      let message = "null"
+      if (chat.data().messenger) {
+
+        const res = await getDoc(doc(db, 'messenger', chat.data().messenger[chat.data().messenger.length - 1]))
+        message = res.data().message
+
+      }
 
       return {
         query: id,
-        name: friend[0] ? friend[0].displayName: "User",
-        lastMessenge: messenge.data().message
+        name: friend[0] ? friend[0].displayName : "User",
+        lastMessenge: message,
+        userToken: friend[0] ? friend[0].currentToken : ""
       }
     }))
     res.status(200).json({ success: true, data: await chatRoom })

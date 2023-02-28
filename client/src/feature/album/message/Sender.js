@@ -5,7 +5,7 @@ import axiosProvider from "../../../ulti/axios"
 import useGetUserId from "../../../ulti/hooks/getUserId"
 import { socket } from "../../../ulti/socketIO"
 
-const Sender = ({ updateChat, room }) => {
+const Sender = ({ updateChat, room, userToken }) => {
   const inputRef = useRef(null)
   const userId = useGetUserId()
 
@@ -26,6 +26,15 @@ const Sender = ({ updateChat, room }) => {
         updateChat({
           message: inputRef.current.innerHTML,
           userId
+        })
+        await axiosProvider.post("/api/pushNotification", {}, {
+          currentToken: userToken,
+          title: "Message",
+          body: {
+            content: `Have received a message: ${inputRef.current.innerHTML}`,
+            room,
+            message: inputRef.current.innerHTML
+          }
         })
         inputRef.current.innerHTML = ""
         resolve("dv")

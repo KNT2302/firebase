@@ -4,38 +4,44 @@ import Tab from '../../../component/Tab'
 import ChatSession from './ChatSession'
 import axiosProvider from '../../../ulti/axios'
 import useGetUserId from '../../../ulti/hooks/getUserId'
-import { onMessage } from 'firebase/messaging'
-import { message } from '../../../firebaseConfig'
 import { socket } from '../../../ulti/socketIO'
+import TabChat from './TabChat'
+import messageStore from "../../../store/message"
+
 
 const Message = () => {
 
-
   const [query, setQuery] = useState("")
-  const [queryHaveGot, setQueryHaveGot] = useState([])
 
   const [messageData, setMessageData] = useState(null)
 
   const [roomData, setRoomData] = useState([])
 
+  const [userToken, setUserToken] = useState("")
+
   const userId = useGetUserId()
+
+  const { setChatRoomCurrent, messageReceive, roomCurrent, roomReceive } = messageStore(state => state)
 
   useEffect(() => {
     const getMessengers = async () => {
 
       const response = await axiosProvider.get(`/api/chat?idChat=${query}`, {})
-      if (response.success) {
-        setMessageData({ ...messageData, [query]: [...response.data.messenge] })
-      } else {
-        setMessageData()
-      }
+      setMessageData({ ...messageData, [query]: [...response.data.messenge] })
+    }
+    if (query) {
+
+      getMessengers()
+
     }
 
-    if (!queryHaveGot.includes(query)) {
-      getMessengers()
-      setQueryHaveGot([...queryHaveGot, query])
+    return () => {
+      socket.emit('leave_room', query)
     }
+
+
   }, [query])
+
 
   useEffect(() => {
     const getRoomList = async () => {
@@ -47,10 +53,11 @@ const Message = () => {
     getRoomList()
   }, [userId])
 
-
-  const handleUser = (query) => {
+  const handleUser = (query, userToken) => {
     socket.emit("join_room", query)
     setQuery(query)
+    setUserToken(userToken)
+    setChatRoomCurrent(query)
   }
 
   const updateChat = (inbox) => {
@@ -59,24 +66,58 @@ const Message = () => {
     setMessageData({ ...newMessageData })
   }
 
-  const ItemTab = (tab, setTab, key) => {
-
-    return (
-      <div key={key} style={{ display: 'flex', alignItems: 'flex-start', padding: '.5em', gap: '.5em', width: '150px', overflow: 'hidden', cursor: 'pointer', flexShrink: '0' }} onClick={() => { setTab(tab.query) }}>
-        <div style={{ width: '2em', height: '2em', background: 'white', borderRadius: '50%', flexShrink: '0' }}></div>
-        <div>
-          <h1 style={{ fontSize: '1.2em', textOverflow: "ellipsis", overflow: 'hidden', whiteSpace: 'nowrap' }}>{tab.name}</h1>
-          <p style={{ textOverflow: "ellipsis", overflow: 'hidden', whiteSpace: 'nowrap' }}>
-            {messageData && messageData[tab.query] ? (messageData[tab.query] && messageData[tab.query][messageData[tab.query].length - 1].message) : tab.lastMessenge}
-          </p>
-        </div>
-      </div>
-    )
+  const updateChatFromTab = (inbox, query) => {
+    const newMessageData = messageData
+    newMessageData[query] = [...newMessageData[query], inbox]
+    setMessageData({ ...newMessageData })
   }
 
-  const getChildrens = () => {
+  useEffect(() => {
+
+    if (roomData.length > 0 && messageData) {
+
+      const newRoomData = roomData.map((room) => {
+        if (messageData[room.query] && messageData[room.query].length) {
+          return {
+            ...room,
+            lastMessenge: messageData[room.query][messageData[room.query].length - 1].message
+          }
+        } else {
+          return {
+            ...room
+          }
+        }
+
+      })
+      setRoomData([...newRoomData])
+    }
+  }, [messageData])
+
+  useEffect(() => {
+    if (messageReceive) {
+      const newDataRoom = roomData.map((roomItem) => {
+        if (roomCurrent !== roomReceive && roomItem.query === roomReceive) {
+          return {
+            ...roomItem,
+            lastMessenge: messageReceive
+          }
+        } else {
+          return {
+            ...roomItem
+          }
+        }
+      })
+      setRoomData([...newDataRoom])
+    }
+
+
+
+  }, [messageReceive])
+
+  const GetChildrens = () => {
+
     return (
-      <ChatSession query={query} messengeData={messageData} updateChat={updateChat} />
+      <ChatSession query={query} messengeData={messageData} updateChat={updateChat} userToken={userToken} />
     )
   }
 
@@ -84,7 +125,7 @@ const Message = () => {
 
     return (
       <div style={{ width: '100%', position: 'relative' }}>
-        <Tab listTab={roomData} row setTab={handleUser} itemTab={ItemTab} getChildrens={getChildrens} />
+        <Tab listTab={roomData} row setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} />
       </div>
     )
 
@@ -97,3 +138,6 @@ const Message = () => {
 }
 
 export default Message
+
+
+

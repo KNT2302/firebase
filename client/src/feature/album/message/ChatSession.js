@@ -4,7 +4,7 @@ import { socket } from "../../../ulti/socketIO"
 import BoxChat from "./BoxChat"
 import Sender from "./Sender"
 
-const ChatSession = ({ query, messengeData, updateChat }) => {
+const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
 
   const { userId } = JSON.parse(localStorage.getItem('user')).data
 
@@ -21,15 +21,6 @@ const ChatSession = ({ query, messengeData, updateChat }) => {
     }
   },[updateChat])
 
-
-  useEffect(() => {
-    return () => {
-      if (query) {
-
-        socket.emit('leave_room', query)
-      }
-    }
-  }, [query])
 
   useEffect(() => {
 
@@ -57,7 +48,7 @@ const ChatSession = ({ query, messengeData, updateChat }) => {
               )
             })}
           </div>
-          <Sender updateChat={updateChat} room={query} />
+          <Sender updateChat={updateChat} room={query} userToken={userToken} />
 
         </> :
         <>Chat</>
