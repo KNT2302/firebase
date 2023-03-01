@@ -5,6 +5,9 @@ const store = create((set, get) => ({
   roomCurrent:"",
   roomReceive:"",
   messageReceive:"",
+  isUseChat:false,
+  isLinkNotify:false,
+  openPopupByClick: true,
   // increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   // removeAllBears: () => set({ bears: 0 }),
 
@@ -16,7 +19,22 @@ const store = create((set, get) => ({
     ...state,
     messageReceive: notify.message,
     roomReceive: notify.room
-  }))
+  })),
+  toggleClickChat: ()=>{
+    console.log(get().isUseChat)
+    set((state)=>(
+      {
+      ...state,
+      isUseChat: !get().isUseChat
+    }))
+  },
+  toggleClickLink: () => {
+    set((state)=>(
+      {
+      ...state,
+      isLinkNotify: !get().isLinkNotify
+    }))
+  }
 }))
 
 export default store

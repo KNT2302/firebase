@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Button from './Button'
+import messageStore from "../store/message"
 
-const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth }) => {
+const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth, whenClose, isLinkNotify }) => {
   const [isFadedIn, setIsFadedIn] = useState(false)
+  const { toggleClickLink } = messageStore(state => state)
+
 
   let timer = null
 
@@ -11,15 +14,19 @@ const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth }) => {
   const handleClosePopup = () => {
     handleToggleFadedIn()
     timer = setTimeout(() => {
+
       handleTogglePopup()
+
       if (resetState) {
         resetState()
       }
     }, 150)
   }
+
   useEffect(() => {
     setIsFadedIn(!isFadedIn)
     return () => {
+      console.log('run timer')
       clearTimeout(timer)
     }
   }, [])
@@ -28,7 +35,7 @@ const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth }) => {
   return (
 
 
-    <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.5)', padding:'0 20px' }}>
+    <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.5)', padding: '0 20px' }}>
       <div style={{ opacity: `${isFadedIn ? "1" : '.5'}`, borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', width: '100%', maxWidth: maxWidthProp, position: 'relative' }}>
         {getChildren(handleClosePopup)}
         <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: 'translateY(-100%)', background: 'lightpink', borderRadius: ".1em" }}>
@@ -42,21 +49,37 @@ const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth }) => {
 }
 
 
-const Popup = ({ name, getChildren, resetState, maxWidth }) => {
+const Popup = ({ name, getChildren, resetState, maxWidth, whenClick, whenClose, openPopupByClick, isLinkNotify, commonClose }) => {
 
   const [isOpen, setIsOpen] = useState(false)
-  const handleToggle = () => {
-    setIsOpen(!isOpen)
+
+  const clickOpen = () => {
+    setIsOpen(true)
+    if (whenClick) {
+      whenClick()
+    }
+  }
+
+  const clickClose = () => {
+    if (commonClose) {
+
+      commonClose()
+    }
+    if (isLinkNotify) {
+      whenClose()
+    } else {
+      setIsOpen(false)
+    }
   }
 
   return (
     <>
       <div style={{ display: 'flex', alignItems: "flex-start" }}>
 
-        <Button type="button" onClick={handleToggle} name={name} />
+        <Button type="button" onClick={clickOpen} name={name} />
       </div>
-      {isOpen &&
-        <Content getChildren={getChildren} handleTogglePopup={handleToggle} resetState={resetState} maxWidth={maxWidth} />
+      {(isOpen || (openPopupByClick && isLinkNotify)) &&
+        <Content openPopupByClick getChildren={getChildren} handleTogglePopup={clickClose} isLinkNotify={isLinkNotify} resetState={resetState} maxWidth={maxWidth} whenClose={whenClose ? whenClose : () => { }} />
       }
     </>
   )

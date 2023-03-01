@@ -1,10 +1,14 @@
 import React from 'react'
 import { FiUser } from "react-icons/fi"
 
-const Message = ({ message, isLast, isNew, handleClick }) => {
+const Message = ({ message, isLast, isNew, handleClick, handleClosePopup, type }) => {
   
   const handleOnClick = isNew? () => {
-    handleClick(message)
+
+    handleClick(message, type)
+    if(handleClosePopup){
+      handleClosePopup()
+    }
   }: ()=>{}
   return (
     <div style={{ display: 'flex', gap: '.5em', borderBottom: `${isLast ? 'none' : '1px solid gray'}`, padding: '.5em', background:`${isNew?"lightgreen":"transparent"}`, width:'100%', cursor:"pointer" }} onClick={handleOnClick}>

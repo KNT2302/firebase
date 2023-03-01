@@ -39,7 +39,6 @@ const Share = () => {
   return (
     <>
       <Popup name={<RiShareForwardLine />} getChildren={getChildren} />
-
     </>
   )
 }

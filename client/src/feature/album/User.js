@@ -3,9 +3,9 @@ import Popup from '../../component/Popup'
 import UserList from '../../component/UserList'
 import axiosProvider from '../../ulti/axios'
 import useResponsive from '../../ulti/hooks/reponsive'
+import notifyStore from "../../store/notify"
 
 const User = () => {
-
 
   const BigSize = {
     BIG: 'big',
@@ -68,9 +68,16 @@ export default User
 
 
 const UserPopup = ({ getChildren }) => {
+
+  const { isFriendNotify, closePopup } = notifyStore(state => state)
+
+  console.log(isFriendNotify)
   return (
 
-    <Popup name={<div style={{}}>User</div>} getChildren={getChildren} position={{ top: '1em' }} />
+    <Popup openPopupByClick isLinkNotify={isFriendNotify} name={<div style={{}}>User</div>} getChildren={getChildren} position={{ top: '1em' }} whenClose={() => {
+      console.log("run")
+      closePopup()
+    }} />
 
   )
 }

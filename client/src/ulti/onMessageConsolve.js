@@ -1,22 +1,27 @@
 
 export const onMessageConsolve = (message, notifyStore) => {
 
-  const { receiveMessage } = notifyStore
+  const { receiveMessage, isUseChat } = notifyStore
 
   const { notification } = message
 
 
   const notifyDisplay = message
+  
   const body = JSON.parse(notification.body)
   if (typeof body === 'object') {
 
     if (notification.title === "Message") {
-      message.notification["body"] = body.content
-      receiveMessage(body)
+      notifyDisplay.notification["body"] = body.content
+      body.message = body.message + ":new"
+      if (isUseChat) {
+        receiveMessage(body)
+        return
+      }
     }
 
   }
 
-  return notifyDisplay
+  return {...notifyDisplay, type: notification.title}
 
 }

@@ -7,6 +7,7 @@ import useGetUserId from '../../../ulti/hooks/getUserId'
 import { socket } from '../../../ulti/socketIO'
 import TabChat from './TabChat'
 import messageStore from "../../../store/message"
+import notifyStore from "../../../store/notify"
 
 
 const Message = () => {
@@ -21,8 +22,10 @@ const Message = () => {
 
   const userId = useGetUserId()
 
-  const { setChatRoomCurrent, messageReceive, roomCurrent, roomReceive } = messageStore(state => state)
+  const { setChatRoomCurrent, messageReceive, roomCurrent, roomReceive, toggleClickChat } = messageStore(state => state)
+  const { isMessageNotify, closePopup } = notifyStore(state => state)
 
+  console.log(isMessageNotify)
   useEffect(() => {
     const getMessengers = async () => {
 
@@ -130,9 +133,15 @@ const Message = () => {
     )
 
   }
+
+  const toggleChat = () => {
+    toggleClickChat()
+  }
   return (
     <>
-      <Popup name="Message" getChildren={getChildren} position={{ bottom: '0%', left: '0' }} maxWidth="375px" />
+      <Popup openPopupByClick={true} isLinkNotify={isMessageNotify} name="Message" getChildren={getChildren} position={{ bottom: '0%', left: '0' }} maxWidth="375px" whenClick={toggleChat} whenClose={() => {
+        closePopup()
+      }} commonClose={toggleChat} />
     </>
   )
 }

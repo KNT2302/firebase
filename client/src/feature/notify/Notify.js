@@ -9,14 +9,18 @@ import Button from '../../component/Button'
 import { List } from './List'
 import { onMessageConsolve } from '../../ulti/onMessageConsolve'
 import messageStore from "../../store/message"
+import notifyStore from "../../store/notify"
 
 const Notify = ({ promiseGetToken }) => {
 
   const [data, setData] = useState([])
 
-  const notifyStore = messageStore(state=>state)
+  const messageStoreGet = messageStore(state => state)
+
+  const {openMessage, openFriend} = notifyStore(state=>state)
 
   const [newData, setNewData] = useState([])
+
 
   useEffect(() => {
 
@@ -54,26 +58,41 @@ const Notify = ({ promiseGetToken }) => {
 
   useEffect(() => {
     onMessage(message, (message) => {
-      console.log(message)
-      const data = onMessageConsolve(message, notifyStore)
-      console.log(data)
-      setNewData([...newData, {
-        id: data.messageId,
-        title: data.notification.title,
-        content: data.notification.body,
-        image: 'url(1)'
-      }])
-     
-    })
-  }, [newData, notifyStore])
+      const data = onMessageConsolve(message, messageStoreGet)
+      if (data) {
+        setNewData([...newData, {
+          id: data.messageId,
+          title: data.notification.title,
+          content: data.notification.body,
+          image: 'url(1)',
+          type:data.type
+        }])
+      }
 
-  const setHaveRead = (message) => {
+    })
+  }, [newData, messageStoreGet])
+
+  console.log(newData)
+
+  const setHaveRead = (message, type) => {
     const haveNotRead = newData
     haveNotRead[haveNotRead.indexOf(message)] = {}
 
     haveNotRead.filter((message) => Object.keys(message).length > 0)
     setNewData(haveNotRead.filter((message) => Object.keys(message).length > 0))
     setData([...data, message])
+
+    if(type==="Message"){
+      openMessage()
+      messageStoreGet.toggleClickChat()
+    }
+    if(type==="Friend"){
+      openFriend()
+    }
+
+    
+    // notifyStore.toggleClickLink()
+
   }
 
   const getChildren = (handleClosePopup) => {
@@ -82,7 +101,7 @@ const Notify = ({ promiseGetToken }) => {
     )
   }
   return (
-    <div style={{display:'flex'}}>
+    <div style={{ display: 'flex' }}>
       <Popup name={<MdOutlineNotificationsNone />} getChildren={getChildren} />
       {newData.length > 0 &&
         <div style={{ width: '1em', height: '1em', position: 'relative' }}>

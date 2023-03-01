@@ -70,7 +70,7 @@ const MakeFriend = ({ currentToken }) => {
   const makeFriend = () => {
     return new Promise(async (resolve) => {
       const notificationContent = {
-        title: "title",
+        title: "Friend",
         body: "body"
       }
       const response = await axiosProvider.post("api/pushNotification", {}, {
