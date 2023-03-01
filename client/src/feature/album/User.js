@@ -4,6 +4,7 @@ import UserList from '../../component/UserList'
 import axiosProvider from '../../ulti/axios'
 import useResponsive from '../../ulti/hooks/reponsive'
 import notifyStore from "../../store/notify"
+import useGetUserId from '../../ulti/hooks/getUserId'
 
 const User = () => {
 
@@ -24,6 +25,8 @@ const User = () => {
     }
   }
 
+  const userIdClient = useGetUserId()
+
   const screenSize = useResponsive(getSizeScreen)
 
   useEffect(() => {
@@ -31,13 +34,14 @@ const User = () => {
       const response = await axiosProvider.get("/api/user")
       const { success } = response
       if (success) {
-        setData(response.data)
+        const users = response.data.filter(user => user.userId !== userIdClient)
+        setData(users)
       } else {
         setData([])
       }
     }
     getUser()
-  }, [])
+  }, [userIdClient])
 
 
   return (

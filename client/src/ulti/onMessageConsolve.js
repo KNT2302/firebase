@@ -1,14 +1,16 @@
 
-export const onMessageConsolve = (message, notifyStore) => {
+export const onMessageConsolve = (message, messageStore) => {
 
-  const { receiveMessage, isUseChat } = notifyStore
+  const { receiveMessage, isUseChat } = messageStore
 
   const { notification } = message
 
 
   const notifyDisplay = message
-  
-  const body = JSON.parse(notification.body)
+
+
+
+  const body = notification.body.includes("{") ? JSON.parse(notification.body) : notification.body
   if (typeof body === 'object') {
 
     if (notification.title === "Message") {
@@ -22,6 +24,6 @@ export const onMessageConsolve = (message, notifyStore) => {
 
   }
 
-  return {...notifyDisplay, type: notification.title}
+  return { ...notifyDisplay, type: notification.title }
 
 }

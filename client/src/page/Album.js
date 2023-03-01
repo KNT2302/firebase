@@ -9,6 +9,8 @@ import User from '../feature/album/User'
 import Post from '../feature/album/Post'
 import Message from "../feature/album/message/Message"
 import useResponsive from '../ulti/hooks/reponsive'
+import axiosProvider from '../ulti/axios'
+import useGetUserId from '../ulti/hooks/getUserId'
 
 const Album = () => {
 
@@ -33,54 +35,40 @@ const Album = () => {
   const [list, setList] = useState([])
   const [tab, setTab] = useState("mine")
   const screenSize = useResponsive(getSizeScreen)
+  const userId = useGetUserId()
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleTab = (query) => {
-    // console.log(query)
-    // setTab(query)
+    console.log(query)
+    setTab(query)
   }
 
-  const getList = async () => {
-    const list = []
-    const querySnapshot = await getDocs(collection(db, "posts"))
-    querySnapshot.forEach((doc) => {
-      list.push(doc.data())
-    })
-    setList(list)
+  const getList = async (query) => {
+    setIsLoading(true)
+    if (query === "mine") {
+      const posts = await axiosProvider.get(`/api/post?userId=${userId}`)
+      setList([...posts.data])
+    } else {
+      const posts = await axiosProvider.get(`/api/post`)
+      const newData = posts.data.filter(post => !post.userId || post.userId !== userId)
+      console.log(newData)
+      setList([...newData])
+    }
+    setIsLoading(false)
   }
 
   const updateList = (photo) => {
     setList([...list, photo])
   }
   useEffect(() => {
-    //     const listRef = ref(storage, 'images')
-    // 
-    //     // Find all the prefixes and items.
-    //     listAll(listRef)
-    //       .then((res) => {
-    // 
-    //         const list = []
-    //         res.prefixes.forEach((folderRef) => {
-    //           // All the prefixes under listRef.
-    //           // You may call listAll() recursively on them.
-    //         })
-    //         res.items.forEach((itemRef) => {
-    //           // All the items under listRef.
-    //           list.push(itemRef._location.path_)
-    //           setList(list)
-    //         })
-    //       }).catch((error) => {
-    //         // Uh-oh, an error occurred!
-    //       })
-    getList()
-  }, [])
+    getList(tab)
+  }, [tab])
 
 
 
   return (
     <Container>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "1rem" }}>
-
-
         <Tab>
           <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display: `${screenSize === sizeObj.BIG ? 'block' : 'flex'}`, gap: '.5em' }}>
 
@@ -96,15 +84,16 @@ const Album = () => {
             <div style={{ fontSize: '1.5rem' }}>
               <h1>{nameTab[tab]}</h1>
             </div>
-            {list.length === 0 && <div style={{ fontSize: '1.8rem' }}>Getting photo list <span style={{ display: 'inline-block' }}><Loading /></span></div>}
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-              {list.reverse().map((post) => {
-                return (
-                  <Post key={post.urlPhoto} path={post.urlPhoto} comment={post.comment} postId={post.postId} />
-                )
-              })}
+            {isLoading ? <div style={{ fontSize: '1.8rem' }}>Getting photo list <span style={{ display: 'inline-block' }}><Loading /></span></div> :
+              <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {list.reverse().map((post) => {
+                  return (
+                    <Post key={post.urlPhoto} path={post.urlPhoto} comment={post.comment} postId={post.postId} />
+                  )
+                })}
 
-            </div>
+              </div>}
+
 
           </Tab>
         </div>

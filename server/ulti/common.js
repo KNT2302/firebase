@@ -78,3 +78,21 @@ export const createOne = async (collectionName, data, res) => {
     res.status(200).json(`failed ${error}`)
   }
 }
+
+export const getAllFromArrayField = async (req, res, fieldName) => {
+  let result = null
+  const user = await getUser(res, req.query.userId)
+  if (user[0][fieldName]) {
+
+    const arrayFiled = user[0][fieldName]
+
+    const getItemOfField = Promise.all(arrayFiled.map(async item => {
+      const response = await getDoc(doc(db, fieldName, item))
+      return response.data()
+    }))
+    result = await getItemOfField
+  } else {
+    result = []
+  }
+  return result
+}

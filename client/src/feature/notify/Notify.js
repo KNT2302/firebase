@@ -71,9 +71,7 @@ const Notify = ({ promiseGetToken }) => {
 
     })
   }, [newData, messageStoreGet])
-
-  console.log(newData)
-
+  
   const setHaveRead = (message, type) => {
     const haveNotRead = newData
     haveNotRead[haveNotRead.indexOf(message)] = {}

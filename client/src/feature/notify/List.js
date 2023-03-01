@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../../component/Button'
+import AgreeButton from '../album/AgreeButton'
 import Message from './Message'
 
 export const List = ({ oldList, newList, setHaveRead, handleClosePopup }) => {
@@ -39,13 +40,17 @@ const NewList = ({ data, setHaveRead, handleClosePopup }) => {
   return (
     <div>
       <h2>Recently</h2>
-      {data.map((message) => {
+      {data.map((message, index) => {
         return (
-          <Message key={message.id} message={message} isLast={message.id == data.length} isNew handleClick={setHaveRead} handleClosePopup={handleClosePopup} type={message.type} />
+          <>
+            {message.type === "Friend" ? <Message key={message.id} message={message} isLast={message.id == data.length} isNew handleClick={setHaveRead} handleClosePopup={handleClosePopup} type={message.type} getChildren={(handleOnClick) => { return (<AgreeButton handleOnClick={handleOnClick} />) }} /> : <Message key={message.id} message={message} isLast={message.id == data.length} isNew handleClick={setHaveRead} handleClosePopup={handleClosePopup} type={message.type} />}
+          </>
+
         )
       })}
 
     </div>
   )
 }
+
 

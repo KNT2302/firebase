@@ -33,8 +33,8 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
               urlPhoto: uploaded.ref._location.path_,
             })
 
-            const addPostToUser = await axiosProvider.post("/api/post",{},{
-              userId: JSON.parse(localStorage.getItem('user')).userId,
+            const addPostToUser = await axiosProvider.post("/api/post", {}, {
+              userId: JSON.parse(localStorage.getItem('user')).data.userId,
               postId: docRef._key.path.segments[1]
             })
 
@@ -96,7 +96,7 @@ const AddNew = ({ updateList }) => {
     return sizeObj.SMALL
   }
 
-  
+
 
   const screenSize = useResponsive(getSizeScreen)
 
@@ -107,13 +107,13 @@ const AddNew = ({ updateList }) => {
 
   return (
     <div style={{ fontSize: '1.8rem' }}>
-      {screenSize === sizeObj.BIG ? <BoxAddNew updateList={updateList} bigScreen /> : 
+      {screenSize === sizeObj.BIG ? <BoxAddNew updateList={updateList} bigScreen /> :
 
-      <Popup getChildren={children} name="New">
-      </Popup>
+        <Popup getChildren={children} name="New">
+        </Popup>
 
-    }
-      
+      }
+
 
 
     </div>
