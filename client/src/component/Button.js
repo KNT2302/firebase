@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Loading from './Loading'
 
-const Button = ({ name, onClick, type }) => {
+const Button = ({ name, onClick, type, icon }) => {
   const [isHover, setIsHover] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
 
@@ -24,10 +24,12 @@ const Button = ({ name, onClick, type }) => {
   return (
     <div style={{ margin: '-.25em -.5em' }}>
 
-      <button disabled={isDisabled} style={{ fontSize: '1em', borderRadius: '3px', border: 'none', background: `transparent`, color: `${isHover ? "black" : "rgba(0,0,0,.7)"}`, cursor: "pointer", transition: '.15s', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '.25em .5em' }} type={type} onClick={(e) => handleOnClick(e)} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
-        {!isDisabled ? name : <Loading />}
-      </button>
-    </div>
+      <button disabled={isDisabled} style={{
+        fontSize: '1em', borderRadius: '3px', border: 'none', background: `${isHover?'rgba(225,225,225,.8':'transparent'}`, color: `${isHover ? "black" : "rgba(0,0,0,.7)"}`, cursor: "pointer", transition: '.15s', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '.25em .5em', gap: `${icon ? '.5em':'0'}` }} type={type} onClick={(e) => handleOnClick(e)} onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
+          <div>{ icon && icon }</div>
+        { !isDisabled ? name : <Loading /> }
+      </button >
+    </div >
   )
 }
 

@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 
-const useGetUserId = () => {
+const useGetUserId = (isUser) => {
   const [getUserId, setGetUserId] = useState(0)
 
 
   const userId = JSON.parse(localStorage.getItem('user')).data ? JSON.parse(localStorage.getItem('user')).data.userId : ""
 
+  let user = null
+  if (isUser) {
+    user = JSON.parse(localStorage.getItem('user')).data ? JSON.parse(localStorage.getItem('user')).data : null
+  }
 
   useEffect(() => {
     if (!userId) {
@@ -18,6 +22,6 @@ const useGetUserId = () => {
 
   }, [getUserId])
 
-  return userId
+  return isUser ? user : userId
 }
 export default useGetUserId

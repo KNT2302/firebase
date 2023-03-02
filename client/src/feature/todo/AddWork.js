@@ -15,7 +15,7 @@ const AddWork = ({ todoList, setTodoList }) => {
     setAddWork(!addWork)
   }
   return (
-    <div>
+    <div style={{fontSize:'1.8rem'}}>
       {addWork && <WorkEdit handleToggleState={handleToggleAddWork} stateDo={stateDoObj.ADD} todoList={todoList} setTodoList={setTodoList} />}
       {!addWork &&
         <div style={{ position: 'absolute', top: 'calc(100% + 1rem)', right: '0%', fontSize:'2.5rem' }}>

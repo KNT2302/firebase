@@ -8,6 +8,7 @@ import { socket } from '../../../ulti/socketIO'
 import TabChat from './TabChat'
 import messageStore from "../../../store/message"
 import notifyStore from "../../../store/notify"
+import {TiMessages} from "react-icons/ti"
 
 
 const Message = () => {
@@ -138,11 +139,12 @@ const Message = () => {
     toggleClickChat()
   }
   return (
-    <>
+    <div>
+  
       <Popup openPopupByClick={true} isLinkNotify={isMessageNotify} name="Message" getChildren={getChildren} position={{ bottom: '0%', left: '0' }} maxWidth="375px" whenClick={toggleChat} whenClose={() => {
         closePopup()
-      }} commonClose={toggleChat} />
-    </>
+      }} commonClose={toggleChat} icon={<TiMessages/>} />
+    </div>
   )
 }
 

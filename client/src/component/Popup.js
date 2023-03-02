@@ -49,7 +49,7 @@ const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth, whenClo
 }
 
 
-const Popup = ({ name, getChildren, resetState, maxWidth, whenClick, whenClose, openPopupByClick, isLinkNotify, commonClose }) => {
+const Popup = ({ name, getChildren, resetState, maxWidth, whenClick, whenClose, openPopupByClick, isLinkNotify, commonClose, icon }) => {
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -76,7 +76,7 @@ const Popup = ({ name, getChildren, resetState, maxWidth, whenClick, whenClose, 
     <>
       <div style={{ display: 'flex', alignItems: "flex-start" }}>
 
-        <Button type="button" onClick={clickOpen} name={name} />
+        <Button icon={icon} type="button" onClick={clickOpen} name={name} />
       </div>
       {(isOpen || (openPopupByClick && isLinkNotify)) &&
         <Content openPopupByClick getChildren={getChildren} handleTogglePopup={clickClose} isLinkNotify={isLinkNotify} resetState={resetState} maxWidth={maxWidth} whenClose={whenClose ? whenClose : () => { }} />

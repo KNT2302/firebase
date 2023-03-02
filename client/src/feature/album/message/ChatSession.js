@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import axiosProvider from "../../../ulti/axios"
 import { socket } from "../../../ulti/socketIO"
 import BoxChat from "./BoxChat"
+import NoteChat from "./NoteChat"
 import Sender from "./Sender"
 
 const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
@@ -51,7 +52,7 @@ const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
           <Sender updateChat={updateChat} room={query} userToken={userToken} />
 
         </> :
-        <>Chat</>
+        <NoteChat />
       }
     </div>
   )

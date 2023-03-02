@@ -43,7 +43,7 @@ const NewList = ({ data, setHaveRead, handleClosePopup }) => {
       {data.map((message, index) => {
         return (
           <>
-            {message.type === "Friend" ? <Message key={message.id} message={message} isLast={message.id == data.length} isNew handleClick={setHaveRead} handleClosePopup={handleClosePopup} type={message.type} getChildren={(handleOnClick) => { return (<AgreeButton handleOnClick={handleOnClick} />) }} /> : <Message key={message.id} message={message} isLast={message.id == data.length} isNew handleClick={setHaveRead} handleClosePopup={handleClosePopup} type={message.type} />}
+            {message.type === "Friend" ? <Message key={message.id} message={message} isLast={message.id == data.length} isNew handleClick={setHaveRead} handleClosePopup={handleClosePopup} type={message.type} getChildren={(handleOnClick) => { return (<AgreeButton data={message.data} handleOnClick={handleOnClick} />) }} /> : <Message key={message.id} message={message} isLast={message.id == data.length} isNew handleClick={setHaveRead} handleClosePopup={handleClosePopup} type={message.type} />}
           </>
 
         )

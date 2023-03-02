@@ -32,7 +32,8 @@ const Album = () => {
   }
 
 
-  const [list, setList] = useState([])
+  const [listMine, setListMine] = useState([])
+  const [listPublish, setListPublish] = useState([])
   const [tab, setTab] = useState("mine")
   const screenSize = useResponsive(getSizeScreen)
   const userId = useGetUserId()
@@ -47,23 +48,32 @@ const Album = () => {
     setIsLoading(true)
     if (query === "mine") {
       const posts = await axiosProvider.get(`/api/post?userId=${userId}`)
-      setList([...posts.data])
+      setListMine([...posts.data])
     } else {
       const posts = await axiosProvider.get(`/api/post`)
       const newData = posts.data.filter(post => !post.userId || post.userId !== userId)
       console.log(newData)
-      setList([...newData])
+      setListPublish([...newData])
     }
     setIsLoading(false)
   }
 
   const updateList = (photo) => {
-    setList([...list, photo])
+    setListMine([...listMine, photo])
   }
   useEffect(() => {
-    getList(tab)
+    if (!listMine.length || !listPublish.length) {
+      getList(tab)
+    }
   }, [tab])
 
+  const getDataList = () => {
+    if (tab === "mine") {
+      return listMine
+    } else {
+      return listPublish
+    }
+  }
 
 
   return (
@@ -86,7 +96,7 @@ const Album = () => {
             </div>
             {isLoading ? <div style={{ fontSize: '1.8rem' }}>Getting photo list <span style={{ display: 'inline-block' }}><Loading /></span></div> :
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {list.reverse().map((post) => {
+                {getDataList().reverse().map((post) => {
                   return (
                     <Post key={post.urlPhoto} path={post.urlPhoto} comment={post.comment} postId={post.postId} />
                   )

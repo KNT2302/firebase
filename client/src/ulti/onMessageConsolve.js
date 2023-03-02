@@ -5,12 +5,11 @@ export const onMessageConsolve = (message, messageStore) => {
 
   const { notification } = message
 
-
   const notifyDisplay = message
-
-
+  let data = null
 
   const body = notification.body.includes("{") ? JSON.parse(notification.body) : notification.body
+  notifyDisplay.notification.body = body.content
   if (typeof body === 'object') {
 
     if (notification.title === "Message") {
@@ -21,9 +20,15 @@ export const onMessageConsolve = (message, messageStore) => {
         return
       }
     }
-
+    if (notification.title === "Friend") {
+      const { friendId, currentToken } = body
+      data = {
+        friendId,
+        currentToken
+      }
+    }
   }
 
-  return { ...notifyDisplay, type: notification.title }
+  return { ...notifyDisplay, type: notification.title, data }
 
 }

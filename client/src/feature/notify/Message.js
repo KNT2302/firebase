@@ -1,7 +1,7 @@
 import React from 'react'
 import { FiUser } from "react-icons/fi"
 
-const Message = ({ message, isLast, isNew, handleClick, handleClosePopup, type, getChildren }) => {
+const Message = ({ message, isLast, isNew, handleClick, handleClosePopup, type, getChildren, data }) => {
 
   const handleOnClick = isNew ? () => {
 

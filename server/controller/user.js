@@ -1,7 +1,7 @@
 
 import { db } from "../app.js"
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore"
-import { getAllUsers } from "../ulti/common.js"
+import { getAllUsers, getUser } from "../ulti/common.js"
 
 
 export const login = async (req, res, next) => {
@@ -26,10 +26,6 @@ export const login = async (req, res, next) => {
 
 
   const updateCurrentToken = async (res, req, user) => {
-
-   
-
-
 
     const userRef = doc(db, "users", user.docId)
 
@@ -63,6 +59,31 @@ export const get = async (req, res, next) => {
   } catch (error) {
 
     res.status(200).json({ success: false, error })
+  }
+}
+
+export const makeFriend = async (req, res, next) => {
+  try {
+    const userId = req.body.userId
+    const friendId = req.body.friendId
+    const user = await getUser(res, userId)
+    const friend = await getUser(res, friendId)
+    const userDoc = doc(db, 'users', user[0].docId)
+    const friendDoc = doc(db, 'users', friend[0].docId)
+
+    const userFriend = user[0].friend ? user[0].friend : []
+    const friendFriend = friend[0].friend ? friend[0].friend : []
+    await updateDoc(userDoc, {
+      friend: [...userFriend, friendId]
+    })
+
+    await updateDoc(friendDoc, {
+      friend: [...friendFriend, userId]
+    })
+
+    res.status(200).json({ success: true })
+  } catch (err) {
+    res.status(200).json({ success: false })
   }
 }
 

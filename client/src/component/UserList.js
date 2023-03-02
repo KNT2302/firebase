@@ -5,6 +5,7 @@ import { FiUser } from "react-icons/fi"
 import Button from './Button'
 import axiosProvider from '../ulti/axios'
 import { async } from '@firebase/util'
+import useGetUserId from '../ulti/hooks/getUserId'
 
 
 
@@ -32,9 +33,8 @@ const User = ({ user, isPick }) => {
         } onClick={() => { pickFriendRef.current.checked = !pickFriendRef.current.checked }} />
 
       </div> :
-        <div style={{ display: 'flex', gap:'.5em' }}>
+        <div style={{ display: 'flex', gap: '.5em' }}>
           <div>
-
             <FiUser />
           </div>
           <div>
@@ -51,7 +51,7 @@ const UserList = ({ list, isPick }) => {
 
 
   return (
-    <div style={{width:'375px'}}>
+    <div style={{ width: '375px' }}>
       {list.length <= 0 ? <div style={{ fontSize: '2rem' }}>
         <Loading />
       </div> : <>
@@ -67,11 +67,18 @@ const UserList = ({ list, isPick }) => {
 
 const MakeFriend = ({ currentToken }) => {
 
+  const isUser = true
+  const user = useGetUserId(isUser)
+
   const makeFriend = () => {
     return new Promise(async (resolve) => {
       const notificationContent = {
         title: "Friend",
-        body: "body"
+        body: {
+          friendId: user.userId,
+          content: "has given making friend",
+          currentToken: user.currentToken
+        }
       }
       const response = await axiosProvider.post("api/pushNotification", {}, {
         ...notificationContent,

@@ -17,7 +17,7 @@ const Notify = ({ promiseGetToken }) => {
 
   const messageStoreGet = messageStore(state => state)
 
-  const {openMessage, openFriend} = notifyStore(state=>state)
+  const { openMessage, openFriend } = notifyStore(state => state)
 
   const [newData, setNewData] = useState([])
 
@@ -58,20 +58,21 @@ const Notify = ({ promiseGetToken }) => {
 
   useEffect(() => {
     onMessage(message, (message) => {
-      const data = onMessageConsolve(message, messageStoreGet)
-      if (data) {
+      const haveGot = onMessageConsolve(message, messageStoreGet)
+      if (haveGot) {
         setNewData([...newData, {
-          id: data.messageId,
-          title: data.notification.title,
-          content: data.notification.body,
+          id: haveGot.messageId,
+          title: haveGot.notification.title,
+          content: haveGot.notification.body,
           image: 'url(1)',
-          type:data.type
+          type: haveGot.type,
+          data: haveGot.data ? haveGot.data : []
         }])
       }
 
     })
   }, [newData, messageStoreGet])
-  
+
   const setHaveRead = (message, type) => {
     const haveNotRead = newData
     haveNotRead[haveNotRead.indexOf(message)] = {}
@@ -80,15 +81,15 @@ const Notify = ({ promiseGetToken }) => {
     setNewData(haveNotRead.filter((message) => Object.keys(message).length > 0))
     setData([...data, message])
 
-    if(type==="Message"){
+    if (type === "Message") {
       openMessage()
       messageStoreGet.toggleClickChat()
     }
-    if(type==="Friend"){
+    if (type === "Friend") {
       openFriend()
     }
 
-    
+
     // notifyStore.toggleClickLink()
 
   }
