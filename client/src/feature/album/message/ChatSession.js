@@ -20,7 +20,7 @@ const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
     return () => {
       socket.off("receive_message")
     }
-  },[updateChat])
+  }, [updateChat])
 
 
   useEffect(() => {
@@ -34,22 +34,27 @@ const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
 
   }, [messengeData, query])
 
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '50vh', paddingBottom: '3em' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* <h1>{query}</h1> */}
       {query ?
         <>
+          <div ref={chatRef} className={"chat"} style={{ overflow: 'auto', padding: '0 1em 0 0', flex: '1', flexBasis: '1px', marginRight:'-20px'}}>
+            <div style={{ display: 'flex', flexDirection: 'column',width:'100%',maxWidth:'375px', margin:'0 auto', height:'100%'}} >
+              <div style={{ flex: '1'}}></div>
+              {messengeData && messengeData[query] && messengeData[query].map((inbox, index) => {
+                return (
+                  <BoxChat key={index} sent={inbox.userId === userId} inbox={inbox} />
+                )
+              })}
+            </div>
 
-          <div ref={chatRef} className={"chat"} style={{ overflow: 'auto', padding: '0 1em 0 0', flex: '1', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ flex: '1' }}></div>
-            {messengeData && messengeData[query] && messengeData[query].map((inbox, index) => {
-              return (
-                <BoxChat key={index} sent={inbox.userId === userId} inbox={inbox} />
-              )
-            })}
           </div>
-          <Sender updateChat={updateChat} room={query} userToken={userToken} />
+
+          <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
+            <Sender updateChat={updateChat} room={query} userToken={userToken} />
+
+          </div>
 
         </> :
         <NoteChat />

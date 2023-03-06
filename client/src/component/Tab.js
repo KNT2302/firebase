@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import useResponsive from '../ulti/hooks/reponsive'
 import Button from './Button'
+import Loading from './Loading'
 
 
 
@@ -35,18 +36,23 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children }) => {
   }
 
   return (
-    <div style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "row" : 'column'}`, height: '100%', width: `${screenSize === sizeObj.BIG ? 'auto' : '100%'}` }}>
+    <div style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "row" : 'column'}`, width: `${screenSize === sizeObj.BIG ? 'auto' : '100%'}`, height: '100%' }}>
       <div style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "column" : 'row'}` }}>
 
-        {listTab ? listTab.map((tab, index) => {
+        {listTab ? (listTab.length ? listTab.map((tab, index) => {
           return (
             itemTab ? itemTab(tab, setTab, index) :
               <ItemTab key={index} name={tab.name} setTab={handleSetTab} query={tab.query} isSelect={tabValue === tab.query} />
           )
-        }) :
-          <div style={{ padding: ".5em", cursor: 'pointer', borderRadius: '1em', transform: 'translateX(-.5em)', color: 'transparent' }}>
-            NaN
-          </div>}
+        }) : <div><Loading /></div>) :
+          <>
+            {
+              screenSize === sizeObj.BIG && <div style={{ padding: ".5em", cursor: 'pointer', borderRadius: '1em', transform: 'translateX(-.5em)', color: 'transparent' }}>
+                NaN
+              </div>
+            }
+          </>
+        }
       </div>
       <div style={{ flex: '1' }}>
         {getChildrens ? getChildrens() : children}

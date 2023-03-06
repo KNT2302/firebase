@@ -8,7 +8,8 @@ import { socket } from '../../../ulti/socketIO'
 import TabChat from './TabChat'
 import messageStore from "../../../store/message"
 import notifyStore from "../../../store/notify"
-import {TiMessages} from "react-icons/ti"
+import { TiMessages } from "react-icons/ti"
+import useResponsive from '../../../ulti/hooks/reponsive'
 
 
 const Message = () => {
@@ -113,41 +114,48 @@ const Message = () => {
       })
       setRoomData([...newDataRoom])
     }
-
-
-
   }, [messageReceive])
 
   const GetChildrens = () => {
-
     return (
       <ChatSession query={query} messengeData={messageData} updateChat={updateChat} userToken={userToken} />
     )
   }
 
+  const sizeObj = {
+    BIG: 'big',
+    SMALL: 'small'
+  }
+
+  const getSizeScreen = (size) => {
+    if (size >= 800) {
+      return sizeObj.BIG
+    }
+    return sizeObj.SMALL
+  }
+
+  const screenSize = useResponsive(getSizeScreen)
   const getChildren = () => {
 
     return (
-      <div style={{ width: '100%', position: 'relative' }}>
-        <Tab listTab={roomData} row setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} />
+      <div style={{ width: '100%', height:'100%' }}>
+        <Tab listTab={roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} />
       </div>
     )
 
   }
-
   const toggleChat = () => {
     toggleClickChat()
   }
   return (
-    <div>
-  
-      <Popup openPopupByClick={true} isLinkNotify={isMessageNotify} name="Message" getChildren={getChildren} position={{ bottom: '0%', left: '0' }} maxWidth="375px" whenClick={toggleChat} whenClose={() => {
+    <div style={{ height:'100%'}}>
+      {getChildren()}
+      {/* <Popup openPopupByClick={true} isLinkNotify={isMessageNotify} name="Message" getChildren={getChildren} position={{ bottom: '0%', left: '0' }} maxWidth="375px" whenClick={toggleChat} whenClose={() => {
         closePopup()
-      }} commonClose={toggleChat} icon={<TiMessages/>} />
+      }} commonClose={toggleChat} icon={<TiMessages/>} /> */}
     </div>
   )
 }
-
 export default Message
 
 

@@ -1,7 +1,7 @@
 
 import { db } from "../app.js"
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore"
-import { getAllUsers, getUser } from "../ulti/common.js"
+import { getAllFromArrayField, getAllUsers, getUser } from "../ulti/common.js"
 
 
 export const login = async (req, res, next) => {
@@ -84,6 +84,17 @@ export const makeFriend = async (req, res, next) => {
     res.status(200).json({ success: true })
   } catch (err) {
     res.status(200).json({ success: false })
+  }
+}
+
+export const getFriend = async (req, res, next) => {
+  try {
+    const response = await getAllFromArrayField(req, res, "users", "friend")
+    
+
+    res.status(200).json({ success: true, data: response })
+  } catch (err) {
+    res.status(200).json({ success: false, err })
   }
 }
 

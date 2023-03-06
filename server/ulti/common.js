@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDocs, updateDoc, getDoc } from "firebase/firestore"
 import { db } from "../app.js"
 
 export const getAllUsers = async (res) => {
@@ -79,15 +79,31 @@ export const createOne = async (collectionName, data, res) => {
   }
 }
 
-export const getAllFromArrayField = async (req, res, fieldName) => {
+export const getAllFromArrayField = async (req, res, path, fieldName) => {
   let result = null
   const user = await getUser(res, req.query.userId)
   if (user[0][fieldName]) {
 
-    const arrayFiled = user[0][fieldName]
+    let arrayFiled = null
+
+
+    if (path === "users") {
+
+      const arrayIdDoc = Promise.all(user[0][fieldName].map(async (id) => {
+        const response = await getUser(res, id)
+        return response[0].docId
+      }))
+      arrayFiled = await arrayIdDoc
+    } else {
+
+      arrayFiled = user[0][fieldName]
+    }
+
+    console.log(arrayFiled)
+
 
     const getItemOfField = Promise.all(arrayFiled.map(async item => {
-      const response = await getDoc(doc(db, fieldName, item))
+      const response = await getDoc(doc(db, path, item))
       return response.data()
     }))
     result = await getItemOfField

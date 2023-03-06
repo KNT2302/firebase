@@ -42,8 +42,8 @@ const Sender = ({ updateChat, room, userToken }) => {
     })
   }
   return (
-    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '.5em', alignItems: 'flex-end', fontSize: '1em', position: 'absolute', width: '100%', bottom: '0', left: '0', padding: '.5em' }}>
-      <div style={{ borderRadius: '1em', overflow: 'hidden', flex: '1', transition: '.3s' }}>
+    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '.5em', alignItems: 'flex-end', fontSize: '1em', padding: '.5em', width:'375px' }}>
+      <div style={{ borderRadius: '1em', overflow: 'hidden', flex: '1', transition: '.3s', width:'100%' }}>
 
         <Input textarea ref={inputRef} type="text" />
       </div>

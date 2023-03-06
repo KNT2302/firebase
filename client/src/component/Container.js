@@ -10,7 +10,7 @@ const Container = ({children}) => {
     setIsFadeIn(true)
   },[])
   return (
-    <div ref={conRef} style={{ opacity:`${isFadeIn?"1":"0.5"}` ,transition:'.15s', width:'100%', maxWidth:'1536px', margin:'0 auto'}}>{children}</div>
+    <div ref={conRef} style={{ opacity:`${isFadeIn?"1":"0.5"}` ,transition:'.15s', width:'100%',margin:'0 auto', height:'100%'}}>{children}</div>
   )
 }
 
