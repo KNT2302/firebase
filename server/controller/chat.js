@@ -80,6 +80,7 @@ export const getRoom = async (req, res, next) => {
       return {
         query: id,
         name: friend[0] ? friend[0].displayName : "User",
+        photoURL: friend[0] ? friend[0].photoURL : "",
         lastMessenge: message,
         userToken: friend[0] ? friend[0].currentToken : ""
       }

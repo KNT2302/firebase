@@ -24,10 +24,20 @@ const Message = () => {
 
   const userId = useGetUserId()
 
-  const { setChatRoomCurrent, messageReceive, roomCurrent, roomReceive, toggleClickChat } = messageStore(state => state)
-  const { isMessageNotify, closePopup } = notifyStore(state => state)
+  const { setChatRoomCurrent, messageReceive, roomCurrent, roomReceive } = messageStore(state => state)
 
-  console.log(isMessageNotify)
+  const friendInfo = () => {
+
+    let info = null
+    const roomJoined = roomData.filter((room) => room.query === query)
+
+    info = roomJoined[0]
+   
+
+    return info
+
+  }
+
   useEffect(() => {
     const getMessengers = async () => {
 
@@ -66,12 +76,6 @@ const Message = () => {
   }
 
   const updateChat = (inbox) => {
-    const newMessageData = messageData
-    newMessageData[query] = [...newMessageData[query], inbox]
-    setMessageData({ ...newMessageData })
-  }
-
-  const updateChatFromTab = (inbox, query) => {
     const newMessageData = messageData
     newMessageData[query] = [...newMessageData[query], inbox]
     setMessageData({ ...newMessageData })
@@ -118,7 +122,7 @@ const Message = () => {
 
   const GetChildrens = () => {
     return (
-      <ChatSession query={query} messengeData={messageData} updateChat={updateChat} userToken={userToken} />
+      <ChatSession query={query} messengeData={messageData} updateChat={updateChat} userToken={userToken} friendInfo={friendInfo} />
     )
   }
 
@@ -138,17 +142,15 @@ const Message = () => {
   const getChildren = () => {
 
     return (
-      <div style={{ width: '100%', height:'100%' }}>
+      <div style={{ width: '100%', height: '100%' }}>
         <Tab listTab={roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} />
       </div>
     )
 
   }
-  const toggleChat = () => {
-    toggleClickChat()
-  }
+
   return (
-    <div style={{ height:'100%'}}>
+    <div style={{ height: '100%' }}>
       {getChildren()}
       {/* <Popup openPopupByClick={true} isLinkNotify={isMessageNotify} name="Message" getChildren={getChildren} position={{ bottom: '0%', left: '0' }} maxWidth="375px" whenClick={toggleChat} whenClose={() => {
         closePopup()

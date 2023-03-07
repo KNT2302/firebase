@@ -12,10 +12,8 @@ const Input = forwardRef((props, ref) => {
       {
         !props.textarea ?
           <input ref={ref} style={{ fontSize: '1em', padding: '.2em', border: 'none', outline: 'none', fontFamily: 'Times New Roman', width:'100%' }} type={props.type} placeholder={props.placeholder} id={props.name} /> :
-          <div contentEditable ref={ref} style={{ fontSize: '1em', padding: '.5em', border: 'none', outline: 'none', fontFamily: 'Times New Roman', minHeight:'1em', width:'100%',background:'gray', transition:'.3s' }} type={props.type} placeholder={props.placeholder} id={props.name}  />
+          <div contentEditable ref={ref} style={{ fontSize: '1em', padding: '.5em', border: 'none', outline: 'none', fontFamily: 'Times New Roman', minHeight:'1em', width:'100%',background:'rgba(225,225,225,1)', transition:'.3s' }} type={props.type} placeholder={props.placeholder} id={props.name}  />
       }
-
-
     </div>
   )
 })

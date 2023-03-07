@@ -5,11 +5,14 @@ import BoxChat from "./BoxChat"
 import NoteChat from "./NoteChat"
 import Sender from "./Sender"
 
-const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
+const ChatSession = ({ query, messengeData, updateChat, userToken, friendInfo }) => {
+
 
   const { userId } = JSON.parse(localStorage.getItem('user')).data
 
   const chatRef = useRef()
+
+  const friend = friendInfo()
 
   useEffect(() => {
     socket.on('receive_message', (data) => {
@@ -36,7 +39,7 @@ const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {/* <h1>{query}</h1> */}
+      <h1 style={{fontSize:'1.5em'}}>{friend && friend.name}</h1>
       {query ?
         <>
           <div ref={chatRef} className={"chat"} style={{ overflow: 'auto', padding: '0 1em 0 0', flex: '1', flexBasis: '1px', marginRight:'-20px'}}>
@@ -44,7 +47,7 @@ const ChatSession = ({ query, messengeData, updateChat, userToken }) => {
               <div style={{ flex: '1'}}></div>
               {messengeData && messengeData[query] && messengeData[query].map((inbox, index) => {
                 return (
-                  <BoxChat key={index} sent={inbox.userId === userId} inbox={inbox} />
+                  <BoxChat key={index} sent={inbox.userId === userId} inbox={inbox} friendInfo={friend} isLastSent={index===messengeData[query].length - 1 || inbox.userId !== messengeData[query][index].userId}/>
                 )
               })}
             </div>
