@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Popup from '../../../component/Popup'
 import Tab from '../../../component/Tab'
 import ChatSession from './ChatSession'
 import axiosProvider from '../../../ulti/axios'
@@ -7,8 +6,6 @@ import useGetUserId from '../../../ulti/hooks/getUserId'
 import { socket } from '../../../ulti/socketIO'
 import TabChat from './TabChat'
 import messageStore from "../../../store/message"
-import notifyStore from "../../../store/notify"
-import { TiMessages } from "react-icons/ti"
 import useResponsive from '../../../ulti/hooks/reponsive'
 
 
@@ -138,12 +135,12 @@ const Message = () => {
     return sizeObj.SMALL
   }
 
-  const screenSize = useResponsive(getSizeScreen)
+  const {screenSize} = useResponsive(getSizeScreen)
   const getChildren = () => {
 
     return (
       <div style={{ width: '100%', height: '100%' }}>
-        <Tab listTab={roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} />
+        <Tab listTab={roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} canScroll />
       </div>
     )
 
@@ -152,9 +149,6 @@ const Message = () => {
   return (
     <div style={{ height: '100%' }}>
       {getChildren()}
-      {/* <Popup openPopupByClick={true} isLinkNotify={isMessageNotify} name="Message" getChildren={getChildren} position={{ bottom: '0%', left: '0' }} maxWidth="375px" whenClick={toggleChat} whenClose={() => {
-        closePopup()
-      }} commonClose={toggleChat} icon={<TiMessages/>} /> */}
     </div>
   )
 }

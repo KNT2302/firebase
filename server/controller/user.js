@@ -81,6 +81,19 @@ export const makeFriend = async (req, res, next) => {
       friend: [...friendFriend, userId]
     })
 
+    const chatDoc = await addDoc(collection(db, "chat"), {
+      users:[user[0].userId, friend[0].userId]
+    })
+
+    const chatRef = doc(db, 'chat', chatDoc.id)
+
+    await updateDoc(chatRef, {
+      chatId: chatDoc.id
+    })
+
+
+
+
     res.status(200).json({ success: true })
   } catch (err) {
     res.status(200).json({ success: false })

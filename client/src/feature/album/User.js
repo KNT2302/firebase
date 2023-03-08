@@ -27,7 +27,7 @@ const User = () => {
 
   const userIdClient = useGetUserId()
 
-  const screenSize = useResponsive(getSizeScreen)
+  const {screenSize} = useResponsive(getSizeScreen)
 
   useEffect(() => {
     const getUser = async () => {

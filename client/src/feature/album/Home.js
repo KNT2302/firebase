@@ -32,7 +32,7 @@ const Home = () => {
   
   const userId = useGetUserId()
 
-  const screenSize = useResponsive(getSizeScreen)
+  const {screenSize} = useResponsive(getSizeScreen)
 
   const [listMine, setListMine] = useState ([])
   const [listPublish, setListPublish] = useState([])

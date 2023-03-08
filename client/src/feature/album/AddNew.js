@@ -98,7 +98,7 @@ const AddNew = ({ updateList }) => {
 
 
 
-  const screenSize = useResponsive(getSizeScreen)
+  const {screenSize} = useResponsive(getSizeScreen)
 
 
   const children = (handleClosePopup) => {
