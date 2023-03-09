@@ -135,7 +135,7 @@ const Message = () => {
   }
 
   const getSizeScreen = (size) => {
-    if (size >= 800) {
+    if (size >= 700) {
       return sizeObj.BIG
     }
     return sizeObj.SMALL

@@ -85,13 +85,6 @@ export const searchRoom = async (req, res, next) => {
   } catch (error) {
     res.status(200).json({ success: false, error })
   }
-
-
-
-
-
-
-
 }
 
 

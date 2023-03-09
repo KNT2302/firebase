@@ -43,7 +43,7 @@ const ChatSession = ({ query, messengeData, updateChat, userToken, friendInfo })
       {query ?
         <>
           <div ref={chatRef} className={"chat"} style={{ overflow: 'auto', padding: '0 1em 0 0', flex: '1', flexBasis: '1px', marginRight: '-20px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '600px', margin: '0 auto', height: '100%' }} >
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '700px', margin: '0 auto', height: '100%' }} >
               <div style={{ flex: '1' }}></div>
               {(!messengeData || !messengeData[query]) && <Loading />}
               {messengeData && messengeData[query] && messengeData[query].map((inbox, index) => {

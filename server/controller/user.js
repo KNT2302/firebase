@@ -103,8 +103,8 @@ export const makeFriend = async (req, res, next) => {
 export const getFriend = async (req, res, next) => {
   try {
     const response = await getAllFromArrayField(req, res, "users", "friend")
-    
 
+    response = response.map()
     res.status(200).json({ success: true, data: response })
   } catch (err) {
     res.status(200).json({ success: false, err })

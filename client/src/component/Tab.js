@@ -21,7 +21,7 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
   }
 
   const getSizeScreen = (size) => {
-    if (size >= 800) {
+    if (size >= 700) {
       return sizeObj.BIG
     }
     return sizeObj.SMALL
@@ -48,22 +48,20 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
     }
   }, [barTabRef.current, screenChange])
 
+  useEffect(() => {
+    if (screenSize === sizeObj.BIG) {
+      barTabRef.current.style.transform = `translateX(0%)`
+    }
+  }, [screenSize])
+
   return (
     <div style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "row" : 'column'}`, width: `${screenSize === sizeObj.BIG ? 'auto' : '100%'}`, height: '100%' }}>
-
-
-
-      <div style={{ overflow: `${canScroll ? 'hidden' : 'visible'}`, position: 'relative' }}>
+      <div style={{ overflow: `${canScroll ? 'hidden' : 'visible'}`, position: `relative` }}>
         {itemTab &&
-
           <div style={{ padding: '.5em .5em .5em 0' }}>
             <Search searchCall={searchTab} />
           </div>
-
-
         }
-
-
         {
           canScroll && screenSize === sizeObj.SMALL &&
           <>
@@ -93,9 +91,7 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
             </>
           }
         </div>
-
       </div>
-
       <div style={{ flex: '1' }}>
         {getChildrens ? getChildrens() : children}
       </div>
