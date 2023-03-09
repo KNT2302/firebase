@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useFetcher } from 'react-router-dom'
 import useResponsive from '../ulti/hooks/reponsive'
 import scroll from '../ulti/scroll'
 import Button from './Button'
-
-
-
+import { MdNavigateNext } from "react-icons/md"
+import Search from './Search'
 
 const ItemTab = ({ name, setTab, query, isSelect }) => {
 
@@ -16,8 +14,7 @@ const ItemTab = ({ name, setTab, query, isSelect }) => {
   )
 }
 
-
-const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll }) => {
+const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll, searchTab }) => {
   const sizeObj = {
     BIG: 'big',
     SMALL: 'small'
@@ -33,21 +30,11 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll 
   const barTabRef = useRef(null)
 
   const [tabValue, setTabValue] = useState(() => listTab ? (listTab.length ? listTab[0].query : 0) : 0)
-  const {screenSize, screenChange} = useResponsive(getSizeScreen)
+  const { screenSize, screenChange } = useResponsive(getSizeScreen)
 
   const handleSetTab = (tabName) => {
     setTab(tabName)
     setTabValue(tabName)
-  }
-
-  const next = () => {
-    barTabRef.current.style.transform = 'translateX(-100%)'
-    console.log(barTabRef)
-  }
-
-  const back = () => {
-    barTabRef.current.style.transform = 'translateX(0)'
-    console.log(barTabRef)
   }
 
   const scrollNext = useRef()
@@ -59,19 +46,29 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll 
       let tabMount = barTabRef.current.childElementCount
       scrollNext.current = scroll(tabBarWidth, tabMount, tabWidth)
     }
-  }, [barTabRef.current,screenChange])
+  }, [barTabRef.current, screenChange])
 
   return (
     <div style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "row" : 'column'}`, width: `${screenSize === sizeObj.BIG ? 'auto' : '100%'}`, height: '100%' }}>
 
 
 
-      <div style={{ overflowX: `${canScroll ? 'hidden' : 'visible'}`, position: 'relative' }}>
+      <div style={{ overflow: `${canScroll ? 'hidden' : 'visible'}`, position: 'relative' }}>
+        {itemTab &&
+
+          <div style={{ padding: '.5em .5em .5em 0' }}>
+            <Search searchCall={searchTab} />
+          </div>
+
+
+        }
+
+
         {
           canScroll && screenSize === sizeObj.SMALL &&
           <>
-            <div style={{ position: 'absolute', right: '0', zIndex: '1', top: '50%', transform: 'translateY(-50%)' }}>
-              <Button type='button' name="next" onClick={() => {
+            <div style={{ position: 'absolute', zIndex: '1', top: 'calc(50% + 2.5rem)', right: '.5em', transform: 'translateY(-50%)', borderRadius: '50%', overflow: 'hidden', boxShadow: '1px 1px 10px', width: '2em', height: '2em', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white' }}>
+              <Button type='button' name={<MdNavigateNext />} onClick={() => {
                 console.log('run')
                 const next = (scrollNext.current)
                 barTabRef.current.style.transform = `translateX(-${next() * 100}%)`

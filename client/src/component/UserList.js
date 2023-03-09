@@ -22,7 +22,6 @@ const User = ({ user, isPick }) => {
   }, [])
   return (
     <div>
-
       {isPick ? <div style={{ display: 'flex', fontSize: '1.8rem' }}>
         <Input ref={pickFriendRef} type='checkbox' name={user.displayName} />
         <Button name={

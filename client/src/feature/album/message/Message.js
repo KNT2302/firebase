@@ -29,7 +29,7 @@ const Message = () => {
     const roomJoined = roomData.filter((room) => room.query === query)
 
     info = roomJoined[0]
-   
+
 
     return info
 
@@ -117,11 +117,17 @@ const Message = () => {
     }
   }, [messageReceive])
 
+  const searchTab = () => {
+
+  }
+
   const GetChildrens = () => {
     return (
       <ChatSession query={query} messengeData={messageData} updateChat={updateChat} userToken={userToken} friendInfo={friendInfo} />
     )
   }
+
+
 
   const sizeObj = {
     BIG: 'big',
@@ -135,12 +141,12 @@ const Message = () => {
     return sizeObj.SMALL
   }
 
-  const {screenSize} = useResponsive(getSizeScreen)
+  const { screenSize } = useResponsive(getSizeScreen)
   const getChildren = () => {
 
     return (
       <div style={{ width: '100%', height: '100%' }}>
-        <Tab listTab={roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} canScroll />
+        <Tab listTab={roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} canScroll searchTab={searchTab} />
       </div>
     )
 

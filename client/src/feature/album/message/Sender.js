@@ -3,6 +3,7 @@ import Button from "../../../component/Button"
 import Input from "../../../component/Input"
 import axiosProvider from "../../../ulti/axios"
 import useGetUserId from "../../../ulti/hooks/getUserId"
+import {TbSend} from "react-icons/tb"
 import { socket } from "../../../ulti/socketIO"
 
 const Sender = ({ updateChat, room, userToken }) => {
@@ -49,7 +50,7 @@ const Sender = ({ updateChat, room, userToken }) => {
       </div>
       <div style={{ padding: '0 .5em' }}>
 
-        <Button name="Send" onClick={sendMessage} />
+        <Button name={<TbSend/>} onClick={sendMessage} />
       </div>
     </div>
   )
