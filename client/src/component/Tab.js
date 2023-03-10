@@ -4,6 +4,9 @@ import scroll from '../ulti/scroll'
 import Button from './Button'
 import { MdNavigateNext } from "react-icons/md"
 import Search from './Search'
+import Loading from './Loading'
+import SearchTab from './SearchTab'
+import { async } from '@firebase/util'
 
 const ItemTab = ({ name, setTab, query, isSelect }) => {
 
@@ -14,12 +17,11 @@ const ItemTab = ({ name, setTab, query, isSelect }) => {
   )
 }
 
-const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll, searchTab }) => {
+const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll, handleSetDataSearch, urlApi }) => {
   const sizeObj = {
     BIG: 'big',
     SMALL: 'small'
   }
-
   const getSizeScreen = (size) => {
     if (size >= 700) {
       return sizeObj.BIG
@@ -46,7 +48,7 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
       let tabMount = barTabRef.current.childElementCount
       scrollNext.current = scroll(tabBarWidth, tabMount, tabWidth)
     }
-  }, [barTabRef.current, screenChange])
+  }, [barTabRef.current, screenChange, handleSetDataSearch])
 
   useEffect(() => {
     if (screenSize === sizeObj.BIG) {
@@ -54,13 +56,17 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
     }
   }, [screenSize])
 
+  useEffect(() => {
+    barTabRef.current.style.transform = `translateX(0%)`
+  }, [handleSetDataSearch])
+
   return (
     <div style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "row" : 'column'}`, width: `${screenSize === sizeObj.BIG ? 'auto' : '100%'}`, height: '100%' }}>
       <div style={{ overflow: `${canScroll ? 'hidden' : 'visible'}`, position: `relative` }}>
         {itemTab &&
-          <div style={{ padding: '.5em .5em .5em 0' }}>
-            <Search searchCall={searchTab} />
-          </div>
+          <SearchTab handleSetDataSearch={async (data) => {
+            await handleSetDataSearch(data)
+          }} urlApi={urlApi} />
         }
         {
           canScroll && screenSize === sizeObj.SMALL &&
@@ -76,12 +82,13 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
         }
         <div ref={barTabRef} style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "column" : 'row'}`, transition: '.3s' }}>
 
-          {listTab ? (listTab.map((tab, index) => {
+          {listTab ? (listTab.length ? (listTab.map((tab, index) => {
             return (
               itemTab ? itemTab(tab, setTab, index) :
                 <ItemTab key={index} name={tab.name} setTab={handleSetTab} query={tab.query} isSelect={tabValue === tab.query} />
             )
           })) :
+            <Loading />) :
             <>
               {
                 screenSize === sizeObj.BIG && <div style={{ padding: ".5em", cursor: 'pointer', borderRadius: '1em', transform: 'translateX(-.5em)', color: 'transparent' }}>

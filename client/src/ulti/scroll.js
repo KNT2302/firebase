@@ -1,10 +1,8 @@
+
+
 const scroll = (tabBarWidth, tabMount, tabWidth) => {
-
-  console.log(tabBarWidth, tabMount, tabWidth)
-
-  const totalTimeScroll = (tabMount * tabWidth) / tabBarWidth - 1
-
   let timeScroll = 0
+  const totalTimeScroll = (tabMount * tabWidth) / tabBarWidth - 1
   const next = () => {
     if (timeScroll !== totalTimeScroll) {
       if (totalTimeScroll - timeScroll < 1) {

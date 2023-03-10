@@ -5,10 +5,10 @@ import Input from './Input'
 import Loading from './Loading'
 
 
-const PicPicker = ({handleOnloadImage, isAutoClick}) => {
+const PicPicker = ({ handleOnloadImage, isAutoClick }) => {
   const pickerImage = useRef(null)
 
-  const handlePickFile=()=>{
+  const handlePickFile = () => {
     pickerImage.current.click()
   }
 
@@ -23,21 +23,19 @@ const PicPicker = ({handleOnloadImage, isAutoClick}) => {
     return
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     pickerImage.current.onchange = addImage
-    if(isAutoClick){
+    if (isAutoClick) {
       pickerImage.current.click()
     }
-  },[])
+  }, [])
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'dashed 1px ' }}>
       <p>Chose a picture</p>
       <div style={{ display: 'none' }}>
-
         <Input ref={pickerImage} type="file" />
       </div>
-
       <Button type="button" onClick={handlePickFile} name="Choose" />
     </div>
   )
@@ -49,20 +47,20 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
 
   const picRef = useRef(null)
 
-  const handleOnloadImage=(src, nameFile)=>{
+  const handleOnloadImage = (src, nameFile) => {
 
     setSrc(src)
-    handlePickFile(src,nameFile)
+    handlePickFile(src, nameFile)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    if(isNeedChosen){
-      if(isNeedChosen.haveDone){
+    if (isNeedChosen) {
+      if (isNeedChosen.haveDone) {
         setSrc("")
       }
     }
-  },[isNeedChosen])
+  }, [isNeedChosen])
 
   useEffect(() => {
     const updateSrc = () => {
@@ -72,29 +70,27 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick }) => {
           setSrc(url)
 
         }
-      }, 1000)
+      }, 250)
 
     }
-   
-
     updateSrc()
   }, [])
 
   return (
     <>
-      {src ? <div ref={picRef} style={{ width: '100%', height: '100%',backgroundImage: `url(${src})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
-        {isNeedChosen && 
-         <div style={{fontSize:'1.8rem', padding:'.5em', background:'rgba(0,0,0,.25)' ,display:'inline-block'}}>
-         <Button type="button" name="X" onClick={()=>{
-          setSrc("")
-          handlePickFile("")
-         }}/>
- 
-         </div>
+      {src ? <div ref={picRef} style={{ width: '100%', height: '100%', backgroundImage: `url(${src})`, backgroundPosition: "center", backgroundSize: 'cover' }}>
+        {isNeedChosen &&
+          <div style={{ fontSize: '1.8rem', padding: '.5em', background: 'rgba(0,0,0,.25)', display: 'inline-block' }}>
+            <Button type="button" name="X" onClick={() => {
+              setSrc("")
+              handlePickFile("")
+            }} />
+
+          </div>
         }
-       
+
       </div> : <>
-        {isNeedChosen ? <PicPicker handleOnloadImage={handleOnloadImage} isAutoClick={isAutoClick?true:false} /> : <Loading />}
+        {isNeedChosen ? <PicPicker handleOnloadImage={handleOnloadImage} isAutoClick={isAutoClick ? true : false} /> : <Loading />}
       </>
       }
     </>

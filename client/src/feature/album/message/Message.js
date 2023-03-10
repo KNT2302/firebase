@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Tab from '../../../component/Tab'
 import ChatSession from './ChatSession'
 import axiosProvider from '../../../ulti/axios'
@@ -7,12 +7,12 @@ import { socket } from '../../../ulti/socketIO'
 import TabChat from './TabChat'
 import messageStore from "../../../store/message"
 import useResponsive from '../../../ulti/hooks/reponsive'
+import { async } from '@firebase/util'
 
 
 const Message = () => {
 
   const [query, setQuery] = useState("")
-
   const [messageData, setMessageData] = useState(null)
 
   const [roomData, setRoomData] = useState([])
@@ -20,6 +20,8 @@ const Message = () => {
   const [userToken, setUserToken] = useState("")
 
   const userId = useGetUserId()
+
+  const [searchedRoom, setSearchedRoom] = useState([])
 
   const { setChatRoomCurrent, messageReceive, roomCurrent, roomReceive } = messageStore(state => state)
 
@@ -117,9 +119,12 @@ const Message = () => {
     }
   }, [messageReceive])
 
-  const searchTab = () => {
-
-  }
+  const handleSetDataSearch = useCallback((data) => {
+    return new Promise(async (resolve) => {
+      setSearchedRoom(data)
+      resolve("done")
+    })
+  }, [searchedRoom])
 
   const GetChildrens = () => {
     return (
@@ -144,9 +149,11 @@ const Message = () => {
   const { screenSize } = useResponsive(getSizeScreen)
   const getChildren = () => {
 
+    const urlApi = `/api/chat/search?userId=${userId}&name=`
+
     return (
       <div style={{ width: '100%', height: '100%' }}>
-        <Tab listTab={roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} canScroll searchTab={searchTab} />
+        <Tab listTab={searchedRoom.length ? searchedRoom : roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} canScroll handleSetDataSearch={handleSetDataSearch} urlApi={urlApi} />
       </div>
     )
 
