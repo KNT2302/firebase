@@ -45,11 +45,11 @@ const startServer = async () => {
       resolvers
     })
 
-    const io = new Server(httpInstance,{
+    const io = new Server(httpInstance, {
       cors: {
         origin: "*"
-      }
-    });
+      }, maxHttpBufferSize: 1e8
+    })
 
     await server.start()
 
@@ -58,23 +58,23 @@ const startServer = async () => {
     io.on("connection", (socket) => {
       connection(socket)
       // ...
-      socket.on("disconnect",()=>{
+      socket.on("disconnect", () => {
         console.log(socket.id, "disconnected")
       })
 
-      socket.on('send_message',(data)=>{
-        socket.to(data.room).emit("receive_message",data)
+      socket.on('send_message', (data) => {
+        socket.to(data.room).emit("receive_message", data)
       })
-      
-      socket.on("join_room",(room)=>{
+
+      socket.on("join_room", (room) => {
         socket.join(room)
-        console.log("joined ",room)
+        console.log("joined ", room)
       })
-      socket.on("leave_room",(room)=>{
+      socket.on("leave_room", (room) => {
         socket.leave(room)
-        console.log("leave ",room)
+        console.log("leave ", room)
       })
-    });
+    })
 
     httpInstance.listen({ port }, () => {
       console.log('Listening on port', server.graphqlPath)

@@ -1,5 +1,3 @@
-
-
 const scroll = (tabBarWidth, tabMount, tabWidth) => {
   let timeScroll = 0
   const totalTimeScroll = (tabMount * tabWidth) / tabBarWidth - 1

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Loading from "../../../component/Loading"
 import { socket } from "../../../ulti/socketIO"
 import BoxChat from "./BoxChat"
@@ -14,11 +14,12 @@ const ChatSession = ({ query, messengeData, updateChat, userToken, friendInfo })
 
   const friend = friendInfo()
 
+
   useEffect(() => {
     socket.on('receive_message', (data) => {
 
-      console.log(data)
-      updateChat({ message: data.message, userId: data.userId })
+      const pictureUrls = data.pictures.map((picture) => picture.data_url)
+      updateChat({ message: data.message, userId: data.userId, pictures: pictureUrls, isSocket: true })
     })
     return () => {
       socket.off("receive_message")

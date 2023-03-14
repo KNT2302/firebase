@@ -82,7 +82,7 @@ const ItemComment = ({ comment }) => {
   }
 
   return (
-    <div style={{paddingBottom:'.5em'}}>
+    <div style={{}}>
       <p>{data.text}</p>
       <ReplyComment updateComment={updateComment} reply={data.reply} commentId={data.commentId} />
 

@@ -1,3 +1,4 @@
+import { async } from '@firebase/util'
 import { resolveTo } from '@remix-run/router'
 import { addDoc, collection } from 'firebase/firestore'
 import { ref, uploadString } from 'firebase/storage'
@@ -8,17 +9,14 @@ import Popup from '../../component/Popup'
 import { db, storage } from '../../firebaseConfig'
 import axiosProvider from '../../ulti/axios'
 import useResponsive from '../../ulti/hooks/reponsive'
+import { useUploadPicture } from '../../ulti/hooks/uploadPicture'
 
 const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
-  const [selectedPic, setSelectedPic] = useState("")
-  const [nameFile, setNameFile] = useState("")
+
+  const { selectedPic, handlePickFile, upLoadImagesPicked } = useUploadPicture()
   const [isNeedChosen, setIsNeedChosen] = useState({ haveDone: false })
 
-  const handlePickFile = (src, nameFile) => {
-    setSelectedPic(src)
-    setNameFile(nameFile)
-  }
 
   const postNewImage = () => {
     return new Promise((resolve, reject) => {
@@ -26,11 +24,12 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
         try {
           setTimeout(async () => {
 
-            const imageRef = ref(storage, `images/${nameFile}`)
-            const uploaded = await uploadString(imageRef, selectedPic, "data_url")
+            const imagesUploaded = await upLoadImagesPicked()
+
+
 
             const docRef = await addDoc(collection(db, "posts"), {
-              urlPhoto: uploaded.ref._location.path_,
+              urlPhoto: imagesUploaded
             })
 
             const addPostToUser = await axiosProvider.post("/api/post", {}, {
@@ -40,19 +39,16 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
 
             updateList({
               caption: "",
-              urlPhoto: uploaded.ref._location.path_,
+              urlPhoto: imagesUploaded,
               postId: docRef._key.path.segments[1]
             })
 
             if (bigScreen) {
-
               setIsNeedChosen({ ...isNeedChosen, haveDone: true })
-              setSelectedPic("")
+              handlePickFile([])
             }
             if (handleClosePopup) {
-
               handleClosePopup()
-
             }
             resolve("copmplete")
           }, 0)
@@ -66,16 +62,16 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
     })
 
   }
+
   return (
     <div>
       <form style={{ width: '100%' }}>
         <legend style={{ textAlign: 'center', height: '31px' }}>New picture</legend>
         <div style={{ width: '100%', height: '250px' }}>
-          <Picture handlePickFile={handlePickFile} isNeedChosen={isNeedChosen} isAutoClick={bigScreen ? false : true} />
-
+          <Picture handlePickFile={handlePickFile} isNeedChosen={isNeedChosen} isAutoClick={bigScreen ? false : true} multiple />
         </div>
         <div style={{ fontSize: '1.8rem' }}>
-          {selectedPic && <Button type="submit" name="Add" onClick={postNewImage} />}
+          {selectedPic.length > 0 && <Button type="submit" name="Add" onClick={postNewImage} />}
         </div>
       </form>
     </div>
@@ -98,7 +94,7 @@ const AddNew = ({ updateList }) => {
 
 
 
-  const {screenSize} = useResponsive(getSizeScreen)
+  const { screenSize } = useResponsive(getSizeScreen)
 
 
   const children = (handleClosePopup) => {

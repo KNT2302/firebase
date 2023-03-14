@@ -1,8 +1,8 @@
-import { async } from '@firebase/util'
 import React, { useRef } from 'react'
 import Button from '../../../component/Button'
 import Picture from '../../../component/Picture'
 import Popup from '../../../component/Popup'
+import { AiOutlinePicture } from "react-icons/ai"
 
 const PhotoPicker = ({ handlePickPhoto }) => {
   const srcPhoto = useRef()
@@ -17,7 +17,7 @@ const PhotoPicker = ({ handlePickPhoto }) => {
   const getChildren = (handleClosePopup) => {
     return (
       <div style={{ height: '250px' }}>
-        <Picture isAutoClick isNeedChosen handlePickFile={handlePickFile} />
+        <Picture isAutoClick isNeedChosen handlePickFile={handlePickFile} multiple />
         <Button name={'Choose'} onClick={() => {
           handlePick()
           handleClosePopup()
@@ -28,7 +28,7 @@ const PhotoPicker = ({ handlePickPhoto }) => {
     )
   }
   return (
-    <Popup name="photo" getChildren={getChildren} />
+    <Popup name={<AiOutlinePicture />} getChildren={getChildren} />
   )
 }
 

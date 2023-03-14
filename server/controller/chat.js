@@ -38,7 +38,8 @@ export const createMessenger = async (req, res, next) => {
   try {
     const docId = await createOne("messenger", {
       message: req.body.message,
-      userId: req.body.userId
+      userId: req.body.userId,
+      pictures: req.body.pictures
     }, res)
 
 
