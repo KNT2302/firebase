@@ -45,13 +45,13 @@ const Sender = ({ updateChat, room, userToken }) => {
           message: inputRef.current.innerHTML,
           pictures: selectedPic,
           userId,
-          isSocket:true
+          isSocket: true
         })
         await axiosProvider.post("/api/pushNotification", {}, {
           currentToken: userToken,
           title: "Message",
           body: {
-            content: `Have received a message: ${inputRef.current.innerHTML}`,
+            content: `Have received a message: ${inputRef.current.innerHTML} ${selectedPic.length && `and ${selectedPic.length} picture(s)`}`,
             room,
             message: inputRef.current.innerHTML
           }

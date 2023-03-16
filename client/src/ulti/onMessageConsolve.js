@@ -15,6 +15,9 @@ export const onMessageConsolve = (message, messageStore) => {
     if (notification.title === "Message") {
       notifyDisplay.notification["body"] = body.content
       body.message = body.message + ":new"
+      data = {
+        room: body.room
+      }
       if (isUseChat) {
         receiveMessage(body)
         return

@@ -7,6 +7,7 @@ import Sender from "./Sender"
 
 const ChatSession = ({ query, messengeData, updateChat, userToken, friendInfo }) => {
 
+  console.log(query)
 
   const { userId } = JSON.parse(localStorage.getItem('user')).data
 

@@ -7,7 +7,7 @@ import { socket } from '../../../ulti/socketIO'
 import TabChat from './TabChat'
 import messageStore from "../../../store/message"
 import useResponsive from '../../../ulti/hooks/reponsive'
-import { async } from '@firebase/util'
+import notifyStore from "../../../store/notify"
 
 
 const Message = () => {
@@ -25,10 +25,12 @@ const Message = () => {
 
   const { setChatRoomCurrent, messageReceive, roomCurrent, roomReceive } = messageStore(state => state)
 
+  const { closePopup } = notifyStore(state => state)
+
   const friendInfo = () => {
 
     let info = null
-    const roomJoined = roomData.filter((room) => room.query === query)
+    const roomJoined = roomData.filter((room) => room.query === roomCurrent)
 
     info = roomJoined[0]
 
@@ -40,21 +42,21 @@ const Message = () => {
   useEffect(() => {
     const getMessengers = async () => {
 
-      const response = await axiosProvider.get(`/api/chat?idChat=${query}`, {})
-      setMessageData({ ...messageData, [query]: [...response.data.messenge] })
+      const response = await axiosProvider.get(`/api/chat?idChat=${roomCurrent}`, {})
+      setMessageData({ ...messageData, [roomCurrent]: [...response.data.messenge] })
     }
-    if (query) {
+    if (roomCurrent) {
 
       getMessengers()
 
     }
 
     return () => {
-      socket.emit('leave_room', query)
+      socket.emit('leave_room', roomCurrent)
     }
 
 
-  }, [query])
+  }, [roomCurrent])
 
 
   useEffect(() => {
@@ -126,9 +128,15 @@ const Message = () => {
     })
   }, [searchedRoom])
 
+  useEffect(() => {
+    return () => {
+      closePopup()
+    }
+  }, [])
+
   const GetChildrens = () => {
     return (
-      <ChatSession query={query} messengeData={messageData} updateChat={updateChat} userToken={userToken} friendInfo={friendInfo} />
+      <ChatSession query={roomCurrent} messengeData={messageData} updateChat={updateChat} userToken={userToken} friendInfo={friendInfo} />
     )
   }
 
@@ -147,13 +155,17 @@ const Message = () => {
   }
 
   const { screenSize } = useResponsive(getSizeScreen)
+
+  const getItemTab = (tab, setTab, index,func) => {
+    return <TabChat tab={tab} setTab={setTab} index={index} handleSetIsOvered={func.handleSetIsOvered} />
+  }
   const getChildren = () => {
 
     const urlApi = `/api/chat/search?userId=${userId}&name=`
 
     return (
       <div style={{ width: '100%', height: '100%' }}>
-        <Tab listTab={searchedRoom.length ? searchedRoom : roomData} row={screenSize === sizeObj.BIG} setTab={handleUser} itemTab={TabChat} getChildrens={GetChildrens} canScroll handleSetDataSearch={handleSetDataSearch} urlApi={urlApi} />
+        <Tab listTab={searchedRoom.length ? searchedRoom : roomData} row={true} setTab={handleUser} itemTab={getItemTab} getChildrens={GetChildrens} canScroll handleSetDataSearch={handleSetDataSearch} urlApi={urlApi} over={screenSize === sizeObj.SMALL}/>
       </div>
     )
 

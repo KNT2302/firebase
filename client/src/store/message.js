@@ -20,12 +20,12 @@ const store = create((set, get) => ({
     messageReceive: notify.message,
     roomReceive: notify.room
   })),
-  toggleClickChat: ()=>{
+  toggleClickChat: (value)=>{
     console.log(get().isUseChat)
     set((state)=>(
       {
       ...state,
-      isUseChat: !get().isUseChat
+      isUseChat: value
     }))
   },
   toggleClickLink: () => {

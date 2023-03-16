@@ -35,12 +35,13 @@ const NumberNew = ({ numberNew }) => {
       fontWeight: '700',
       fontSize:'1em',
       position: 'absolute',
-      top: '0%',
-      right: '0%',
+      top: '-20%',
+      right: '-50%',
       width:'100%',
       height:'100%',
       opacity:`${doAnimate? "1":'0.5'}`,
       transition:'.3s',
+      zIndex:-1
     }}><span>{numberNew}</span></div>
   )
 }

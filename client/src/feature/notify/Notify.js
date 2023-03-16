@@ -74,6 +74,7 @@ const Notify = ({ promiseGetToken }) => {
   }, [newData, messageStoreGet])
 
   const setHaveRead = (message, type) => {
+    console.log(message)
     const haveNotRead = newData
     haveNotRead[haveNotRead.indexOf(message)] = {}
 
@@ -84,6 +85,7 @@ const Notify = ({ promiseGetToken }) => {
     if (type === "Message") {
       openMessage()
       messageStoreGet.toggleClickChat()
+      messageStoreGet.setChatRoomCurrent(message.data.room)
     }
     if (type === "Friend") {
       openFriend()
@@ -100,12 +102,10 @@ const Notify = ({ promiseGetToken }) => {
     )
   }
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ position: 'relative', width: '1em', height: '1em', }}>
       <Popup name={<MdOutlineNotificationsNone />} getChildren={getChildren} />
       {newData.length > 0 &&
-        <div style={{ width: '1em', height: '1em', position: 'relative' }}>
-          <NumberNew numberNew={newData.length} />
-        </div>
+        <NumberNew numberNew={newData.length} />
       }
 
     </div>
