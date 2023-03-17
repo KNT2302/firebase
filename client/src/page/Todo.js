@@ -3,6 +3,7 @@ import Container from '../component/Container'
 import Page from '../component/Page'
 import AddWork from '../feature/todo/AddWork'
 import TodoList from '../feature/todo/List'
+import Mission from '../feature/todo/mission/Mission'
 
 const Todo = () => {
 
@@ -18,12 +19,23 @@ const Todo = () => {
 
   return (
     <Container>
-      <h1 style={{ textAlign: 'center' }}>Daily plan</h1>
+      <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
 
-      <div ref={listComp} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '600px', width: '100%', margin: '0 auto', position: 'relative', transition: '.15s' }}>
-        <AddWork todoList={list} setTodoList={handleSetList} />
-        <TodoList list={list} handleSetList={handleSetList} />
+        <div style={{ flex: '1' }}>
+          <h1 style={{ textAlign: 'center' }}>Daily plan</h1>
+          <div ref={listComp} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '600px', width: '100%', margin: '0 auto', position: 'relative', transition: '.15s' }}>
+            <AddWork todoList={list} setTodoList={handleSetList} />
+            <TodoList list={list} handleSetList={handleSetList} />
+          </div>
+        </div>
+
+        <div style={{ fontSize: '1.8rem', paddingBlock: '1rem', margin: '0 auto', width: '100%', flex: '1' }}>
+          <Mission />
+        </div>
+
       </div>
+
+
 
     </Container>
   )

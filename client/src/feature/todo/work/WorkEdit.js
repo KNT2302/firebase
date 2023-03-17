@@ -46,7 +46,7 @@ const WorkEdit = ({ id, name, handleToggleState, stateDo, todoList, setTodoList 
   }
 
   return (
-    <div ref={workRef} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: "space-between", flexWrap:'wrap', opacity:'0',transition:'.15s' }}>
+    <div ref={workRef} style={{ display: 'flex', alignItems: 'flex-end', justifyContent: "space-between", flexWrap:'wrap', opacity:'0',transition:'.15s', fontSize:'1.8rem' }}>
       <Input ref={workInputRef} type="text"/>
       <div style={{ display: 'flex', gap: '1em', fontSize:'1.8rem' }}>
         <Button name="Save" onClick={handleSave} />

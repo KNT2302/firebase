@@ -29,12 +29,12 @@ const Home = () => {
 
 
 
-  
+
   const userId = useGetUserId()
 
-  const {screenSize} = useResponsive(getSizeScreen)
+  const { screenSize } = useResponsive(getSizeScreen)
 
-  const [listMine, setListMine] = useState ([])
+  const [listMine, setListMine] = useState([])
   const [listPublish, setListPublish] = useState([])
   const [tab, setTab] = useState("mine")
   const [isLoading, setIsLoading] = useState(true)
@@ -79,7 +79,7 @@ const Home = () => {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "1rem" }}>
       <Tab>
-        <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display: `${screenSize === sizeObj.BIG ? 'block' : 'flex'}`, gap: '.5em', paddingTop:`${screenSize === sizeObj.BIG?"0":'.5em'}` }}>
+        <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display: `${screenSize === sizeObj.BIG ? 'block' : 'flex'}`, gap: '.5em', paddingTop: `${screenSize === sizeObj.BIG ? "0" : '.5em'}` }}>
           <AddNew updateList={updateList} />
           <User />
         </div>

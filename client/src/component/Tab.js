@@ -65,6 +65,11 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
   //     }
   //   }, [barTabRef.current, screenChange, handleSetDataSearch])
 
+  const handleBack = () => {
+    setTab()
+    handleSetIsOvered()
+  }
+
   useEffect(() => {
     if (screenSize === sizeObj.BIG) {
       barTabRef.current.style.transform = `translateX(0%)`
@@ -98,7 +103,7 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
             </div> */}
           </>
         }
-        <div ref={barTabRef} style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "column" : 'row'}`, transition: '.3s' }}>
+        <div ref={barTabRef} style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "column" : 'row'}`, transition: '.3s', height: "100%" }}>
 
           {listTab ? (listTab.length ? (listTab.map((tab, index) => {
             return (
@@ -117,10 +122,10 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
           }
         </div>
       </div>
-      <div style={{ flex: '1', position: `${over ? 'absolute' : 'relative'}`, top: '0', left: '0', height: '100%', width: '100%', background: 'white', zIndex: `${over ? (isOvered ? "1" : '-1') : "auto"}`, opacity: `${over ? (isOvered ? "1" : "0") : "1"}`, display:'flex',flexDirection:'column'}}>
+      <div style={{ flex: '1', position: `${over ? 'absolute' : 'relative'}`, top: '0', left: '0', height: '100%', width: '100%', background: 'white', zIndex: `${over ? (isOvered ? "1" : '-1') : "auto"}`, opacity: `${over ? (isOvered ? "1" : "0") : "1"}`, display: `${over?'flex':'block'}`, flexDirection: 'column' }}>
         {
           over && isOvered && (
-            <Button type='button' onClick={handleSetIsOvered} name="Back" />
+            <Button type='button' onClick={handleBack} name="Back" />
           )
         }
         {getChildrens ? getChildrens() : children}

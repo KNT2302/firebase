@@ -13,6 +13,7 @@ import userRoute from "./route/user.js"
 import postRoute from "./route/post.js"
 import commentRoute from "./route/comment.js"
 import chatRoute from "./route/chat.js"
+import missionRoute from "./route/mission.js"
 import { ApolloServer } from "apollo-server-express"
 import { getMessaging } from "firebase/messaging"
 import { typeDefs } from "./graphql/schema.js"
@@ -108,6 +109,7 @@ app.use("/api/user", userRoute)
 app.use("/api/post", postRoute)
 app.use("/api/comment", commentRoute)
 app.use("/api/chat", chatRoute)
+app.use("/api/mission", missionRoute)
 
 
 

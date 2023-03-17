@@ -51,7 +51,7 @@ export const getAll = async (res, path) => {
     const querySnapshot = await getDocs(collection(db, path))
 
     querySnapshot.forEach((doc) => {
-      devices.push(doc.data())
+      arr.push(doc.data())
     })
 
     return arr

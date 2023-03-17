@@ -69,11 +69,17 @@ const Message = () => {
     getRoomList()
   }, [userId])
 
-  const handleUser = (query, userToken) => {
-    socket.emit("join_room", query)
-    setQuery(query)
-    setUserToken(userToken)
-    setChatRoomCurrent(query)
+  const handleUser = (query, data = {}) => {
+    const { userToken } = data
+    if (query) {
+      socket.emit("join_room", query)
+      setQuery(query)
+      setUserToken(userToken)
+      setChatRoomCurrent(query)
+    } else {
+      setChatRoomCurrent("")
+    }
+
   }
 
   const updateChat = (inbox) => {
@@ -156,7 +162,7 @@ const Message = () => {
 
   const { screenSize } = useResponsive(getSizeScreen)
 
-  const getItemTab = (tab, setTab, index,func) => {
+  const getItemTab = (tab, setTab, index, func) => {
     return <TabChat tab={tab} setTab={setTab} index={index} handleSetIsOvered={func.handleSetIsOvered} />
   }
   const getChildren = () => {
@@ -165,7 +171,7 @@ const Message = () => {
 
     return (
       <div style={{ width: '100%', height: '100%' }}>
-        <Tab listTab={searchedRoom.length ? searchedRoom : roomData} row={true} setTab={handleUser} itemTab={getItemTab} getChildrens={GetChildrens} canScroll handleSetDataSearch={handleSetDataSearch} urlApi={urlApi} over={screenSize === sizeObj.SMALL}/>
+        <Tab listTab={searchedRoom.length ? searchedRoom : roomData} row={true} setTab={handleUser} itemTab={getItemTab} getChildrens={GetChildrens} canScroll handleSetDataSearch={handleSetDataSearch} urlApi={urlApi} over={screenSize === sizeObj.SMALL} />
       </div>
     )
 
