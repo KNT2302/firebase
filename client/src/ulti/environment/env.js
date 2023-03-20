@@ -1,6 +1,6 @@
-let environment = "https://firebase-xpvi.vercel.app"
+let environment = "https://app-znqp.onrender.com"
 if (process.env.DEVELOPMENT) {
-  environment = "https://firebase-xpvi.vercel.app"
+  environment = "https://app-znqp.onrender.com"
 }
 
 export default environment
