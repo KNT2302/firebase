@@ -43,7 +43,8 @@ const startServer = async () => {
   try {
     const server = new ApolloServer({
       typeDefs,
-      resolvers
+      resolvers,
+      cache: "bounded"
     })
 
     const io = new Server(httpInstance, {
