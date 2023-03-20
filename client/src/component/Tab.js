@@ -11,8 +11,8 @@ import notifyStore from "../store/notify"
 const ItemTab = ({ name, setTab, query, isSelect }) => {
 
   return (
-    <div style={{ padding: ".5em", color: 'gray', cursor: 'pointer', background: `${isSelect ? 'lightpink' : 'transparent'}`, borderRadius: '1em', transform: 'translateX(-.5em)' }}>
-      <Button name={name} type="button" onClick={() => setTab(query)} />
+    <div style={{ padding: ".5em", cursor: 'pointer', transform: 'translateX(-.5em)', borderBottom:`${isSelect ? '2px solid #154c79': 'none'}` }}>
+      <Button style={{color:'black'}} name={name} type="button" onClick={() => setTab(query)} />
     </div>
   )
 }
@@ -122,7 +122,7 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
           }
         </div>
       </div>
-      <div style={{ flex: '1', position: `${over ? 'absolute' : 'relative'}`, top: '0', left: '0', height: '100%', width: '100%', background: 'white', zIndex: `${over ? (isOvered ? "1" : '-1') : "auto"}`, opacity: `${over ? (isOvered ? "1" : "0") : "1"}`, display: `${over?'flex':'block'}`, flexDirection: 'column' }}>
+      <div style={{ flex: '1', position: `${over ? 'absolute' : 'relative'}`, top: '0', left: '0', height: '100%', width: '100%', background: 'white', zIndex: `${over ? (isOvered ? "1" : '-1') : "auto"}`, opacity: `${over ? (isOvered ? "1" : "0") : "1"}`, display: `${over ? 'flex' : 'block'}`, flexDirection: 'column' }}>
         {
           over && isOvered && (
             <Button type='button' onClick={handleBack} name="Back" />

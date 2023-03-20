@@ -82,7 +82,7 @@ export const makeFriend = async (req, res, next) => {
     })
 
     const chatDoc = await addDoc(collection(db, "chat"), {
-      users:[user[0].userId, friend[0].userId]
+      users: [user[0].userId, friend[0].userId]
     })
 
     const chatRef = doc(db, 'chat', chatDoc.id)
@@ -104,7 +104,6 @@ export const getFriend = async (req, res, next) => {
   try {
     const response = await getAllFromArrayField(req, res, "users", "friend")
 
-    response = response.map()
     res.status(200).json({ success: true, data: response })
   } catch (err) {
     res.status(200).json({ success: false, err })

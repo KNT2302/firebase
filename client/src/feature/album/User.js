@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import Popup from '../../component/Popup'
-import UserList from '../../component/UserList'
+import UserList from '../../component/user/UserList'
 import axiosProvider from '../../ulti/axios'
 import useResponsive from '../../ulti/hooks/reponsive'
 import notifyStore from "../../store/notify"

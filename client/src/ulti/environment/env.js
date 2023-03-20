@@ -1,6 +1,6 @@
-let environment = "https://app-znqp.onrender.com"
+let environment = "http://localhost:3000"
 if (process.env.DEVELOPMENT) {
-  environment = "https://app-znqp.onrender.com"
+  environment = "http://localhost:3000"
 }
 
 export default environment

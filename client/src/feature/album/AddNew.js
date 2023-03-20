@@ -66,7 +66,7 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
   return (
     <div>
       <form style={{ width: '100%' }}>
-        <legend style={{ textAlign: 'center', height: '31px' }}>New picture</legend>
+        <legend style={{ textAlign: 'center', height: '31px', fontSize:'2rem' }}>New picture</legend>
         <div style={{ width: '100%', height: '250px' }}>
           <Picture handlePickFile={handlePickFile} isNeedChosen={isNeedChosen} isAutoClick={bigScreen ? false : true} multiple />
         </div>
@@ -102,7 +102,7 @@ const AddNew = ({ updateList }) => {
   }
 
   return (
-    <div style={{ fontSize: '1.8rem' }}>
+    <div style={{ fontSize: '1.8rem', width:'100%' }}>
       {screenSize === sizeObj.BIG ? <BoxAddNew updateList={updateList} bigScreen /> :
 
         <Popup getChildren={children} name="New">

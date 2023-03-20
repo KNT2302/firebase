@@ -6,8 +6,9 @@ import Popup from '../../component/Popup'
 import actionCodeSettings from './setting'
 import { auth } from '../../firebaseConfig'
 import Container from '../../component/Container'
+import { FcGoogle } from "react-icons/fc"
 
-const SignIn = ({setSignined,getUserInfo }) => {
+const SignIn = ({ setSignined, getUserInfo }) => {
 
 
 
@@ -16,16 +17,18 @@ const SignIn = ({setSignined,getUserInfo }) => {
 
 
     return (
-      <div style={{ padding: '.5em' }}>
+      <>
         <SignByEmail handleClosePopup={handleClosePopup} />
-        <div style={{ textAlign: 'center', fontSize: '1.6rem', marginTop: '10px' }}>Or</div>
-        <SignByGoogle setSignined={setSignined} getUserInfo={getUserInfo}/>
-      </div>
+        <div style={{ paddingTop: '1em' }}>
+          <div style={{ textAlign: 'center', fontSize: '1.6rem', marginTop: '10px', paddingBottom: '.5em' }}>Or</div>
+          <SignByGoogle setSignined={setSignined} getUserInfo={getUserInfo} />
+        </div>
+      </>
     )
   }
   return (
     <Container>
-      <div style={{ fontSize: '1.8rem', width:'100%'}}>
+      <div style={{ fontSize: '1.8rem', width: '100%' }}>
         <Popup name="Sign In" getChildren={getForm}>
 
         </Popup>
@@ -66,19 +69,21 @@ const SignByEmail = ({ handleClosePopup }) => {
 
   return (
     <form style={{ width: '100%' }}>
-      <legend style={{ fontSize: '1.8rem' }}>Sign in</legend>
-      <Input type="text" ref={email} name="email" />
-      <div style={{ marginTop: '10px', fontSize: '1em' }}>
+      <legend style={{ fontSize: '2.2rem', paddingBottom: '.5em' }}>Sign in</legend>
+
+      <Input border type="text" ref={email} name="Email" />
+
+      <div style={{ marginTop: '10px', fontSize: '1em', display: 'inline-block' }}>
         <Button type="submit" name="Sign In" onClick={handleSubmit} />
       </div>
     </form>
   )
 }
 
-const SignByGoogle = ({setSignined, getUserInfo}) => {
+const SignByGoogle = ({ setSignined, getUserInfo }) => {
 
   const onClick = async () => {
-    return new Promise((resolve)=>{
+    return new Promise((resolve) => {
 
       const provider = new GoogleAuthProvider()
 
@@ -94,7 +99,7 @@ const SignByGoogle = ({setSignined, getUserInfo}) => {
           console.log(result)
           setSignined()
           getUserInfo.current = result.user
-          localStorage.setItem("user",JSON.stringify({isLogined:true}))
+          localStorage.setItem("user", JSON.stringify({ isLogined: true }))
           resolve("authed")
         }).catch((error) => {
           // Handle Errors here.
@@ -106,14 +111,14 @@ const SignByGoogle = ({setSignined, getUserInfo}) => {
           const credential = GoogleAuthProvider.credentialFromError(error)
           // ...
         })
-  
+
 
     })
-   
+
   }
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Button name="Sign in by google" onClick={onClick} />
+      <Button icon={<FcGoogle />} name="Sign in by google" onClick={onClick} />
     </div>
   )
 }

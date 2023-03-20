@@ -36,9 +36,9 @@ const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth, whenClo
 
 
     <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.5)', padding: '0 20px', zIndex: '2' }}>
-      <div style={{ opacity: `${isFadedIn ? "1" : '.5'}`, borderRadius: '3px', transition: '0.15s', backgroundColor: 'lightpink', width: '100%', maxWidth: maxWidthProp, position: 'relative' }}>
+      <div style={{ opacity: `${isFadedIn ? "1" : '.5'}`, borderRadius: '3px', transition: '0.15s', backgroundColor: 'white', width: '100%', maxWidth: maxWidthProp, position: 'relative', padding:'.5em' }}>
         {getChildren(handleClosePopup)}
-        <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: 'translateY(-100%)', background: 'lightpink', borderRadius: ".1em" }}>
+        <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: 'translateY(-100%)', background: 'white', borderRadius: ".1em"}}>
           <Button type="button" name="X" onClick={handleClosePopup} />
         </div>
 

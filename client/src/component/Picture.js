@@ -4,6 +4,7 @@ import Input from './Input'
 import Loading from './Loading'
 import Popup from '../component/Popup'
 import popupStore from "../store/notify"
+import { AiOutlinePlus } from "react-icons/ai"
 
 
 const PicPicker = ({ handleOnloadImage, isAutoClick, multiple }) => {
@@ -41,12 +42,14 @@ const PicPicker = ({ handleOnloadImage, isAutoClick, multiple }) => {
   }, [])
 
   return (
-    <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', border: 'dashed 1px ' }}>
-      <p>Chose a picture</p>
+    <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', border: 'dashed 1px ', gap: '.5em' }}>
+      <p style={{ fontSize: '2rem' }}>Chose a picture</p>
       <div style={{ display: 'none' }}>
         <Input ref={pickerImage} type="file" />
       </div>
-      <Button type="button" onClick={handlePickFile} name="Choose" />
+
+      <Button icon={<AiOutlinePlus />} type="button" onClick={handlePickFile} name="Choose" />
+
     </div>
   )
 }
@@ -96,7 +99,7 @@ export const BoxPictures = ({ pictures }) => {
   )
 }
 
-const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick, multiple }) => {
+const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick, multiple, specSrc }) => {
 
   const [src, setSrc] = useState([])
 
@@ -128,7 +131,12 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick, multiple }
         }
       }, 250)
     }
-    updateSrc()
+    if (!specSrc) {
+
+      updateSrc()
+    }else{
+      setSrc([...src, specSrc])
+    }
   }, [])
 
   console.log(src)

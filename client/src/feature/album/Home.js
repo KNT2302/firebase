@@ -78,12 +78,16 @@ const Home = () => {
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "1rem" }}>
-      <Tab>
-        <div style={{ fontSize: '1.8rem', width: '100%', maxWidth: '375px', display: `${screenSize === sizeObj.BIG ? 'block' : 'flex'}`, gap: '.5em', paddingTop: `${screenSize === sizeObj.BIG ? "0" : '.5em'}` }}>
-          <AddNew updateList={updateList} />
-          <User />
-        </div>
-      </Tab>
+      <div style={{ width: "100%", maxWidth: '375px' }}>
+
+        <Tab>
+          <div style={{ fontSize: '1.8rem', display: `${screenSize === sizeObj.BIG ? 'block' : 'flex'}`, gap: '.5em', paddingTop: `${screenSize === sizeObj.BIG ? "0" : '.5em'}` }}>
+            <AddNew updateList={updateList} />
+            <User />
+          </div>
+        </Tab>
+      </div>
+
       <div style={{ width: "100%", maxWidth: '375px' }}>
         <Tab listTab={[{ name: 'Mine', query: 'mine' }, { name: 'Publish', query: 'publish' }]} setTab={handleTab}>
           <div style={{ fontSize: '1.5rem' }}>
