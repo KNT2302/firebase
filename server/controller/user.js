@@ -1,5 +1,5 @@
 
-import { db } from "../app.js"
+import { db } from "../index.js"
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore"
 import { getAllFromArrayField, getAllUsers, getUser } from "../ulti/common.js"
 

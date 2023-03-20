@@ -1,7 +1,7 @@
 import { async } from "@firebase/util"
 import { getAuth } from "firebase/auth"
 import { collection, getDocs } from "firebase/firestore"
-import { db } from "../../app.js"
+import { db } from "../../index.js"
 
 export const getUsers = async (parent, args) => {
 

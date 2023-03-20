@@ -1,5 +1,5 @@
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../app.js"
+import { db } from "../index.js"
 
 export const saveToken =  async (req,res,next) => {
   try {

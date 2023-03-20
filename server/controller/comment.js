@@ -1,5 +1,5 @@
 import { addDoc, collection, doc, updateDoc, getDoc } from "firebase/firestore"
-import { db } from "../app.js"
+import { db } from "../index.js"
 import { getAll } from "../ulti/common.js"
 
 export const create = async (req, res, next) => {

@@ -1,4 +1,4 @@
-import { db } from "../app.js"
+import { db } from "../index.js"
 import { getDoc, doc, updateDoc } from "firebase/firestore"
 
 import { createOne, getUser } from "../ulti/common.js"

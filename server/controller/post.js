@@ -1,5 +1,5 @@
 import { addDoc, collection, updateDoc, doc, getDoc, getDocs } from 'firebase/firestore'
-import { db } from '../app.js'
+import { db } from '../index.js'
 import { getUser } from '../ulti/common.js'
 
 export const addPostToUser = async (req, res, next) => {
