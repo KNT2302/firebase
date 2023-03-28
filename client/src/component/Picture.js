@@ -5,6 +5,8 @@ import Loading from './Loading'
 import Popup from '../component/Popup'
 import popupStore from "../store/notify"
 import { AiOutlinePlus } from "react-icons/ai"
+import scroll from "../ulti/scroll"
+import Slide from './Slide'
 
 
 const PicPicker = ({ handleOnloadImage, isAutoClick, multiple }) => {
@@ -47,17 +49,21 @@ const PicPicker = ({ handleOnloadImage, isAutoClick, multiple }) => {
       <div style={{ display: 'none' }}>
         <Input ref={pickerImage} type="file" />
       </div>
-
-      <Button icon={<AiOutlinePlus />} type="button" onClick={handlePickFile} name="Choose" />
+      <div>
+        <Button icon={<AiOutlinePlus />} type="button" onClick={handlePickFile} name="Choose" />
+      </div>
 
     </div>
   )
 }
 
+
+
 export const BoxPictures = ({ pictures }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const { isBoxImage, openBoxImage, closePopup } = popupStore(state => state)
+
 
   const toggleBoxShow = () => {
     setIsOpen(!isOpen)
@@ -65,13 +71,7 @@ export const BoxPictures = ({ pictures }) => {
 
   const getChildren = () => {
     return (
-      <div style={{ background: 'lightgreen', width: '100%', display: 'flex', overflow: 'auto' }}>
-        {pictures.map((picture, index) => {
-          return (
-            <img key={index} style={{ width: '100%' }} src={`${picture.data_url ? picture.data_url : picture}`} />
-          )
-        })}
-      </div>
+      <Slide images={pictures} slice={1} />
     )
   }
 
@@ -88,11 +88,14 @@ export const BoxPictures = ({ pictures }) => {
         })
       }
       {
+
         pictures.length > 4 && (
-          <div style={{ position: 'absolute', bottom: '0', right: '0', width: '50%', height: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'white' }} onClick={toggleBoxShow}>
-            {pictures.length - 4} +
+          <>
+            <div style={{ position: 'absolute', bottom: '0', right: '0', width: '50%', height: '50%', background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'white' }} onClick={toggleBoxShow}>
+              {pictures.length - 4} +
+            </div>
             <Popup getChildren={getChildren} openPopupByClick={isOpen} isLinkOpen commonClose={toggleBoxShow} />
-          </div>
+          </>
         )
       }
     </div>
@@ -102,6 +105,8 @@ export const BoxPictures = ({ pictures }) => {
 const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick, multiple, specSrc }) => {
 
   const [src, setSrc] = useState([])
+
+
 
   const picRef = useRef(null)
 
@@ -129,12 +134,14 @@ const Picture = ({ getSrc, isNeedChosen, handlePickFile, isAutoClick, multiple, 
             setSrc([...src, url])
           }
         }
+
       }, 250)
     }
     if (!specSrc) {
-
       updateSrc()
-    }else{
+
+
+    } else {
       setSrc([...src, specSrc])
     }
   }, [])

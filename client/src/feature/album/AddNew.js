@@ -66,7 +66,7 @@ const BoxAddNew = ({ bigScreen, handleClosePopup, updateList }) => {
   return (
     <div>
       <form style={{ width: '100%' }}>
-        <legend style={{ textAlign: 'center', height: '31px', fontSize:'2rem' }}>New picture</legend>
+        <legend style={{ textAlign: 'center', height: '34px', fontSize:'2rem' }}>New picture</legend>
         <div style={{ width: '100%', height: '250px' }}>
           <Picture handlePickFile={handlePickFile} isNeedChosen={isNeedChosen} isAutoClick={bigScreen ? false : true} multiple />
         </div>

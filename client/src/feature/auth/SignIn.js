@@ -7,6 +7,7 @@ import actionCodeSettings from './setting'
 import { auth } from '../../firebaseConfig'
 import Container from '../../component/Container'
 import { FcGoogle } from "react-icons/fc"
+import TabClick from '../../component/tabClick/TabClick'
 
 const SignIn = ({ setSignined, getUserInfo }) => {
 
@@ -30,9 +31,7 @@ const SignIn = ({ setSignined, getUserInfo }) => {
     <Container>
       <div style={{ fontSize: '1.8rem', width: '100%' }}>
         <Popup name="Sign In" getChildren={getForm}>
-
         </Popup>
-
       </div>
 
     </Container>

@@ -5,6 +5,8 @@ import ListPick from '../../component/ListPick'
 import Picture from '../../component/Picture'
 import Popup from '../../component/Popup'
 import useGetUserId from '../../ulti/hooks/getUserId'
+import { TiInputChecked } from "react-icons/ti"
+import axiosProvider from '../../ulti/axios'
 
 const FriendList = ({ handleClosePopup }) => {
 
@@ -13,21 +15,38 @@ const FriendList = ({ handleClosePopup }) => {
   const userId = useGetUserId()
 
   const handleList = (pickedList) => {
-    console.log(pickedList)
+
+
+
+    return new Promise(async (resolve) => {
+      const res = await Promise.all(pickedList.map((item) => {
+        return new Promise(async (resolve) => {
+          const pushNotification = await axiosProvider.post("/api/pushNotification", {}, {
+            currentToken: item.currentToken,
+            title: 'Shared',
+            body: 'a post has shared'
+          })
+          resolve("finish")
+        })
+      }))
+      resolve("done")
+    })
+
+
   }
 
 
   const itemHandle = (user, index, picked, onClick) => {
     return (
-      <div style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center' }} key={index} onClick={() => { onClick(user) }} >
-        <div style={{ width: '50px', height: '50px' }}>
+      <div style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center', padding: '.5em 0', gap: '.5em', cursor: 'pointer' }} key={index} onClick={() => onClick(user)} >
+        <div style={{ width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden' }}>
 
           <Picture specSrc={[user.photoURL]} />
         </div>
         <p style={{ fontSize: '1em' }}>
           {user.displayName}
         </p>
-        {picked && "Picked"}
+        {picked && <TiInputChecked color='green' />}
       </div>
     )
   }
@@ -42,7 +61,7 @@ const FriendList = ({ handleClosePopup }) => {
       <span>Or</span>
       <div>
         <h2>Friends</h2>
-        <ListPick urlData={`/api/user/friend?userId=${userId}`} itemHandle={itemHandle} handleList={handleList} />
+        <ListPick urlData={`/api/user/friend?userId=${userId}`} itemHandle={itemHandle} handleList={handleList} excuteName="Shared" />
       </div>
     </div>
 

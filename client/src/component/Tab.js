@@ -11,8 +11,8 @@ import notifyStore from "../store/notify"
 const ItemTab = ({ name, setTab, query, isSelect }) => {
 
   return (
-    <div style={{ padding: ".5em", cursor: 'pointer', transform: 'translateX(-.5em)', borderBottom:`${isSelect ? '2px solid #154c79': 'none'}` }}>
-      <Button style={{color:'black'}} name={name} type="button" onClick={() => setTab(query)} />
+    <div style={{ padding: ".5em", cursor: 'pointer', transform: 'translateX(-.5em)', borderBottom: `${isSelect ? '2px solid #154c79' : 'none'}` }}>
+      <Button style={{ color: 'black' }} name={name} type="button" onClick={() => setTab(query)} />
     </div>
   )
 }
@@ -92,16 +92,16 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
           }} urlApi={urlApi} />
         }
         {
-          canScroll && screenSize === sizeObj.SMALL &&
-          <>
-            {/* <div style={{ position: 'absolute', zIndex: '1', top: 'calc(50% + 2.5rem)', right: '.5em', transform: 'translateY(-50%)', borderRadius: '50%', overflow: 'hidden', boxShadow: '1px 1px 10px', width: '2em', height: '2em', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white' }}>
-              <Button type='button' name={<MdNavigateNext />} onClick={() => {
-                console.log('run')
-                const next = (scrollNext.current)
-                barTabRef.current.style.transform = `translateX(-${next() * 100}%)`
-              }} />
-            </div> */}
-          </>
+          // canScroll && screenSize === sizeObj.SMALL &&
+          // <>
+          //   <div style={{ position: 'absolute', zIndex: '1', top: 'calc(50% + 2.5rem)', right: '.5em', transform: 'translateY(-50%)', borderRadius: '50%', overflow: 'hidden', boxShadow: '1px 1px 10px', width: '2em', height: '2em', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white' }}>
+          //     <Button type='button' name={<MdNavigateNext />} onClick={() => {
+          //       console.log('run')
+          //       const next = (scrollNext.current)
+          //       barTabRef.current.style.transform = `translateX(-${next() * 100}%)`
+          //     }} />
+          //   </div>
+          // </>
         }
         <div ref={barTabRef} style={{ display: 'flex', fontSize: '1.8rem', flexDirection: `${row ? "column" : 'row'}`, transition: '.3s', height: "100%" }}>
 
@@ -125,7 +125,9 @@ const Tab = ({ listTab, setTab, row, itemTab, getChildrens, children, canScroll,
       <div style={{ flex: '1', position: `${over ? 'absolute' : 'relative'}`, top: '0', left: '0', height: '100%', width: '100%', background: 'white', zIndex: `${over ? (isOvered ? "1" : '-1') : "auto"}`, opacity: `${over ? (isOvered ? "1" : "0") : "1"}`, display: `${over ? 'flex' : 'block'}`, flexDirection: 'column' }}>
         {
           over && isOvered && (
-            <Button type='button' onClick={handleBack} name="Back" />
+            <div>
+              <Button type='button' onClick={handleBack} name="Back" />
+            </div>
           )
         }
         {getChildrens ? getChildrens() : children}

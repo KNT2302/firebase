@@ -53,17 +53,19 @@ const Home = () => {
   }
 
   const getList = async (query) => {
-    setIsLoading(true)
-    if (query === "mine") {
-      const posts = await axiosProvider.get(`/api/post?userId=${userId}`)
-      setListMine([...posts.data])
-    } else {
-      const posts = await axiosProvider.get(`/api/post`)
-      const newData = posts.data.filter(post => !post.userId || post.userId !== userId)
-      console.log(newData)
-      setListPublish([...newData])
+    if (userId) {
+      setIsLoading(true)
+      if (query === "mine") {
+        const posts = await axiosProvider.get(`/api/post?userId=${userId}`)
+        setListMine([...posts.data])
+      } else {
+        const posts = await axiosProvider.get(`/api/post`)
+        const newData = posts.data.filter(post => !post.userId || post.userId !== userId)
+        console.log(newData)
+        setListPublish([...newData])
+      }
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   const updateList = (photo) => {
@@ -73,7 +75,7 @@ const Home = () => {
     if (!listMine.length || !listPublish.length) {
       getList(tab)
     }
-  }, [tab])
+  }, [tab, userId])
 
 
   return (
@@ -81,7 +83,7 @@ const Home = () => {
       <div style={{ width: "100%", maxWidth: '375px' }}>
 
         <Tab>
-          <div style={{ fontSize: '1.8rem', display: `${screenSize === sizeObj.BIG ? 'block' : 'flex'}`, gap: '.5em', paddingTop: `${screenSize === sizeObj.BIG ? "0" : '.5em'}` }}>
+          <div style={{ fontSize: '1.8rem', display: `${screenSize === sizeObj.BIG ? 'block' : 'inline-flex'}`, gap: '.5em', paddingTop: `${screenSize === sizeObj.BIG ? "0" : '.5em'}` }}>
             <AddNew updateList={updateList} />
             <User />
           </div>

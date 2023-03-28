@@ -68,20 +68,31 @@ const Layout = ({ children }) => {
   }, [isLogined])
 
   return (
-    <div style={{ width: '100%', padding: '0 20px', height: '100vh', maxHeight:'100vh' }}>
+    <div style={{ width: '100%', padding: '0 20px', height: '100vh', maxHeight: '100vh' }}>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Nav handleSignOut={() => { setIsLogined(false) }} isLogined={isLogined} promiseGetToken={promiseGetToken} />
-        {isLogined ?
-          <>
-            <div style={{flex: '1', width: '100%' }}>
-              <div style={{width:'100%', margin:'0 auto', height:'100%'}}>
-              {children}
+        {
+          false ? <>{isLogined ?
+            <>
+              <div style={{ flex: '1', width: '100%' }}>
+                <div style={{ width: '100%', margin: '0 auto', height: '100%' }}>
+                  {children}
+
+                </div>
+              </div>
+
+            </>
+            : <SignIn setSignined={handleSignIned} getUserInfo={getUserInfo} />}</> : <>
+            <div style={{ flex: '1', width: '100%' }}>
+              <div style={{ width: '100%', margin: '0 auto', height: '100%' }}>
+                {children}
 
               </div>
             </div>
 
           </>
-          : <SignIn setSignined={handleSignIned} getUserInfo={getUserInfo} />}
+        }
+
         <Outlet />
       </div>
 

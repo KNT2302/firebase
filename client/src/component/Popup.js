@@ -36,9 +36,9 @@ const Content = ({ handleTogglePopup, getChildren, resetState, maxWidth, whenClo
 
 
     <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.5)', padding: '0 20px', zIndex: '2' }}>
-      <div style={{ opacity: `${isFadedIn ? "1" : '.5'}`, borderRadius: '3px', transition: '0.15s', backgroundColor: 'white', width: '100%', maxWidth: maxWidthProp, position: 'relative', padding:'.5em' }}>
+      <div style={{ opacity: `${isFadedIn ? "1" : '.5'}`, borderRadius: '3px', transition: '0.15s', backgroundColor: 'white', width: '100%', maxWidth: maxWidthProp, position: 'relative', padding: '.5em' }}>
         {getChildren(handleClosePopup)}
-        <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: 'translateY(-100%)', background: 'white', borderRadius: ".1em"}}>
+        <div style={{ position: 'absolute', top: '0% ', right: '0%', transform: 'translateY(-100%)', background: 'white', borderRadius: ".1em" }}>
           <Button type="button" name="X" onClick={handleClosePopup} />
         </div>
 
@@ -74,10 +74,13 @@ const Popup = ({ name, getChildren, resetState, maxWidth, whenClick, whenClose, 
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: "flex-start" }}>
+      {
+        name && <div style={{ display: 'flex', alignItems: "flex-start" }}>
 
-        <Button icon={icon} type="button" onClick={clickOpen} name={name} />
-      </div>
+          <Button icon={icon} type="button" onClick={clickOpen} name={name} />
+        </div>
+      }
+
       {(isOpen || (openPopupByClick && (isLinkNotify || isLinkOpen))) &&
         <Content openPopupByClick getChildren={getChildren} handleTogglePopup={clickClose} isLinkNotify={isLinkNotify} resetState={resetState} maxWidth={maxWidth} whenClose={whenClose ? whenClose : () => { }} />
       }
